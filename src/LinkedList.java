@@ -159,33 +159,6 @@ public class LinkedList
 						prevNode = prevNode.next;
 				}
 		}
-
-		public static void main(String[] args)
-		{
-				LinkedList linkedList = new LinkedList();
-				linkedList.addInTail(new Node(10));
-				linkedList.addInTail(new Node(20));
-				Node thirdNode = new Node(30);
-				linkedList.addInTail(thirdNode);
-				linkedList.addInTail(new Node(10));
-				linkedList.addInTail(new Node(20));
-				/*System.out.println("Find All by: 20");
-				linkedList.findAll(20).stream().map(Node::getValue).forEach(System.out::println);
-				System.out.println("Remove by value: 20");
-				linkedList.remove(20);*/
-				/*System.out.println("Remove all by value: 10");
-				linkedList.removeAll(30);*/
-				/*	linkedList.clear();*/
-				linkedList.insertAfter(thirdNode, new Node(50));
-				Node node = linkedList.head;
-				while(node != null)
-				{
-						System.out.println(node.value);
-						node = node.next;
-				}
-				System.out.println("______ elements count _______");
-				System.out.println(linkedList.count());
-		}
 }
 
 class Node
