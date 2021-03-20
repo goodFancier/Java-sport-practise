@@ -57,6 +57,8 @@ public class LinkedList
 						if(this.head.value == _value)
 						{
 								this.head = this.head.next;
+								if(this.head == null)
+										this.tail = null;
 								return true;
 						}
 						Node node = this.head.next;
@@ -66,6 +68,8 @@ public class LinkedList
 								if(node.value == _value)
 								{
 										prevNode.next = node.next;
+										if(prevNode.next == null)
+												this.tail = prevNode;
 										node = null;
 										return true;
 								}
@@ -156,7 +160,7 @@ public class LinkedList
 						{
 								prevNode.next = _nodeToInsert;
 								_nodeToInsert.next = node;
-								if (node == null)
+								if(node == null)
 										this.tail = _nodeToInsert;
 								break;
 						}
