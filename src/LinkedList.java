@@ -95,6 +95,8 @@ public class LinkedList
 								}
 								else
 										prevNode = node;
+								if(node.next == null)
+										tail = prevNode;
 								node = node.next;
 						}
 				}
@@ -112,6 +114,7 @@ public class LinkedList
 						}
 						node = null;
 						this.head = null;
+						this.tail = null;
 				}
 		}
 
@@ -153,6 +156,8 @@ public class LinkedList
 						{
 								prevNode.next = _nodeToInsert;
 								_nodeToInsert.next = node;
+								if (node == null)
+										this.tail = _nodeToInsert;
 								break;
 						}
 						node = node.next;
