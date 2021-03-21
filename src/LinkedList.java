@@ -159,6 +159,7 @@ public class LinkedList
 				if(this.head == null)
 				{
 						this.head = _nodeToInsert;
+						this.tail = _nodeToInsert;
 						return;
 				}
 				if(_nodeAfter == null)
