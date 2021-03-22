@@ -2,9 +2,9 @@ import java.util.*;
 
 public class LinkedList
 {
-		public Node head;
+		public LinkedListNode head;
 
-		public Node tail;
+		public LinkedListNode tail;
 
 		public LinkedList()
 		{
@@ -12,7 +12,7 @@ public class LinkedList
 				tail = null;
 		}
 
-		public void addInTail(Node item)
+		public void addInTail(LinkedListNode item)
 		{
 				if(this.head == null)
 						this.head = item;
@@ -21,9 +21,9 @@ public class LinkedList
 				this.tail = item;
 		}
 
-		public Node find(int value)
+		public LinkedListNode find(int value)
 		{
-				Node node = this.head;
+				LinkedListNode node = this.head;
 				while(node != null)
 				{
 						if(node.value == value)
@@ -33,11 +33,11 @@ public class LinkedList
 				return null;
 		}
 
-		public ArrayList<Node> findAll(int _value)
+		public ArrayList<LinkedListNode> findAll(int _value)
 		{
 				// здесь будет ваш код поиска всех узлов
-				ArrayList<Node> nodes = new ArrayList<>();
-				Node node = this.head;
+				ArrayList<LinkedListNode> nodes = new ArrayList<>();
+				LinkedListNode node = this.head;
 				while(node != null)
 				{
 						if(node.value == _value)
@@ -61,8 +61,8 @@ public class LinkedList
 										this.tail = null;
 								return true;
 						}
-						Node node = this.head.next;
-						Node prevNode = this.head;
+						LinkedListNode node = this.head.next;
+						LinkedListNode prevNode = this.head;
 						while(node != null)
 						{
 								if(node.value == _value)
@@ -85,7 +85,7 @@ public class LinkedList
 				// здесь будет ваш код удаления всех узлов по заданному значению
 				if(this.head != null)
 				{
-						Node node = head;
+						LinkedListNode node = head;
 						while(node != null)
 						{
 								if(this.head.value == _value)
@@ -101,7 +101,7 @@ public class LinkedList
 								this.tail = null;
 								return;
 						}
-						Node prevNode = this.head;
+						LinkedListNode prevNode = this.head;
 						node = this.head.next;
 						while(node != null)
 						{
@@ -125,7 +125,7 @@ public class LinkedList
 		public void clear()
 		{
 				// здесь будет ваш код очистки всего списка
-				Node node = this.head;
+				LinkedListNode node = this.head;
 				while(node != null)
 				{
 						while(node.next != null)
@@ -142,7 +142,7 @@ public class LinkedList
 		{
 				// здесь будет ваш код подсчёта количества элементов в списке
 				int count = 0;
-				Node node = this.head;
+				LinkedListNode node = this.head;
 				while(node != null)
 				{
 						count++;
@@ -151,7 +151,7 @@ public class LinkedList
 				return count;
 		}
 
-		public void insertAfter(Node _nodeAfter, Node _nodeToInsert)
+		public void insertAfter(LinkedListNode _nodeAfter, LinkedListNode _nodeToInsert)
 		{
 				// здесь будет ваш код вставки узла после заданного
 				// если _nodeAfter = null ,
@@ -164,13 +164,13 @@ public class LinkedList
 				}
 				if(_nodeAfter == null)
 				{
-						Node oldHead = this.head;
+						LinkedListNode oldHead = this.head;
 						this.head = _nodeToInsert;
 						this.head.next = oldHead;
 						return;
 				}
-				Node node = this.head.next;
-				Node prevNode = this.head;
+				LinkedListNode node = this.head.next;
+				LinkedListNode prevNode = this.head;
 				while(prevNode != null)
 				{
 						if(_nodeAfter.next == prevNode.next && _nodeAfter.value == prevNode.value)
@@ -187,13 +187,13 @@ public class LinkedList
 		}
 }
 
-class Node
+class LinkedListNode
 {
 		public int value;
 
-		public Node next;
+		public LinkedListNode next;
 
-		public Node(int _value)
+		public LinkedListNode(int _value)
 		{
 				value = _value;
 				next = null;
@@ -209,12 +209,12 @@ class Node
 				this.value = value;
 		}
 
-		public Node getNext()
+		public LinkedListNode getNext()
 		{
 				return next;
 		}
 
-		public void setNext(Node next)
+		public void setNext(LinkedListNode next)
 		{
 				this.next = next;
 		}
