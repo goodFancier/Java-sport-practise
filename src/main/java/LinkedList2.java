@@ -124,7 +124,6 @@ public class LinkedList2
 								this.tail = null;
 								return;
 						}
-						this.head.prev = null;
 						Node prevNode = this.head;
 						node = this.head.next;
 						while(node != null)
@@ -135,11 +134,14 @@ public class LinkedList2
 								}
 								else
 								{
-										prevNode = node;
+										prevNode = prevNode.next;
 								}
 								node = node.next;
+								if(prevNode.next == null)
+										tail = prevNode;
+								else
+										tail = node;
 						}
-						tail = prevNode;
 				}
 		}
 
