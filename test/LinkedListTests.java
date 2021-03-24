@@ -1,11 +1,60 @@
 import org.junit.Test;
 
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 public class LinkedListTests
 {
 		@Test
+		public void testFindElement()
+		{
+				LinkedList2 linkedList = new LinkedList2();
+				linkedList.addInTail(new Node(10));
+				linkedList.addInTail(new Node(20));
+				linkedList.addInTail(new Node(30));
+				linkedList.addInTail(new Node(40));
+				linkedList.addInTail(new Node(50));
+				linkedList.addInTail(new Node(60));
+				linkedList.addInTail(new Node(70));
+				linkedList.addInTail(new Node(100));
+				linkedList.addInTail(new Node(100));
+				linkedList.addInTail(new Node(100));
+				Node node = linkedList.find(70);
+				assertEquals(node.value, 70);
+		}
+
+		@Test
+		public void testFindAllElements()
+		{
+				LinkedList2 linkedList = new LinkedList2();
+				linkedList.addInTail(new Node(10));
+				linkedList.addInTail(new Node(20));
+				linkedList.addInTail(new Node(30));
+				linkedList.addInTail(new Node(40));
+				linkedList.addInTail(new Node(50));
+				linkedList.addInTail(new Node(60));
+				linkedList.addInTail(new Node(70));
+				linkedList.addInTail(new Node(100));
+				linkedList.addInTail(new Node(100));
+				linkedList.addInTail(new Node(100));
+				List<Node> nodeList = linkedList.findAll(100);
+				assertEquals(nodeList.size(), 3);
+		}
+
+		@Test
 		public void testRemoveFromBegin()
+		{
+				LinkedList2 linkedList = new LinkedList2();
+				linkedList.addInTail(new Node(10));
+				linkedList.addInTail(new Node(20));
+				linkedList.remove(10);
+				assertEquals(20, linkedList.head.value);
+				assertEquals(20, linkedList.tail.value);
+		}
+
+		@Test
+		public void testRemoveFromCenter()
 		{
 				LinkedList2 linkedList = new LinkedList2();
 				linkedList.addInTail(new Node(10));

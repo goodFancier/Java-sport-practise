@@ -79,23 +79,24 @@ public class LinkedList2
 								else
 										if(this.tail == head)
 										{
-												this.head.next = null;
-												this.head.prev = null;
+												this.tail.next = null;
+												this.tail.prev = null;
 										}
 								return true;
 						}
 						Node node = this.head.next;
+						Node prevNode = this.head;
 						while(node != null)
 						{
 								if(node.value == _value)
 								{
-										node.prev.next = node.next;
-										if(node.prev.next == null)
-												this.tail = node.prev;
+										prevNode.next = node.next;
+										if(prevNode.next == null)
+												this.tail = prevNode;
 										node = null;
 										return true;
 								}
-								node.prev = node;
+								prevNode = node;
 								node = node.next;
 						}
 						return true; // если узел был удалён
@@ -134,31 +135,19 @@ public class LinkedList2
 								}
 								else
 								{
-										prevNode = prevNode.next;
+										prevNode = node;
 								}
 								node = node.next;
-								if(prevNode.next == null)
-										tail = prevNode;
-								else
-										tail = node;
 						}
+						tail = prevNode;
 				}
 		}
 
 		public void clear()
 		{
 				// здесь будет ваш код очистки всего списка
-				Node node = this.head;
-				while(node != null)
-				{
-						while(node.next != null)
-						{
-								node.next = node.next.next;
-						}
-						node = null;
-						this.head = null;
-						this.tail = null;
-				}
+				this.head = null;
+				this.tail = null;
 		}
 
 		public int count()
