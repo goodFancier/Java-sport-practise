@@ -67,6 +67,8 @@ public class LinkedList2
 								this.head = this.head.next;
 								if(this.head == null)
 										this.tail = null;
+								else
+										this.head.prev = null;
 								return true;
 						}
 						if(this.tail.value == _value)
@@ -77,11 +79,7 @@ public class LinkedList2
 										this.head = null;
 								}
 								else
-										if(this.tail == head)
-										{
-												this.tail.next = null;
-												this.tail.prev = null;
-										}
+										this.tail.next = null;
 								return true;
 						}
 						Node node = this.head.next;
@@ -93,7 +91,8 @@ public class LinkedList2
 										prevNode.next = node.next;
 										if(prevNode.next == null)
 												this.tail = prevNode;
-										node = null;
+										else
+												prevNode.next.prev = prevNode;
 										return true;
 								}
 								prevNode = node;
