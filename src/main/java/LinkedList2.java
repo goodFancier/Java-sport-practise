@@ -184,6 +184,7 @@ public class LinkedList2
 						Node oldHead = this.head;
 						this.head = _nodeToInsert;
 						this.head.next = oldHead;
+						oldHead.prev = this.head;
 						return;
 				}
 				Node node = this.head.next;
@@ -193,8 +194,11 @@ public class LinkedList2
 						if(_nodeAfter.next == prevNode.next && _nodeAfter.value == prevNode.value)
 						{
 								prevNode.next = _nodeToInsert;
+								_nodeToInsert.prev = prevNode;
 								_nodeToInsert.next = node;
-								if(node == null)
+								if(node != null)
+										node.prev = _nodeToInsert;
+								else
 										this.tail = _nodeToInsert;
 								break;
 						}
