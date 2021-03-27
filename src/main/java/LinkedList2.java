@@ -113,7 +113,9 @@ public class LinkedList2
 						{
 								if(this.head.value == _value)
 								{
-										this.head = this.head.next;
+										this.head = node.next;
+										if(this.head != null)
+												this.head.prev = null;
 								}
 								else
 										break;
@@ -131,10 +133,12 @@ public class LinkedList2
 								if(node.value == _value)
 								{
 										prevNode.next = node.next;
+										if(prevNode.next != null)
+												prevNode.next.prev = prevNode;
 								}
 								else
 								{
-										prevNode = prevNode.next;
+										prevNode = node;
 								}
 								node = node.next;
 								if(prevNode.next == null)

@@ -161,6 +161,23 @@ public class LinkedListTests
 		}
 
 		@Test
+		public void testRemoveAllInCenter()
+		{
+				LinkedList2 linkedList = new LinkedList2();
+				linkedList.addInTail(new Node(10));
+				linkedList.addInTail(new Node(20));
+				linkedList.addInTail(new Node(10));
+				linkedList.addInTail(new Node(10));
+				linkedList.addInTail(new Node(45));
+				linkedList.addInTail(new Node(30));
+				linkedList.addInTail(new Node(10));
+				linkedList.addInTail(new Node(10));
+				linkedList.removeAll(10);
+				assertEquals(linkedList.head.value, 20);
+				assertEquals(linkedList.tail.value, 30);
+		}
+
+		@Test
 		public void testRemoveAllFromEnd()
 		{
 				LinkedList2 linkedList = new LinkedList2();
