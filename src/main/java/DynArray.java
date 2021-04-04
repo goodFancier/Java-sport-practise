@@ -1,4 +1,5 @@
 import java.lang.reflect.Array;
+import java.util.Arrays;
 
 public class DynArray<T>
 {
@@ -20,9 +21,14 @@ public class DynArray<T>
 
 		public void makeArray(int new_capacity)
 		{
-				array = (T[])Array.newInstance(this.clazz, new_capacity);
-				capacity = new_capacity;
 				// ваш код
+				T[] oldArray = array;
+				array = (T[])Array.newInstance(this.clazz, new_capacity);
+				capacity = Math.max(new_capacity, 16);
+				if(oldArray != null)
+						array = Arrays.copyOf(
+							oldArray,
+							capacity);
 		}
 
 		public T getItem(int index)
@@ -51,29 +57,16 @@ public class DynArray<T>
 				{
 						makeArray(capacity * 2);
 				}
+				if(index >= capacity)
+				{
+						throw new IndexOutOfBoundsException();
+				}
 				if(index == count)
 						array[count] = itm;
 				else
 				{
-						for(int i = 0; i < array.length; i++)
-						{
-								if(i == index)
-								{
-										T oldItem = array[i];
-										array[i] = itm;
-										i++;
-										T nextItem;
-										while(i < array.length)
-										{
-												nextItem = array[i];
-												if(oldItem == null)
-														return;
-												array[i] = oldItem;
-												oldItem = nextItem;
-												i++;
-										}
-								}
-						}
+						System.arraycopy(array, index, array, index + 1, count);
+						array[index] = itm;
 				}
 				count++;
 		}
@@ -81,5 +74,16 @@ public class DynArray<T>
 		public void remove(int index)
 		{
 				// ваш код
+				if(array.length - index + 1 >= 0)
+				{
+						System.arraycopy(array, index + 1, array, index, array.length - 1 - index);
+						count--;
+						if(count * 100 / capacity < 50)
+								makeArray((int)(capacity / 1.5));
+				}
+				else
+				{
+						throw new IndexOutOfBoundsException();
+				}
 		}
 }
