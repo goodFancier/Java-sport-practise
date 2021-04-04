@@ -74,7 +74,7 @@ public class DynArray<T>
 		public void remove(int index)
 		{
 				// ваш код
-				if(array.length - index + 1 >= 0)
+				if(count > index)
 				{
 						System.arraycopy(array, index + 1, array, index, array.length - 1 - index);
 						count--;

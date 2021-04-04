@@ -1,4 +1,3 @@
-import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -71,7 +70,7 @@ public class DynArrayTests
 				dynArray.append(2);
 				dynArray.append(3);
 				dynArray.append(4);
-				dynArray.remove(20);
+				dynArray.remove(2);
 				assertEquals(dynArray.count, 3);
 				assertEquals(dynArray.capacity, 16);
 				Arrays.stream(dynArray.array).forEach(System.out::println);
