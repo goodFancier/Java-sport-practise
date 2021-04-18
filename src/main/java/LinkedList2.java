@@ -2,9 +2,9 @@ import java.util.ArrayList;
 
 public class LinkedList2
 {
-		public Node head;
+		public Nodez head;
 
-		public Node tail;
+		public Nodez tail;
 
 		public LinkedList2()
 		{
@@ -12,7 +12,7 @@ public class LinkedList2
 				tail = null;
 		}
 
-		public void addInTail(Node _item)
+		public void addInTail(Nodez _item)
 		{
 				if(head == null)
 				{
@@ -28,10 +28,10 @@ public class LinkedList2
 				this.tail = _item;
 		}
 
-		public Node find(int _value)
+		public Nodez find(int _value)
 		{
 				// здесь будет ваш код поиска
-				Node node = this.head;
+				Nodez node = this.head;
 				while(node != null)
 				{
 						if(node.value == _value)
@@ -41,11 +41,11 @@ public class LinkedList2
 				return null;
 		}
 
-		public ArrayList<Node> findAll(int _value)
+		public ArrayList<Nodez> findAll(int _value)
 		{
-				ArrayList<Node> nodes = new ArrayList<Node>();
+				ArrayList<Nodez> nodes = new ArrayList<Nodez>();
 				// здесь будет ваш код поиска всех узлов по заданному значению
-				Node node = this.head;
+				Nodez node = this.head;
 				while(node != null)
 				{
 						if(node.value == _value)
@@ -82,8 +82,8 @@ public class LinkedList2
 										this.tail.next = null;
 								return true;
 						}
-						Node node = this.head.next;
-						Node prevNode = this.head;
+						Nodez node = this.head.next;
+						Nodez prevNode = this.head;
 						while(node != null)
 						{
 								if(node.value == _value)
@@ -107,7 +107,7 @@ public class LinkedList2
 				// здесь будет ваш код удаления всех узлов по заданному значению
 				if(this.head != null)
 				{
-						Node node = head;
+						Nodez node = head;
 						while(node != null)
 						{
 								if(this.head.value == _value)
@@ -125,7 +125,7 @@ public class LinkedList2
 								this.tail = null;
 								return;
 						}
-						Node prevNode = this.head;
+						Nodez prevNode = this.head;
 						node = this.head.next;
 						while(node != null)
 						{
@@ -159,7 +159,7 @@ public class LinkedList2
 		{
 				// здесь будет ваш код подсчёта количества элементов в списке
 				int count = 0;
-				Node node = this.head;
+				Nodez node = this.head;
 				while(node != null)
 				{
 						count++;
@@ -168,7 +168,7 @@ public class LinkedList2
 				return count;
 		}
 
-		public void insertAfter(Node _nodeAfter, Node _nodeToInsert)
+		public void insertAfter(Nodez _nodeAfter, Nodez _nodeToInsert)
 		{
 				// здесь будет ваш код вставки узла после заданного узла
 				// если _nodeAfter = null
@@ -181,14 +181,14 @@ public class LinkedList2
 				}
 				if(_nodeAfter == null)
 				{
-						Node oldHead = this.head;
+						Nodez oldHead = this.head;
 						this.head = _nodeToInsert;
 						this.head.next = oldHead;
 						oldHead.prev = this.head;
 						return;
 				}
-				Node node = this.head.next;
-				Node prevNode = this.head;
+				Nodez node = this.head.next;
+				Nodez prevNode = this.head;
 				while(prevNode != null)
 				{
 						if(_nodeAfter.next == prevNode.next && _nodeAfter.value == prevNode.value)
@@ -208,15 +208,15 @@ public class LinkedList2
 		}
 }
 
-class Node
+class Nodez
 {
 		public int value;
 
-		public Node next;
+		public Nodez next;
 
-		public Node prev;
+		public Nodez prev;
 
-		public Node(int _value)
+		public Nodez(int _value)
 		{
 				value = _value;
 				next = null;
