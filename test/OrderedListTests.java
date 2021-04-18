@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 public class OrderedListTests
 {
 		@Test
-		public void testAddElement()
+		public void testAddElementAsc()
 		{
 				OrderedList<Integer> orderedList = new OrderedList<>(true);
 				orderedList.add(10);
@@ -17,6 +17,27 @@ public class OrderedListTests
 				assertEquals(orderedList.head.value.intValue(), 5);
 				assertEquals(orderedList.tail.value.intValue(), 11);
 				assertEquals(orderedList.count(), 6);
+		}
+
+		@Test
+		public void testAddElementDesc()
+		{
+				OrderedList<Integer> orderedList = new OrderedList<>(false);
+				orderedList.add(10);
+				orderedList.add(10);
+				orderedList.add(11);
+				orderedList.add(11);
+				orderedList.add(10);
+				orderedList.add(5);
+				assertEquals(orderedList.head.value.intValue(), 11);
+				assertEquals(orderedList.tail.value.intValue(), 5);
+				assertEquals(orderedList.count(), 6);
+				orderedList.add(10);
+				orderedList.add(11);
+				orderedList.add(11);
+				orderedList.add(10);
+				assertEquals(orderedList.count(), 10);
+				orderedList.getAll().stream().map(o -> o.value).forEach(System.out::println);
 		}
 
 		@Test

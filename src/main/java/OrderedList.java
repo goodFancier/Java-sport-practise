@@ -57,43 +57,87 @@ public class OrderedList<T>
 		{
 				// автоматическая вставка value
 				// в нужную позицию
-				Node<T> node = tail;
-				Node<T> newNode = new Node<>(value);
-				if(node == null)
+				if(_ascending)
 				{
-						head = newNode;
-						tail = newNode;
+						Node<T> node = tail;
+						Node<T> newNode = new Node<>(value);
+						if(node == null)
+						{
+								head = newNode;
+								tail = newNode;
+						}
+						else
+						{
+								if(compare(value, node.value) < 0)
+								{
+										node = head;
+										if(compare(value, head.value) < 0)
+										{
+												node.prev = newNode;
+												head = newNode;
+												head.next = node;
+												return;
+										}
+										else
+												while(node.next != null)
+												{
+														Node<T> nextNode = node.next;
+														if(compare(value, node.value) >= 0 && compare(value, node.next.value) < 1)
+														{
+																node.next = newNode;
+																nextNode.prev = newNode;
+																newNode.next = nextNode;
+																newNode.prev = node;
+																return;
+														}
+														node = node.next;
+												}
+								}
+								node.next = newNode;
+								newNode.prev = node;
+								this.tail = newNode;
+						}
 				}
 				else
 				{
-						if(compare(value, node.value) < 0)
+						Node<T> node = head;
+						Node<T> newNode = new Node<>(value);
+						if(node == null)
 						{
-								node = head;
-								if(compare(value, head.value) < 0)
-								{
-										node.prev = newNode;
-										head = newNode;
-										head.next = node;
-										return;
-								}
-								else
-										while(node.next != null)
-										{
-												Node<T> nextNode = node.next;
-												if(compare(value, node.value) >= 0 && compare(value, node.next.value) < 1)
-												{
-														node.next = newNode;
-														nextNode.prev = newNode;
-														newNode.next = nextNode;
-														newNode.prev = node;
-														return;
-												}
-												node = node.next;
-										}
+								head = newNode;
+								tail = newNode;
 						}
-						node.next = newNode;
-						newNode.prev = node;
-						this.tail = newNode;
+						else
+						{
+								if(compare(value, node.value) < 0)
+								{
+										node = tail;
+										if(compare(value, tail.value) <= 0)
+										{
+												node.next = newNode;
+												tail = newNode;
+												tail.prev = node;
+												return;
+										}
+										else
+												while(node.prev != null)
+												{
+														Node<T> prevNode = node.prev;
+														if(compare(value, node.value) > 0 && compare(value, prevNode.value) <= 0)
+														{
+																node.prev = newNode;
+																prevNode.next = newNode;
+																newNode.prev = prevNode;
+																newNode.next = node;
+																return;
+														}
+														node = node.prev;
+												}
+								}
+								node.prev = newNode;
+								newNode.next = node;
+								this.head = newNode;
+						}
 				}
 		}
 
