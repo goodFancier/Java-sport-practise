@@ -5,45 +5,47 @@ import static org.junit.Assert.assertEquals;
 public class HashTableTests
 {
 		@Test
-		public void testHashFun()
-		{
-				HashTable hashTable = new HashTable(17, 3);
-				System.out.println(hashTable.hashFun("Hello"));
-		}
-
-		@Test
-		public void testSeekSlot()
-		{
-				HashTable hashTable = new HashTable(17, 3);
-				System.out.println(hashTable.seekSlot("Hello"));
-		}
-
-		@Test
 		public void testPutValue()
 		{
-				HashTable hashTable = new HashTable(17, 3);
-				hashTable.put("kitty slow");
-				hashTable.put("come throw");
+				HashTable hashTable = new HashTable(17, 1);
+				hashTable.put("come1");
+				hashTable.put("come2");
+				hashTable.put("come3");
+				hashTable.put("come4");
+				hashTable.put("come5");
+				hashTable.put("come6");
+				hashTable.put("come7");
+				hashTable.put("come8");
+				hashTable.put("come9");
+				hashTable.put("come10");
+				hashTable.put("come11");
+				hashTable.put("come12");
+				hashTable.put("come13");
+				hashTable.put("come14");
+				hashTable.put("come15");
+				hashTable.put("come16");
+				hashTable.put("come17");
+				hashTable.put("come18");
 				System.out.println(hashTable.size);
 		}
 
 		@Test
 		public void testFindValue()
 		{
-				HashTable hashTable = new HashTable(17, 3);
-				hashTable.find("kitty slow");
-				int index = hashTable.put("kitty slow");
-				assertEquals(index, hashTable.find("kitty slow"));
-				index = hashTable.put("come throw");
-				assertEquals(index, hashTable.find("come throw"));
-				index = hashTable.put("cryss flow");
-				assertEquals(index, hashTable.find("cryss flow"));
+				HashTable hashTable = new HashTable(17, 1);
+				hashTable.find("come1");
+				int index = hashTable.put("come2");
+				assertEquals(index, hashTable.find("come2"));
+				index = hashTable.put("come3");
+				assertEquals(index, hashTable.find("come3"));
+				index = hashTable.put("come4");
+				assertEquals(index, hashTable.find("come4"));
 		}
 
 		@Test
-		public void testFindValueInEmptyList()
+		public void testFindValueInEmptyTable()
 		{
-				HashTable hashTable = new HashTable(17, 3);
+				HashTable hashTable = new HashTable(17, 1);
 				int index = hashTable.find("kitty slow");
 				assertEquals(index, -1);
 		}
@@ -51,41 +53,36 @@ public class HashTableTests
 		@Test
 		public void testFindNotExistsValue()
 		{
-				HashTable hashTable = new HashTable(17, 3);
-				hashTable.put("cryss flow");
-				int index = hashTable.find("kitty slow");
+				HashTable hashTable = new HashTable(17, 1);
+				hashTable.put("come1");
+				hashTable.put("come2");
+				hashTable.put("come3");
+				int index = hashTable.find("come4");
 				assertEquals(index, -1);
 		}
 
 		@Test
-		public void testFindValueInFullList()
+		public void testFindValueInFullTable()
 		{
-				HashTable hashTable = new HashTable(17, 3);
-				hashTable.put("cryss flow");
-				hashTable.put("cryss flow");
-				hashTable.put("cryss flow");
-				hashTable.put("cryss flow");
-				hashTable.put("cryss flow");
-				hashTable.put("cryss flow");
-				hashTable.put("cryss flow");
-				hashTable.put("cryss flow");
-				hashTable.put("cryss flow");
-				hashTable.put("cryss flow");
-				hashTable.put("cryss flow");
-				hashTable.put("cryss flow");
-				hashTable.put("cryss flow");
-				hashTable.put("cryss flow");
-				hashTable.put("cryss flow");
-				hashTable.put("cryss flow");
-				hashTable.put("cryss flow");
-				hashTable.put("cryss flow");
-				hashTable.put("cryss flow");
-				hashTable.put("cryss flow");
-				hashTable.put("cryss flow");
-				hashTable.put("cryss flow");
-				hashTable.put("cryss flow");
-				hashTable.put("cryss flow");
-				hashTable.put("cryss flow");
+				HashTable hashTable = new HashTable(17, 1);
+				hashTable.put("come1");
+				hashTable.put("come2");
+				hashTable.put("come3");
+				hashTable.put("come4");
+				hashTable.put("come5");
+				hashTable.put("come6");
+				hashTable.put("come7");
+				hashTable.put("come8");
+				hashTable.put("come9");
+				hashTable.put("come10");
+				hashTable.put("come11");
+				hashTable.put("come12");
+				hashTable.put("come13");
+				hashTable.put("come14");
+				hashTable.put("come15");
+				hashTable.put("come16");
+				hashTable.put("come17");
+				hashTable.put("come18");
 				int index = hashTable.put("cryss flow");
 				assertEquals(index, -1);
 		}

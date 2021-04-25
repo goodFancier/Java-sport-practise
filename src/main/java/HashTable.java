@@ -26,7 +26,6 @@ public class HashTable
 				// находит индекс пустого слота для значения, или -1
 				int defIndex = hashFun(value);
 				String val = slots[defIndex];
-				int power = 1;
 				if(val != null)
 				{
 						int newIndex = hashFun(value) + step;
@@ -37,8 +36,7 @@ public class HashTable
 								val = slots[newIndex];
 								if(val == null)
 										return newIndex;
-								newIndex += Math.pow(step, power) + 1;
-								;
+								newIndex += step;
 								if(newIndex >= slots.length)
 										newIndex = newIndex - slots.length;
 						}
@@ -66,7 +64,6 @@ public class HashTable
 				// находит индекс слота со значением, или -1
 				int defIndex = hashFun(value);
 				String val = slots[defIndex];
-				int power = 1;
 				if(!value.equals(val))
 				{
 						int newIndex = defIndex + step;
@@ -77,8 +74,7 @@ public class HashTable
 								val = slots[newIndex];
 								if(value.equals(val))
 										return newIndex;
-								newIndex += Math.pow(step, power) + 1;
-								power++;
+								newIndex += step;
 								if(newIndex >= slots.length)
 										newIndex = newIndex - slots.length;
 						}
