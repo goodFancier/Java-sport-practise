@@ -48,7 +48,7 @@ public class PowerSet
 				if(get(value))
 				{
 						set.remove(value);
-						return get(value);
+						return true;
 				}
 				return false;
 		}

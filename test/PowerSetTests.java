@@ -17,11 +17,12 @@ public class PowerSetTests
 						text[i] = characters.charAt(rng.nextInt(characters.length()));
 				return new String(text);
 		}
+
 		@Test
 		public void testPutInSet()
 		{
 				PowerSet powerSet = new PowerSet();
-			  for (int i = 0; i < 20000; i++)
+				for(int i = 0; i < 20000; i++)
 				{
 						powerSet.put(getRandomString());
 						powerSet.put("First");
@@ -35,7 +36,9 @@ public class PowerSetTests
 		{
 				PowerSet powerSet = new PowerSet();
 				powerSet.put("First");
-				powerSet.remove("First");
+				powerSet.put("Second");
+				powerSet.put("Third");
+				powerSet.remove("Second");
 				assertEquals(0, powerSet.getSet().size());
 		}
 
