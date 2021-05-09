@@ -70,10 +70,8 @@ public class PowerSet
 		public PowerSet union(PowerSet set2)
 		{
 				// объединение текущего множества и set2
-				PowerSet unionSet = new PowerSet();
-				unionSet.set = this.set;
-				unionSet.set.addAll(set2.set);
-				return unionSet;
+				set.addAll(set2.set);
+				return this;
 		}
 
 		public PowerSet difference(PowerSet set2)
