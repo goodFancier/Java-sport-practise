@@ -70,7 +70,11 @@ public class PowerSet
 		public PowerSet union(PowerSet set2)
 		{
 				// объединение текущего множества и set2
-				set.addAll(set2.set);
+				for (String element : set2.set)
+				{
+					if (!get(element))
+							set.add(element);
+				}
 				return this;
 		}
 
