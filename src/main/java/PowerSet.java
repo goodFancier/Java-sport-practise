@@ -70,12 +70,10 @@ public class PowerSet
 		public PowerSet union(PowerSet set2)
 		{
 				// объединение текущего множества и set2
-				for (String element : set2.set)
-				{
-					if (!get(element))
-							set.add(element);
-				}
-				return this;
+				PowerSet resultSet = new PowerSet();
+				resultSet.set.addAll(this.set);
+				resultSet.set.addAll(set2.set);
+				return resultSet;
 		}
 
 		public PowerSet difference(PowerSet set2)

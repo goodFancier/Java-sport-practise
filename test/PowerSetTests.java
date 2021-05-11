@@ -75,12 +75,20 @@ public class PowerSetTests
 		public void testUnionSets()
 		{
 				PowerSet powerSet = new PowerSet();
-				powerSet.put("First");
-				powerSet.put("Second");
+				powerSet.put("1");
+				powerSet.put("1");
+				powerSet.put("1");
+				powerSet.put("1");
+				powerSet.put("2");
 				PowerSet powerSet1 = new PowerSet();
-				powerSet1.put("Second");
-				powerSet1.put("First");
-				assertEquals(2, powerSet.union(powerSet1).getSet().size());
+				powerSet1.put("2");
+				powerSet1.put("2");
+				powerSet1.put("2");
+				powerSet1.put("2");
+				powerSet1.put("33");
+				powerSet1.put("3");
+				powerSet1.put("1");
+				assertEquals(6, powerSet.union(powerSet1).getSet().size());
 				powerSet = new PowerSet();
 				powerSet.put("First");
 				powerSet1 = new PowerSet();
