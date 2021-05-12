@@ -88,7 +88,7 @@ public class PowerSetTests
 				powerSet1.put("33");
 				powerSet1.put("3");
 				powerSet1.put("1");
-				assertEquals(6, powerSet.union(powerSet1).getSet().size());
+				assertEquals(4, powerSet.union(powerSet1).getSet().size());
 				powerSet = new PowerSet();
 				powerSet.put("First");
 				powerSet1 = new PowerSet();

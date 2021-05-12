@@ -72,7 +72,11 @@ public class PowerSet
 				// объединение текущего множества и set2
 				PowerSet resultSet = new PowerSet();
 				resultSet.set.addAll(this.set);
-				resultSet.set.addAll(set2.set);
+				for (String element : set2.set)
+				{
+						if (!this.get(element))
+								resultSet.set.add(element);
+				}
 				return resultSet;
 		}
 
@@ -80,9 +84,9 @@ public class PowerSet
 		{
 				// разница текущего множества и set2
 				List<String> listOfDiff = new ArrayList<>();
-				for(String element : set2.set)
+				for(String element : this.set)
 				{
-						if(!get(element))
+						if(!set2.get(element))
 								listOfDiff.add(element);
 				}
 				PowerSet resultSet = new PowerSet();
