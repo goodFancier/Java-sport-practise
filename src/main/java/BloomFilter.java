@@ -10,7 +10,6 @@ public class BloomFilter
 		public BloomFilter(int f_len)
 		{
 				filter_len = f_len;
-				// создаём битовый массив длиной f_len ...
 				byteList = new ArrayList<>();
 				for(int i = 0; i < filter_len; i++)
 				{
@@ -31,13 +30,11 @@ public class BloomFilter
 						prevResult = (prevResult * 17 + code) % str1.length();
 				}
 				return prevResult;
-				// реализация ...
 		}
 
 		public int hash2(String str1)
 		{
 				// 223
-				// реализация ...
 				int prevResult = 0;
 				if(str1.isEmpty())
 						return prevResult;
