@@ -7,7 +7,7 @@ public class BloomFilterTests
 		@Test
 		public void testAddInBloomFilter()
 		{
-				BloomFilter bloomFilter = new BloomFilter(32);
+				BloomFilter bloomFilter = new BloomFilter(10);
 				bloomFilter.add("0123456789");
 				bloomFilter.add("1234567890");
 				bloomFilter.add("2345678901");
@@ -19,5 +19,10 @@ public class BloomFilterTests
 				bloomFilter.add("8901234567");
 				bloomFilter.add("9012345678");
 				assertTrue(bloomFilter.isValue("7890123456"));
+				assertTrue(bloomFilter.isValue("5678901234"));
+				assertTrue(bloomFilter.isValue("6789012345"));
+				assertTrue(bloomFilter.isValue("3456789012"));
+				assertTrue(bloomFilter.isValue("0123456789"));
+				assertTrue(bloomFilter.isValue("9012345678"));
 		}
 }

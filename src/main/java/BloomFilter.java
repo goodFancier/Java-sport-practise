@@ -1,20 +1,13 @@
-import java.util.ArrayList;
-import java.util.List;
-
 public class BloomFilter
 {
 		public int filter_len;
 
-		private List<Integer> byteList;
+		private int[] bits;
 
 		public BloomFilter(int f_len)
 		{
-				filter_len = f_len;
-				byteList = new ArrayList<>();
-				for(int i = 0; i < filter_len; i++)
-				{
-						byteList.add(0);
-				}
+				filter_len = (int)Math.pow(2, f_len);
+				bits = new int[filter_len];
 		}
 
 		// хэш-функции
@@ -49,13 +42,17 @@ public class BloomFilter
 		public void add(String str1)
 		{
 				// добавляем строку str1 в фильтр
-				byteList.set(hash1(str1), 1);
-				byteList.set(hash2(str1), 1);
+				int pos = hash1(str1);
+				bits[(1 << pos)] = 1;
+				int pos2 = hash2(str1);
+				bits[(1 << pos2)] = 1;
 		}
 
 		public boolean isValue(String str1)
 		{
 				// проверка, имеется ли строка str1 в фильтре
-				return byteList.get(hash1(str1)) == 1 && byteList.get(hash2(str1)) == 1;
+				int pos = hash1(str1);
+				int pos2 = hash2(str1);
+				return bits[(1 << pos)] == 1 && bits[(1 << pos2)] == 1;
 		}
 }
