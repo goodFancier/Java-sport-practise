@@ -6,7 +6,7 @@ public class BloomFilter
 
 		public BloomFilter(int f_len)
 		{
-				filter_len = (int)Math.pow(2, f_len);
+				filter_len = f_len;
 				bits = new int[filter_len];
 		}
 
@@ -43,9 +43,9 @@ public class BloomFilter
 		{
 				// добавляем строку str1 в фильтр
 				int pos = hash1(str1);
-				bits[(1 << pos)] = 1;
+				bits[pos] = 1;
 				int pos2 = hash2(str1);
-				bits[(1 << pos2)] = 1;
+				bits[pos2] = 1;
 		}
 
 		public boolean isValue(String str1)
@@ -53,6 +53,6 @@ public class BloomFilter
 				// проверка, имеется ли строка str1 в фильтре
 				int pos = hash1(str1);
 				int pos2 = hash2(str1);
-				return bits[(1 << pos)] == 1 && bits[(1 << pos2)] == 1;
+				return bits[pos] == 1 && bits[pos2] == 1;
 		}
 }

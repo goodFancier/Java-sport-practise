@@ -7,7 +7,7 @@ public class BloomFilterTests
 		@Test
 		public void testAddInBloomFilter()
 		{
-				BloomFilter bloomFilter = new BloomFilter(10);
+				BloomFilter bloomFilter = new BloomFilter(32);
 				bloomFilter.add("0123456789");
 				bloomFilter.add("1234567890");
 				bloomFilter.add("2345678901");
