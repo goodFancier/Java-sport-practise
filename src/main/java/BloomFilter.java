@@ -1,18 +1,14 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 public class BloomFilter
 {
 		public int filter_len;
 
-		private final int[] bits;
+		private int bitArray;
+
 
 		public BloomFilter(int f_len)
 		{
 				filter_len = f_len;
-				bits = new int[filter_len];
-				Arrays.fill(bits, 0);
+				bitArray = 0;
 		}
 
 		// хэш-функции
@@ -46,49 +42,13 @@ public class BloomFilter
 
 		public void add(String key)
 		{
-				int bit = hash1(key); // получили
-				int foundBit = bit << 5;
-				for(int index : getPositiveIndexList(foundBit))
-				{
-						bits[index] = 1;
-				}
-				bit = hash2(key);
-				int foundBit2 = bit << 5;
-				for(int index : getPositiveIndexList(foundBit2))
-				{
-						bits[index] = 1;
-				}
-		}
-
-		public List<Integer> getPositiveIndexList(int foundBit)
-		{
-				List<Integer> positiveIndexList = new ArrayList<>();
-				String binaryString = Integer.toBinaryString(foundBit);
-				for (int i = 0; i < binaryString.toCharArray().length; i++)
-				{
-						if (binaryString.charAt(i) == 49)
-								positiveIndexList.add(binaryString.toCharArray().length - i - 1);
-				}
-				return positiveIndexList;
+				bitArray = bitArray | hash1(key);
+				bitArray = bitArray | hash2(key);
 		}
 
 		public boolean isValue(String str1)
 		{
 				// проверка, имеется ли строка str1 в фильтре
-				int bit = hash1(str1);
-				int foundBit1 = bit << 5;
-				for (int index : getPositiveIndexList(foundBit1))
-				{
-						if (bits[index] != 1)
-								return false;
-				}
-				bit = hash2(str1);
-				int foundBit2 = bit << 5;
-				for (int index : getPositiveIndexList(foundBit2))
-				{
-						if (bits[index] != 1)
-								return false;
-				}
-				return true;
+				return (bitArray & hash1(str1)) > 0 && (bitArray & hash2(str1)) > 0;
 		}
 }
