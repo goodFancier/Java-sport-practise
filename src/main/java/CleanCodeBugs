@@ -1,0 +1,9 @@
+// сеттер для поля isNeedToCalculateAllShops
+needToCalculateAllShops - setNeedToCalculateAllShops
+
+// метод, вызываемый при изменении вкладки
+changeTab - onChangeTab
+
+// Обновить статус товара
+statusDelivered - updateOrderStatus
+
