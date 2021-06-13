@@ -1,3 +1,6 @@
+/*
+** Баги в наименовании
+*/
 // сеттер для поля isNeedToCalculateAllShops
 needToCalculateAllShops - setNeedToCalculateAllShops
 
@@ -6,4 +9,39 @@ changeTab - onChangeTab
 
 // Обновить статус товара
 statusDelivered - updateOrderStatus
+
+
+/*
+** Рефакторинг имен переменных
+*/
+sqlTimeConditions - timeConditions
+
+sqlShopsConditions - shopConditions
+
+sqlConditionList - conditions
+
+sqlBrandConditionList - brandConditions
+
+tabId - planningTabId
+
+allDetailingObjects - detailingObjectList
+
+availableYears - availableYearList
+
+filterYears - filterYearQueue
+
+sizesOfPlanValues - planValueListSize
+
+name - buyerName
+
+age - buyerAge
+
+order - receiptOrder
+
+checkedSignificantBrandList - checkedSignificantBrands
+
+getIsNeedToShowAddDialog - isNeedToShowDialog
+
+
+
 
