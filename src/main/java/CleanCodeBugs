@@ -42,6 +42,36 @@ checkedSignificantBrandList - checkedSignificantBrands
 
 getIsNeedToShowAddDialog - isNeedToShowDialog
 
+/*
+** Имена переменных
+*/
 
+// 7.1
+processCompleted - isProcessCompleted
+
+isNeedToUpdate - doNeedUpdate
+
+isCalculatingError - hasCalculatingError
+
+isMessageSendingStopped - doMailingStopped
+
+queryRunning - isQueryRunning
+
+// 7.2
+processFinished - isProcessDone
+
+isElementExists - isElementFound
+
+// 7.3
+
+i - element
+
+// 7.4
+isMailingStarted, isMailingFinished - isMailingBegin, isMailingEnd
+
+// 7.5
+tmpSelectItemChecks - selectItemChecks
+tmpStart - dateStart
+tmpFinish - dateFinish
 
 
