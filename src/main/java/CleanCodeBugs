@@ -74,4 +74,31 @@ tmpSelectItemChecks - selectItemChecks
 tmpStart - dateStart
 tmpFinish - dateFinish
 
+/*
+** Имена, которых следует избегать
+*/
+
+allChannelsForRetailer - allChannels
+
+filteredByEmailAndSmsChannelList - emailSmsChannels
+
+addChannelsNotification - allowAllChannelsToBuyer
+
+channelsDtoDualListModel - channelDualList
+
+consumerList - consumers
+
+goodsValue - goodsCount
+
+buyerList1 - buyerOriginalList
+
+buyerList2 - buyerProcessedList
+
+retailerObject - retailer
+
+guaranteedMessageDeliveryScheduler - msgDeliveryScheduler
+
+max - maxSumOfCheck
+
+value - checkValue
 
