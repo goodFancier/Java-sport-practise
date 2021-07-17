@@ -102,3 +102,39 @@ max - maxSumOfCheck
 
 value - checkValue
 
+/*
+** Имена классов
+*/
+
+// 3.1
+CreatePage - PageConstructor
+
+RuleManager - RuleController
+
+EntityInfo - EntityPayload
+
+CheckDeserializeProcessor - CheckDeserializer
+
+CardDeserializeProcessor - CardDeserializer
+
+// 3.2
+
+initCheckFile - initDocument (реализация абстрактного метода)
+
+initCardFile - initDocument (реализация абстрактного метода)
+
+applyDiscountMechanic - applyMechanic (реализация абстрактного метода)
+
+applyBonusMechanic - applyMechanic (реализация абстрактного метода)
+
+bonusRuleManager - ruleManager
+
+discountRuleManager - ruleManager
+
+pull - pullResult
+
+
+
+
+
+
