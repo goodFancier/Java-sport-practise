@@ -133,6 +133,38 @@ discountRuleManager - ruleManager
 
 pull - pullResult
 
+/*
+** Имена функций/методов
+*/
+
+sendMessageAndCheckDelivery - sendMessage() - checkDelivery() - разделил один метод на два, убрав побочные действия метода
+
+runSmsExecutorAndSaveToFile - runSmsExecutor() - saveResultToFile() - разделил один метод на два, убрав побочные действия метода
+
+getViberJSONObjectAndSendMessage - getViberJSON() - sendMessage() - разделил один метод на два, убрав побочные действия метода
+
+editName - setName - переименовал метод для изменения имени
+
+reloadPage() - reload() - поправил название метода, т.к метод reload относится к классу Page
+
+sendMessage() - send() - поправил название метода, т.к метод send относится к классу Message
+
+taxiOrderToComplete() - completeTaxiOrder() - поправил название метода
+
+lastMessageToFind() - findLastMessage() - поправил название метода
+
+pageReload() - reloadPage() - поправил название метода
+
+Element element = prevElement.add(20) - int element = prevElement.setIndex(20) - переименовал методв add в setIndex
+
+Date date = prevDate.add(20) - Date date = prevDate.addMinutes(20);
+
+entityToUpdate() - updateEntity() - поправил название метода
+
+
+
+
+
 
 
 
