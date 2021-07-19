@@ -289,9 +289,55 @@ private static final DateFormat FilenameDateTimeFormat = new SimpleDateFormat("d
 
 
 
+/*
+** Типы данных
+*/
+
+// использование unicode
+String json = new String(body, StandardCharsets.UTF_8);
+
+// Добавлена проверка на 0
+if (checkItem.getQuantity() <> 0)
+    checkItem.setPrice(checkItem.getSum().divide(checkItem.getQuantity()));
+
+// Добавлена локализация
+CategoryAxis axisX = new CategoryAxis(Localization.loadString("IndicatorController.categoryAxis.label.months"));
+
+// Добавлена локализация
+dateModel.getAxis(AxisType.Y).setLabel(Localization.loadString("IndicatorController.lineChartModel.axisY.label.checkNumber"));
+
+// Добавлена локализация
+dateModel.getAxis(AxisType.Y).setLabel(Localization.loadString("IndicatorController.lineChartModel.axisY.label.buyerNumber"));
 
 
+// Дополнительные булевые переменные
+// Было
+if(MechanicManager.getInstance().getDiscountMechanics()
+									.get(buyerDiscountStocks.get(i).getStockDiscountMechanic() != null? buyerDiscountStocks.get(i).getStockDiscountMechanic(): StockDiscountMechanicEnum.DiscountOnGood)
+									.isCheckItemFitsRequirements(processedCheck, processedCheckItem, buyerDiscountStocks.get(i)))
+
+// Стало
+
+Boolean isCheckFitsRequirements = MechanicManager.getInstance().getDiscountMechanics()
+									.get(buyerDiscountStocks.get(i).getStockDiscountMechanic() != null? buyerDiscountStocks.get(i).getStockDiscountMechanic(): StockDiscountMechanicEnum.DiscountOnGood)
+									.isCheckItemFitsRequirements(processedCheck, processedCheckItem, buyerDiscountStocks.get(i))
+									if (isCheckFitsRequirements)
+
+// использование unicode
+xStream.toXML(dest).getBytes(StandardCharsets.UTF_8);
 
 
+// локализация
+dateModel.getAxis(AxisType.Y).setLabel(Localization.loadString("AnaliticsController.lineChartModel.label.amountOfChecks"));
 
+// локализация
+dateModel.getAxis(AxisType.Y).setLabel(Localization.loadString("AnaliticsController.lineChartModel.label.numberOfCheck"));
 
+// локализация
+dateModel.getAxis(AxisType.Y).setLabel(Localization.loadString("AnaliticsController.lineChartModel.label.averageOfChecks"));
+
+// использование unicode
+HttpEntity entity = new StringEntity(json, StandardCharsets.UTF_8);
+
+// использование unicode
+bundle = new PropertyResourceBundle(new InputStreamReader(stream, StandardCharsets.UTF_8));
