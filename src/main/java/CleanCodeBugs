@@ -161,9 +161,43 @@ Date date = prevDate.add(20) - Date date = prevDate.addMinutes(20);
 
 entityToUpdate() - updateEntity() - поправил название метода
 
+/*
+** ООП и интерфейсы
+*/
 
+// 3.1
+//  Метод-фабрика DataServiceFactory
+    public static synchronized DataServiceFactory getInstance()
+    		{
+    				if(instance == null)
+    						synchronized(DataServiceFactory.class)
+    						{
+    								try
+    								{
+    										if(instance == null)
+    										{
+    												InitialContext context = new InitialContext();
+    												instance = (DataServiceFactory)context.lookup("java:module/DataServiceFactory");
+    										}
+    								}
+    								catch(Exception e)
+    								{
+    										ExceptionHandler.handle(e);
+    								}
+    						}
+    				return instance;
+    		}
 
+// Метод-фабрика AuditoryOperatorFactory
+AuditoryOperatorFactory auditoryOperatorFactory = new AuditoryOperatorFactory(stock) - AuditoryOperatorFactory.fromStock(stock);
 
+// Метод-фабрика BonusOperatorFactory
+BonusOperatorFactory bonusOperatorFactory = new BonusOperatorFactory(bonus) - BonusOperatorFactory.fromBonus(bonus);
+
+// 3.2
+IDiscountMechanic - DiscountMechanic
+IRuleManager - RuleManager
+IBonusMechanic - BonusMechanic
 
 
 
