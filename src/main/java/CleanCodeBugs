@@ -199,6 +199,97 @@ IDiscountMechanic - DiscountMechanic
 IRuleManager - RuleManager
 IBonusMechanic - BonusMechanic
 
+/*
+** Константы
+*/
+
+// Добавлена константа для использования ее для именования входного параметра рест метода
+private static final String NumberParamName = "number";
+public CardJSON register(
+		@NotNull @QueryParam(BaseRestORMService.RetailerParamName) String retailer,
+		@CheckBuyer @NotNull @QueryParam(BaseRestORMService.BuyerIDParamName) Long buyerID,
+		@NotNull @QueryParam(NumberParamName) String number) throws Exception
+
+// Добавлена константа для использования ее для именования входного параметра рест метода
+private static final String CardIDParamName = "cardID";
+
+public CardJSON getCard(
+		@NotNull @QueryParam(BaseRestORMService.RetailerParamName) String retailer,
+		@CheckBuyer @NotNull @QueryParam(BaseRestORMService.BuyerIDParamName) Long buyerID,
+		@NotNull @QueryParam(CardIDParamName) Long cardID)
+	{
+		return getJSON(DataServiceFactory.intance().getCardsService().findById(cardID));
+	}
+
+// Добавлена константа для использования ее для именования входного параметра рест метода
+private static final String LoginParamName = "login";
+
+	public BuyerJSON loginByHashPass(
+			@NonNull @QueryParam(BaseRestORMService.RetailerParamName) String retailer,
+			@NonNull @QueryParam(LoginParamName) String cardNumber,
+			@NonNull String password,
+			@QueryParam(DeviceParamName) String deviceID) throws Exception
+		{
+				return internalLogin(retailer, cardNumber, password, deviceID);
+		}
+
+// Добавлена константа для использования ее для именования входного параметра рест метода
+public static final String PasswordParamName = "password";
+
+public BuyerJSON loginByPass(
+			@NonNull @QueryParam(BaseRestORMService.RetailerParamName) String retailer,
+			@NonNull @QueryParam(LoginParamName) String cardNumber,
+			@NonNull @QueryParam(PasswordParamName) String password,
+			@QueryParam(DeviceParamName) String deviceID,
+			@QueryParam(BuyerIDParamName) Long buyerID,
+			@QueryParam(BaseRestORMService.isNewLogic) Boolean... newLogic) throws Exception
+		{
+				if(newLogic.length > 0)
+						return internalLogin(retailer, cardNumber, password, deviceID, buyerID);
+				else
+						return internalLogin(retailer, cardNumber, password, deviceID);
+		}
+
+// Добавлена константа для использования ее для именования входного параметра рест метода
+private static final String CardNumberParamName = "cardNumber";
+
+	@POST
+		@Path("/register/material4")
+		@AccessAll
+		public BuyerJSON registrationMaterialByHashPass(
+			@NonNull @QueryParam(BaseRestORMService.RetailerParamName) String retailerCode,
+			@NotNull @QueryParam(BaseRestORMService.BuyerParamName) BuyerJSON buyer,
+			@NonNull @QueryParam(CardNumberParamName) String login,
+			@NonNull String password,
+			@QueryParam(DeviceParamName) String gmcid) throws Exception
+		{
+				return internalRegisterMaterial(retailerCode, login, password, gmcid, (o) -> createFromJSON(buyer));
+		}
+
+// Добавлена константа для использования ее для именования входного параметра рест метода
+private static final String DeviceCheckParamName = "deviceCheck";
+
+//Скидка по умолчанию
+private static final Double DefaultDiscount = 0d;
+
+// Формат даты
+private static final DateFormat SimpleDateFormat = new SimpleDateFormat("yyyyMMdd");
+
+// Формат даты
+private static final DateFormat BirthDayDateFormat = new SimpleDateFormat("MMdd");
+
+// Формат даты
+private static final SimpleDateFormat GUIDateTimeFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+
+// Формат даты
+private static final SimpleDateFormat JQPlotDateTimeFormat = new SimpleDateFormat("MM.dd.yyyy HH:mm");
+
+// Формат даты
+private static final DateFormat FilenameDateTimeFormat = new SimpleDateFormat("ddMMyyyy HHmm");
+
+
+
+
 
 
 
