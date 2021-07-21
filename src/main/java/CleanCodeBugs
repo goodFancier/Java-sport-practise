@@ -341,3 +341,258 @@ HttpEntity entity = new StringEntity(json, StandardCharsets.UTF_8);
 
 // использование unicode
 bundle = new PropertyResourceBundle(new InputStreamReader(stream, StandardCharsets.UTF_8));
+
+
+/*
+** Переменные и их значения
+*/
+
+// Было
+int planningStartValue = 100;
+... // Много кода
+String result = planningStartValue / 2;
+
+// Стало
+... // Много кода
+int planningStartValue = 100;
+String result = planningStartValue / 2;
+
+// Было
+public boolean notify(StockDto stock, Boolean calculateBadges)
+{
+NotificationEntity notificationEntity = new NotificationEntity();
+						notificationEntity.setRetailerCode(stock.getRetailer().getCode());
+						notificationEntity.setIsDebug(VersionUtils.getIsDebug());
+... // Много кода
+notificationSender.send(KeyConfig.KEY_COMMAN_STOCK.getTitle(), KeyConfig.KEY_COMMAN_STOCK.getTitle(), new Gson().toJson(notificationEntity));
+}
+
+// Стало
+public boolean notify(StockDto stock, Boolean calculateBadges)
+{
+... // Много кода
+NotificationEntity notificationEntity = new NotificationEntity();
+						notificationEntity.setRetailerCode(stock.getRetailer().getCode());
+						notificationEntity.setIsDebug(VersionUtils.getIsDebug());
+notificationSender.send(KeyConfig.KEY_COMMAN_STOCK.getTitle(), KeyConfig.KEY_COMMAN_STOCK.getTitle(), new Gson().toJson(notificationEntity));
+notificationSender = null;
+}
+
+// Было
+public void errorsEvent(JSONArray jsonArray, HttpServletResponse response) throws IOException
+{
+		JSONObject psItem;
+		... // Много кода
+		psItem = (JSONObject)jsonTreeElementArray.get(j);
+        								String key = psItem.keys().next();
+        								Object value = psItem.get(key);
+        ... // Много кода
+}
+
+// Стало
+public void errorsEvent(JSONArray jsonArray, HttpServletResponse response) throws IOException
+{
+        ... // Много кода
+		JSONObject psItem;
+		psItem = (JSONObject)jsonTreeElementArray.get(j);
+        								String key = psItem.keys().next();
+        								Object value = psItem.get(key);
+        psItem = null;
+}
+
+// Было
+int plansSize = 0;
+while (plansSize < 10)
+{
+    ... // Много кода
+    plansSize++;
+}
+
+// Стало
+int plansSize = 0;
+for (int i=0; i < 10; i++)
+{
+    ... // Много кода
+    plansSize++;
+}
+
+// Было
+int resultListSize = 0;
+while (true)
+{
+    ... // Много кода
+    if (resultListSize >= 10)
+        break;
+}
+
+// Стало
+for (int i=0; i < 10; i++)
+{
+    ... // Много кода
+}
+
+// Было
+public void errorsEvent(JSONArray jsonArray, HttpServletResponse response) throws IOException
+{
+    StringBuilder sqlConditions = new StringBuilder("SELECT er.ErrorMessage FROM `analytics.plansandforecasts.values`");
+     ... // Много кода
+
+}
+
+// Стало
+public void errorsEvent(JSONArray jsonArray, HttpServletResponse response) throws IOException
+{
+    StringBuilder sqlConditions = new StringBuilder("SELECT er.ErrorMessage FROM `analytics.plansandforecasts.values`");
+     ... // Много кода
+    sqlConditions = null;
+}
+
+// Было
+private void fillSubTreeList(JSONArray jsonArray, List<Map<String, List<String>>> subTreeList)
+{
+    Map<String, List<String>> timeIntervalListMap = new HashMap<>();
+     ... // Много кода
+}
+
+// Стало
+private void fillSubTreeList(JSONArray jsonArray, List<Map<String, List<String>>> subTreeList)
+{
+    Map<String, List<String>> timeIntervalListMap = new HashMap<>();
+     ... // Много кода
+     timeIntervalListMap = null;
+}
+
+// Было
+private void fillSubTreeList(JSONArray jsonArray, List<Map<String, List<String>>> subTreeList)
+{
+	String lastQuarter = "";
+	... //  Много кода
+}
+
+// Cтало
+private void fillSubTreeList(JSONArray jsonArray, List<Map<String, List<String>>> subTreeList)
+{
+	String lastQuarter = "";
+	... //  Много кода
+	lastQuarter = null;
+}
+
+// Было
+public void executeClastering(RetailerDto retailer, AnalysisScenarioEnum analysisScenario) throws Exception
+{
+	ClusteringMechanism clustering = new ClusteringMechanism();
+	Map<List<Long>, List<Integer>> resultTagCardMap;
+	... //  Много кода
+	resultTagCardMap = clustering.getClasterResults(retailer, getRepository().getTagStatisticByRetailer(retailer, analysisScenario, rank), analysisScenario);
+}
+
+// Стало
+public void executeClastering(RetailerDto retailer, AnalysisScenarioEnum analysisScenario) throws Exception
+{
+	... //  Много кода
+	ClusteringMechanism clustering = new ClusteringMechanism();
+    Map<List<Long>, List<Integer>> resultTagCardMap;
+	resultTagCardMap = clustering.getClasterResults(retailer, getRepository().getTagStatisticByRetailer(retailer, analysisScenario, rank), analysisScenario);
+}
+
+// Было
+public Map<List<Long>, List<Integer>> getClasterResults(RetailerDto retailer, Map<Long, Map<Double, Double>> tagStatisticByRetailer, AnalysisScenarioEnum analysisScenario) throws Exception
+{
+	List<List<Long>> resultClasterCards = new ArrayList<>();
+	... //  Много кода
+}
+
+// Стало
+public Map<List<Long>, List<Integer>> getClasterResults(RetailerDto retailer, Map<Long, Map<Double, Double>> tagStatisticByRetailer, AnalysisScenarioEnum analysisScenario) throws Exception
+{
+	List<List<Long>> resultClasterCards = new ArrayList<>();
+	... //  Много кода
+	resultClasterCards = null;
+}
+
+// Было
+public Map<List<Long>, List<Integer>> getClasterResults(RetailerDto retailer, Map<Long, Map<Double, Double>> tagStatisticByRetailer, AnalysisScenarioEnum analysisScenario) throws Exception
+{
+	... // Много кода
+	KMeansParams.Builder builder = new KMeansParams.Builder();
+	... // Много кода
+}
+
+// Стало
+public Map<List<Long>, List<Integer>> getClasterResults(RetailerDto retailer, Map<Long, Map<Double, Double>> tagStatisticByRetailer, AnalysisScenarioEnum analysisScenario) throws Exception
+{
+	... // Много кода
+	KMeansParams.Builder builder = new KMeansParams.Builder();
+	builder = null;
+}
+
+// Было
+public void configApriori(RetailerDto retailer, String pathToFrequentItems, EntityManager em)
+{
+    double minSup = retailer.getSupportCoefficient().doubleValue();
+    ... // Много кода
+    for(int i = 0; i < this.itemsets.size(); i++)
+    						if((count[i] / (double)(this.numTransactions)) >= this.minSup)
+    					... // Много кода
+}
+
+// Стало
+public void configApriori(RetailerDto retailer, String pathToFrequentItems, EntityManager em)
+{
+    ... // Много кода
+    double minSup = retailer.getSupportCoefficient().doubleValue();
+    for(int i = 0; i < this.itemsets.size(); i++)
+    						if((count[i] / (double)(this.numTransactions)) >= this.minSup)
+    					... // Много кода
+}
+
+// Было
+ public static List<Integer> getCategoryIntersections(List<Integer> goodCategoryList, EntityManager em, RetailerDto retailer)
+ {
+ 	ArrayList<ArrayList<Integer>> tuplelist = new ArrayList<>();
+ 	... // Много кода
+ }
+
+ // Стало
+ public static List<Integer> getCategoryIntersections(List<Integer> goodCategoryList, EntityManager em, RetailerDto retailer)
+ {
+ 	ArrayList<ArrayList<Integer>> tuplelist = new ArrayList<>();
+ 	... // Много кода
+ 	tuplelist = null;
+ }
+
+// Было
+private void calculateFrequentItemsets(RetailerDto retailer, EntityManager em)
+{
+    List<int[]> frequentCandidates = new ArrayList<int[]>(); // the frequent candidates for the current itemset.
+    ... // Много кода
+}
+
+// Стало
+private void calculateFrequentItemsets(RetailerDto retailer, EntityManager em)
+{
+    List<int[]> frequentCandidates = new ArrayList<int[]>(); // the frequent candidates for the current itemset.
+    ... // Много кода
+    frequentCandidates = null;
+}
+
+
+// Было
+private void createNewItemsetsFromPreviousOnes()
+{
+    int currentSizeOfItemsets = this.itemsets.get(0).length;
+    ... // Много кода
+    int[] newCand = new int[currentSizeOfItemsets + 1];
+    ... // Много кода
+}
+
+// Стало
+private void createNewItemsetsFromPreviousOnes()
+{
+    ... // Много кода
+    int currentSizeOfItemsets = this.itemsets.get(0).length;
+    int[] newCand = new int[currentSizeOfItemsets + 1];
+    ... // Много кода
+    currentSizeOfItemsets = null;
+    newCant = null;
+}
