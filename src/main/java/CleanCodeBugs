@@ -596,3 +596,366 @@ private void createNewItemsetsFromPreviousOnes()
     currentSizeOfItemsets = null;
     newCant = null;
 }
+
+
+/*
+** Время жизни переменных
+*/
+
+// Было
+Session session = (Session)em.getDelegate();
+
+private void clearTuples(RetailerDto retailer, EntityManager em)
+{
+		session.doWork(new Work()
+		{
+				@Override
+				public void execute(Connection connection) throws SQLException
+				{
+						String tuples = String.format(
+							"DELETE FROM `apriori.tuples.categories` WHERE Retailer = %s;",
+							retailer.getRecID());
+						try (PreparedStatement pStmt = connection.prepareStatement(tuples))
+						{
+								pStmt.execute();
+						}
+				}
+		});
+}
+
+// Стало. Сделал переменную session локальной
+private void clearTuples(RetailerDto retailer, EntityManager em)
+{
+        Session session = (Session)em.getDelegate();
+		session.doWork(new Work()
+		{
+				@Override
+				public void execute(Connection connection) throws SQLException
+				{
+						String tuples = String.format(
+							"DELETE FROM `apriori.tuples.categories` WHERE Retailer = %s;",
+							retailer.getRecID());
+						try (PreparedStatement pStmt = connection.prepareStatement(tuples))
+						{
+								pStmt.execute();
+						}
+				}
+		});
+}
+
+// Было
+private int numItems = 0;
+
+public void configApriori(RetailerDto retailer, String pathToFrequentItems, EntityManager em)
+{
+	while(t.hasMoreTokens())
+    {
+        int x = Integer.parseInt(t.nextToken());
+        if(x + 1 > this.numItems)
+             this.numItems = x + 1;
+    }
+    ...	// Много кода
+}
+
+// Стало. Сделал переменную numItems локальной
+public void configApriori(RetailerDto retailer, String pathToFrequentItems, EntityManager em)
+{
+    int numItems = 0;
+	while(t.hasMoreTokens())
+    {
+        int x = Integer.parseInt(t.nextToken());
+        if(x + 1 > this.numItems)
+             this.numItems = x + 1;
+    }
+    ...	// Много кода
+}
+
+// Было
+private RetailerDto retailer = DataServiceFactory.intance().getRetailersService().getAll().get(0);
+
+@Override
+protected void doWork()
+{
+	List<ProcedureStartParametersDto> procedureStartParameterList = DataServiceFactory.intance().getProcedureStartParametersDataService().getByRetailer(retailer);
+    ...	// Много кода
+}
+
+// Стало. Сделал переменную retailer локальной
+@Override
+protected void doWork()
+{
+     RetailerDto retailer = DataServiceFactory.intance().getRetailersService().getAll().get(0);
+	List<ProcedureStartParametersDto> procedureStartParameterList = DataServiceFactory.intance().getProcedureStartParametersDataService().getByRetailer(retailer);
+    ...	// Много кода
+}
+
+// Было
+private Date periodEndDate = DateUtils.subDay(DateUtils.now(), 1);
+
+@Override
+protected void doWork()
+{
+	DataServiceFactory.intance().getCardsService().callAnalysisRecalculation(periodStartDate, periodEndDate, Settings.instance().getIndicatorPeriod());
+}
+
+// Стало. Сделал переменную periodEndDate локальой
+@Override
+protected void doWork()
+{
+    Date periodEndDate = DateUtils.subDay(DateUtils.now(), 1);
+	DataServiceFactory.intance().getCardsService().callAnalysisRecalculation(periodStartDate, periodEndDate, Settings.instance().getIndicatorPeriod());
+}
+
+// Было
+private ProcedureStartParametersDto procedureParameters = procedureStartParameterList.get(0);
+for(RetailerDto retailer : DataServiceFactory.intance().getRetailersService().getAll())
+{
+    ... // много кода
+	procedureParameters.setLastRfmCompletedTime(DateUtils.now());
+}
+
+// Стало. Сделал переменную procedureParameters локальной
+for(RetailerDto retailer : DataServiceFactory.intance().getRetailersService().getAll())
+{
+    ... // много кода
+    ProcedureStartParametersDto procedureParameters = procedureStartParameterList.get(0);
+	procedureParameters.setLastRfmCompletedTime(DateUtils.now());
+}
+
+// Было
+private StringBuilder sqlConditions = new StringBuilder("SELECT er.ErrorMessage FROM `analytics.plansandforecasts.values` a INNER JOIN `analytics.plansandforecast.errors` er ON a.RecID = er.Plan");
+
+for(int i = 0; i < jsonArray.length(); i++)
+{
+	    ... // много кода
+	    List<String> errors = DataServiceFactory.intance().getPlanForecastValuesDataService().getErrorMessages(sqlConditions.toString());
+}
+
+// Стало. Сделал переменную sqlConditions локальной
+for(int i = 0; i < jsonArray.length(); i++)
+{
+	    ... // много кода
+	    StringBuilder sqlConditions = new StringBuilder("SELECT er.ErrorMessage FROM `analytics.plansandforecasts.values` a INNER JOIN `analytics.plansandforecast.errors` er ON a.RecID = er.Plan");
+	    List<String> errors = DataServiceFactory.intance().getPlanForecastValuesDataService().getErrorMessages(sqlConditions.toString());
+}
+
+// Было
+public void errorsEvent(JSONArray jsonArray, HttpServletResponse response) throws IOException
+{
+	JSONObject psItem;
+	for(int j = jsonTreeElementArray.length() - 1; j >= 0; j--)
+    {
+        psItem = (JSONObject)jsonTreeElementArray.get(j);
+        String key = psItem.keys().next();
+        Object value = psItem.get(key);
+        ... // много кода
+    }
+}
+
+// Стало. Сделал переменную psItem локальной
+public void errorsEvent(JSONArray jsonArray, HttpServletResponse response) throws IOException
+{
+	for(int j = jsonTreeElementArray.length() - 1; j >= 0; j--)
+    {
+        JSONObject psItem = (JSONObject)jsonTreeElementArray.get(j);
+        String key = psItem.keys().next();
+        Object value = psItem.get(key);
+        ... // много кода
+    }
+}
+
+// Было
+private String targetSection = SectionEnum.valueOf(section).name().toLowerCase();
+
+private Boolean canUserRead(String section, UserDto user)
+{
+    boolean userAccessRights = false;
+    List<PrivilegeSectionAccessDto> filteredPrivilegeSectionList = privilegeSectionAccessList.stream()
+                                        .filter(o -> o.getSection().name().toLowerCase().equals(targetSection) || user.isPermissions(PrivilegeEnum.Administrator))
+                                        .filter(o -> o.getRetailer().getRecID().equals(retailerDto.getRecID())).collect(Collectors.toList());
+    ... // Много кода
+}
+
+// Стало. Сделал переменную targetSection локальной
+private Boolean canUserRead(String section, UserDto user)
+{
+    String targetSection = SectionEnum.valueOf(section).name().toLowerCase();
+    boolean userAccessRights = false;
+    List<PrivilegeSectionAccessDto> filteredPrivilegeSectionList = privilegeSectionAccessList.stream()
+                                        .filter(o -> o.getSection().name().toLowerCase().equals(targetSection) || user.isPermissions(PrivilegeEnum.Administrator))
+                                        .filter(o -> o.getRetailer().getRecID().equals(retailerDto.getRecID())).collect(Collectors.toList());
+    ... // Много кода
+}
+
+// Было
+private String targetScheduler = SchedulerEnum.valueOf(schedulerName).name().toLowerCase();
+
+private Boolean canRetailerRead(String schedulerName, RetailerDto retailer)
+{
+    boolean accessRights = false;
+    if (schedulerAccessDtoList.stream()
+                         .filter(o -> o.getScheduler().name().toLowerCase().equals(targetScheduler))
+                         .anyMatch(o -> o.getIsActive().equals(true)))
+                 {
+                     accessRights = true;
+                 }
+    ... // Много кода
+}
+
+// Стало. Сделал переменную targetScheduler локальной
+private Boolean canRetailerRead(String schedulerName, RetailerDto retailer)
+{
+    String targetScheduler = SchedulerEnum.valueOf(schedulerName).name().toLowerCase();
+    boolean accessRights = false;
+    if (schedulerAccessDtoList.stream()
+                         .filter(o -> o.getScheduler().name().toLowerCase().equals(targetScheduler))
+                         .anyMatch(o -> o.getIsActive().equals(true)))
+                 {
+                     accessRights = true;
+                 }
+    ... // Много кода
+}
+
+// Было
+private List<BonusTypeDto> bonusTypeDtoList = DataServiceFactory.intance().getBonusTypeDataService().getAll();
+
+private List<BonusTypeDto> initBonusTypes()
+{
+	bonusTypeDtoList.add(0, null);
+	return bonusTypeDtoList;
+}
+
+// Стало. Сделал список bonusTypeDtoList локальным
+private List<BonusTypeDto> initBonusTypes()
+{
+    List<BonusTypeDto> bonusTypeDtoList = DataServiceFactory.intance().getBonusTypeDataService().getAll();
+	bonusTypeDtoList.add(0, null);
+	return bonusTypeDtoList;
+}
+
+// Было
+private List<SelectItem> result = new ArrayList<SelectItem>();
+
+public List<SelectItem> getAllStockTypes()
+{
+	for(StockTypeEnum type : StockTypeEnum.values())
+	{
+	    type.setTypes(Localization.loadEnumString(type.getClass().getName(), type.name()));
+	    result.add(new SelectItem(type, type.getTypes()));
+	}
+	return result;
+}
+
+// Стало. Сделал список result локальным
+public List<SelectItem> getAllStockTypes()
+{
+    List<SelectItem> result = new ArrayList<SelectItem>();
+	for(StockTypeEnum type : StockTypeEnum.values())
+	{
+	    type.setTypes(Localization.loadEnumString(type.getClass().getName(), type.name()));
+	    result.add(new SelectItem(type, type.getTypes()));
+	}
+	return result;
+}
+
+// Было
+private SelectItem[] result = new SelectItem[StockPersonalTypeEnum.values().length];
+
+public SelectItem[] getPersonalTypes()
+{
+	int i = 0;
+	for(StockPersonalTypeEnum item : StockPersonalTypeEnum.values())
+	{
+	    item.setTitle(Localization.loadEnumString(item.getClass().getName(), item.name()));
+		if(item.name().equals(StockPersonalTypeEnum.Auditory.name()))
+			result[i] = new SelectItem(item, item.getTitle(), null, !SectionPermissionsInitializer.getInstance().canRead("Audiences", SessionInfo.getInstance().getUser()));
+		else
+			result[i] = new SelectItem(item, item.getTitle());
+		i++;
+	}
+	return result;
+}
+
+// Стало. Сделал список result локальным
+public SelectItem[] getPersonalTypes()
+{
+    SelectItem[] result = new SelectItem[StockPersonalTypeEnum.values().length];
+	int i = 0;
+	for(StockPersonalTypeEnum item : StockPersonalTypeEnum.values())
+	{
+	    item.setTitle(Localization.loadEnumString(item.getClass().getName(), item.name()));
+		if(item.name().equals(StockPersonalTypeEnum.Auditory.name()))
+			result[i] = new SelectItem(item, item.getTitle(), null, !SectionPermissionsInitializer.getInstance().canRead("Audiences", SessionInfo.getInstance().getUser()));
+		else
+			result[i] = new SelectItem(item, item.getTitle());
+		i++;
+	}
+	return result;
+}
+
+// Было
+private StockDto stock = this.getEntity();
+
+public String exportStockManually() throws FacesPortalException
+{
+	if(stock.getAuditory() != null && stock.getAuditory().getType().equals(AuditoryTypeEnum.Static) || stock.getBuyers() != null && !stock.getBuyers().isEmpty())
+    	log.trace(String.format("Зафиксированно '%d' покупателей по данной акции", stock.getBuyers().size()));
+    else
+        stock.getBuyers().addAll(new AuditoryOperatorFactory().fixBuyers(stock, this.stockPersonalType, this.getCriteriaWrapper() == null? null: this.getCriteriaWrapper().getCriteria()));
+    DataServiceFactory.intance().getStocksExportDataService().export(stock);
+    stock.setActualExportDate(new Date());
+    return this.save();
+}
+
+// Стало. Сделал переменную stock локальной
+public String exportStockManually() throws FacesPortalException
+{
+    StockDto stock = this.getEntity();
+	if(stock.getAuditory() != null && stock.getAuditory().getType().equals(AuditoryTypeEnum.Static) || stock.getBuyers() != null && !stock.getBuyers().isEmpty())
+    	log.trace(String.format("Зафиксированно '%d' покупателей по данной акции", stock.getBuyers().size()));
+    else
+        stock.getBuyers().addAll(new AuditoryOperatorFactory().fixBuyers(stock, this.stockPersonalType, this.getCriteriaWrapper() == null? null: this.getCriteriaWrapper().getCriteria()));
+    DataServiceFactory.intance().getStocksExportDataService().export(stock);
+    stock.setActualExportDate(new Date());
+    return this.save();
+}
+
+// Было
+EntityManager em = DataServiceFactory.intance().getShopsService().getEm();
+
+public DualListModel<ShopItem> initShopTypeList()
+{
+				... // Много кода
+				Query query = em.createNativeQuery(sql);
+				... // Много кода
+}
+
+// Стало. Сделал переменную em локальной
+public DualListModel<ShopItem> initShopTypeList()
+{
+				EntityManager em = DataServiceFactory.intance().getShopsService().getEm();
+				... // Много кода
+				Query query = em.createNativeQuery(sql);
+				... // Много кода
+}
+
+// Было
+private String sqlTimeConditions = getTimeParametrList(request);
+
+private void processRequest(HttpServletRequest request, HttpServletResponse response) throws Exception
+{
+	if(StringUtils.isRealyEmpty(sqlTimeConditions) && StringUtils.isRealyEmpty(sqlShopsConditions.keySet().toArray()[0].toString()) && StringUtils.isRealyEmpty(sqlShopsConditions.values().toArray()[0].toString()))
+    {
+        ... // Много кода
+    }
+}
+
+// Стало. Сделал переменную sqlTimeConditions локальной
+private void processRequest(HttpServletRequest request, HttpServletResponse response) throws Exception
+{
+    String sqlTimeConditions = getTimeParametrList(request);
+	if(StringUtils.isRealyEmpty(sqlTimeConditions) && StringUtils.isRealyEmpty(sqlShopsConditions.keySet().toArray()[0].toString()) && StringUtils.isRealyEmpty(sqlShopsConditions.values().toArray()[0].toString()))
+    {
+        ... // Много кода
+    }
+}
