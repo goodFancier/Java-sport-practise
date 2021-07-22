@@ -959,3 +959,105 @@ private void processRequest(HttpServletRequest request, HttpServletResponse resp
         ... // Много кода
     }
 }
+
+/*
+** Время связывания переменных
+*/
+// Использовал константу для связывания. Значение этой константы обозначает название параметра рест метода, который используется во многих местах.
+// Если в дальнейшем потребуется изменить название параметра метода, то сделать это необходимо будет лишь в одном месте
+public class BuyersRESTService extends BaseRestORMService<BuyerJSON, BuyerDto>
+{
+	public static final String PasswordParamName = "password";
+
+	@POST
+	@Path("/register/virtualNewLogic")
+	@AccessAll
+	public BuyerJSON registrationVirtual(
+			@NonNull @QueryParam(BaseRestORMService.RetailerParamName) String retailer,
+			@NonNull @QueryParam(PasswordParamName) String password,
+			@QueryParam(DeviceParamName) String gmcid,
+			@CheckBuyer @QueryParam(BaseRestORMService.BuyerIDParamName) Long buyerID) throws Exception
+	{
+		return internalRegistrationVirtualWithBuyer(retailer, password, gmcid, buyerID);
+	}
+
+	@GET
+    @AccessAll
+    @Path("/loginAfterRestore")
+    public BuyerJSON loginAfterRestore(
+        	@NonNull @QueryParam(BaseRestORMService.RetailerParamName) String retailer,
+    		@NonNull @QueryParam(LoginParamName) String cardNumber,
+    		@NonNull @QueryParam(PasswordParamName) String password,
+    		@NonNull @QueryParam(BaseRestORMService.RequestCodeParamName) String code,
+    		@QueryParam(DeviceParamName) String deviceID) throws Exception
+    {
+    	return interalLoginAfterRestore(retailer, cardNumber, password, code, deviceID);
+    }
+
+    @GET
+    @AccessAll
+    @Path("/loginByPhoneNumberAndPassword")
+    public BuyerJSON loginByPhoneNumberAndPassword(
+            			@NonNull @QueryParam(BaseRestORMService.RetailerParamName) String retailer,
+            			@QueryParam(BaseRestORMService.PhoneNumberName) String phone,
+            			@NonNull @QueryParam(PasswordParamName) String password) throws Exception
+    {
+    	return internalLoginByPhoneAndPassword(checkRetailer(retailer), phone, password);
+    }
+}
+
+// BuyerDto buyer - связывание выполняется во время выполнения программы. Значение, которым инициализируется buyer зависит от входящих параметров метода.
+private BuyerDto buyer;
+
+private BuyerJSON returnVerifyNewPhone(
+			String retailer,
+			String phoneNew,
+			String phoneOld,
+			String code,
+			Long buyerID) throws Exception
+{
+	checkRetailer(retailer);
+	if(phoneOld.equals(""))
+		phoneOld = phoneNew;
+	if(buyerID != null)
+	    buyer = DataServiceFactory.intance().getBuyersService().getByPhoneNumberAndDisposableCode(phoneOld, code, buyerID);
+	else
+		buyer = DataServiceFactory.intance().getBuyersService().getByPhoneNumberAndDisposableCode(phoneOld, code);
+	if(buyer == null)
+		throw new ShopperRestException(String.format("Некорректный номер телефона '%s' или проверочный код '%s'", phoneOld, code), ShopperHttpResponseCodes.INVALID_PHONE_NUMBER_OR_CODE);
+	buyer.setPhone(phoneNew);
+	buyer.setVerified(new Date());
+	buyer.setInternalEditDateTime(new Date());
+	buyer = DataServiceFactory.intance().getBuyersService().update(buyer);
+	DataServiceFactory.intance().getBuyersDisposableService().getRepository().deleteByBuyer(buyer, BuyersDisposablePasswordTypeEnum.Verify);
+	return RestServiceUtils.getBuyerJSON(buyer);
+}
+
+// Для stockPersonalType используем максимально ранее связывание, инициализируя его значением по умолчанию.
+/**
+  * Тип аудитории, на которую распространяется акция
+**/
+@Getter
+@Setter
+private StockPersonalTypeEnum stockPersonalType = StockPersonalTypeEnum.Common;
+
+public TreeCriteriaWrapper getCriteriaWrapper()
+{
+	switch(this.stockPersonalType)
+	{
+    	case Auditory:
+	    	if(this.getEntity().getAuditory() != null)
+				if(AuditoryTypeEnum.Calculated.equals(this.getEntity().getAuditory().getType()))
+						this.criteriaWrapper = new TreeCriteriaWrapper(this.getEntity().getAuditory().getCriteria(), this);
+			break;
+		case Criteria:
+			if(this.criteriaWrapper == null)
+				this.criteriaWrapper = new TreeCriteriaWrapper(new Criteria(), this);
+					break;
+		case Common:
+		case All:
+		case SelectedBuyers:
+			break;
+		}
+	return this.criteriaWrapper;
+}
