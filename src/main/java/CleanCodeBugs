@@ -1061,3 +1061,133 @@ public TreeCriteriaWrapper getCriteriaWrapper()
 		}
 	return this.criteriaWrapper;
 }
+
+_____________________________________________________________________
+/*
+** Массивы
+*/
+// Было. Использовал доступ к массиву через индексы
+public void onChangeBookMarkName(StockGoodBookmarkDto value)
+{
+	if(value == null)
+		return;
+	for(int i = 0; i < this.getEntity().getStockItems().size; i++)
+		if(this.getEntity().getStockItems().get(i).getBookmark() != null && this.getEntity().getStockItems().get(i).getBookmark().getBookmarkPosition().equals(value.getBookmarkPosition()))
+			this.getEntity().getStockItems().get(i).setBookmarkName(value.getName());
+}
+
+// Стало. Использовал цикл foreach для работы с элементами массива
+public void onChangeBookMarkName(StockGoodBookmarkDto value)
+{
+	if(value == null)
+		return;
+	for(StockGoodDto good : this.getEntity().getStockItems())
+		if(good.getBookmark() != null && good.getBookmark().getBookmarkPosition().equals(value.getBookmarkPosition()))
+			good.setBookmarkName(value.getName());
+}
+
+// Было. Использовал массив для работы с группами магазинов
+private DualListModel<ShopsGroupDto> initGroupsShopTypeList(){
+			List<ShopsGroupDto> target = this.getEntity().getGroupsShops();
+			List<ShopsGroupDto> allShopsGroupDtoSource = DataServiceFactory.intance().getShopsGroupDataService().getByRetailer(SessionInfo.getInstance().getUser().getRetailer());
+			List<ShopsGroupDto> source = new ArrayList<>();
+			for (int i = 0; i < allShopsGroupDtoSource.size(); i++) {
+				boolean isSave = true;
+				for (ShopsGroupDto savedGroupShops: target) {
+					if (savedGroupShops.getRecID().equals(allShopsGroupDtoSource.get(i).getRecID())){
+						isSave = false;
+						break;
+					}
+				}
+				if (isSave){
+					source.add(allShopsGroupDtoSource.get(i));
+				}
+			}
+			return new DualListModel<>(source,target);
+		}
+
+// Стало. Использовал множество(Set) для работы с группами магазинов
+private DualListModel<ShopsGroupDto> initGroupsShopTypeList(){
+			Set<ShopsGroupDto> target = this.getEntity().getGroupsShops();
+			Set<ShopsGroupDto> allShopsGroupDtoSource = DataServiceFactory.intance().getShopsGroupDataService().getByRetailer(SessionInfo.getInstance().getUser().getRetailer());
+			Set<ShopsGroupDto> source = new HashSet<>();
+			for (ShopsGroupDto shopGroup : allShopsGroupDtoSource.size()) {
+				boolean isSave = true;
+				for (ShopsGroupDto savedGroupShops: target) {
+					if (savedGroupShops.getRecID().equals(shopGroup.getRecID())){
+						isSave = false;
+						break;
+					}
+				}
+				if (isSave){
+					source.add(shopGroup);
+				}
+			}
+			return new DualListModel<>(source,target);
+		}
+
+// Было. Использовал поиндексный доступ к массиву для работы с закладками
+public StockGoodBookmarkDto addBookmarkByImporter(String name)
+{
+	if(!StringUtils.hasValue(name))
+		return null;
+    for(int i = 0; i < this.getEntity().getBookmarks().size(); i++)
+		if(StringUtils.equals(this.getEntity().getBookmarks().get(i).getName(), name))
+			return bookmark;
+	return this.createBookmark(name);
+}
+
+// Стало. Использовал цикл foreach для работы с элементами массива
+public StockGoodBookmarkDto addBookmarkByImporter(String name)
+{
+	if(!StringUtils.hasValue(name))
+		return null;
+	for(StockGoodBookmarkDto bookmark : this.getEntity().getBookmarks())
+		if(StringUtils.equals(bookmark.getName(), name))
+			return bookmark;
+	return this.createBookmark(name);
+}
+
+
+// Было. Вложенный цикл по перебору значений в разрезе дат. В цикле перебираем массив дат. Для каждой даты в цикле перебираем массив значений
+... // много кода
+for (int i = 0; i < dateList.size(); i++)
+    for (int j = 0; j < valueList.size(); j++)
+    {
+        ... // много кода
+        planValueDto.setDate(convertPlanDates(dateList.get(i), timePeriod));
+        planValueDto.setValue(BigDecimal.valueOf(valueList.get(j)));
+        ... // много кода
+    }
+
+// Стало. Массив дат заменил на Map. Где key - дата, value - список значений для этой даты. Использую entrySet
+// для работы с Map. Далее, для каждого списка значений в разрезе даты, использую цикл foreach для работы
+// с элементами этого списка
+for(Map.Entry<Date, List<Double>> entry : valueMap.entrySet())
+{
+        for (Double value : entry.getValue())
+        {
+            ... // много кода
+            planValueDto.setDate(convertPlanDates(entry.getKey(), timePeriod));
+            planValueDto.setValue(BigDecimal.valueOf(value));
+            ... // много кода
+        }
+}
+
+// Было. Использовал массив для работы с брендами. Использовать цикл по индексам для доступа к элементам массива
+List<BrandDto> brandList = DataServiceFactory.intance().getBrandService().getByRetailer(retailer);
+Map<String, String[]> shopMap = new HashMap<>();
+for(int i = 0; i < brandList.size(); i++)
+{
+    List<ShopDto> shopList = DataServiceFactory.intance().getShopsService().getByRetailer(retailer, brandList.get(i));
+	shopMap.put(brandList.get(i).getName(), shopList.stream().map(ShopDto::getName).collect(Collectors.toList()).toArray(new String[shopList.size()]));
+}
+
+// Стало. Использовал множество (Set) для работы с брендами.
+Set<BrandDto> brands = DataServiceFactory.intance().getBrandService().getByRetailer(retailer);
+Map<String, String[]> shopMap = new HashMap<>();
+for(BrandDto brand : brands)
+{
+    List<ShopDto> shopList = DataServiceFactory.intance().getShopsService().getByRetailer(retailer, brand);
+	shopMap.put(brand.getName(), shopList.stream().map(ShopDto::getName).collect(Collectors.toList()).toArray(new String[shopList.size()]));
+}
