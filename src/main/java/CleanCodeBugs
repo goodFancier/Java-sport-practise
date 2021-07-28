@@ -1191,3 +1191,109 @@ for(BrandDto brand : brands)
     List<ShopDto> shopList = DataServiceFactory.intance().getShopsService().getByRetailer(retailer, brand);
 	shopMap.put(brand.getName(), shopList.stream().map(ShopDto::getName).collect(Collectors.toList()).toArray(new String[shopList.size()]));
 }
+
+_______________________________________________________________________________________________________
+/*
+** Комментарии
+*/
+
+// 3.1
+TypedQuery<StockDto> typedQuery = getEm().createQuery(criteriaQuery);
+// Установим лимит выборки
+typedQuery.setMaxResults(20);
+
+// Получаем для пользователя признак прочтения акции
+ListJoin<StockDto, StockBuyerReadDto> readJoin = root.join(StockDto_.buyerRead, JoinType.LEFT);
+readJoin.on(getCriteriaBuilder().equal(readJoin.get(StockBuyerReadDto_.buyer), buyer));
+select.add(readJoin.get(StockBuyerReadDto_.readDatetime));
+
+Predicate restrictions = getCriteriaBuilder().conjunction();
+// Не черновики
+restrictions.getExpressions().add(getCriteriaBuilder().notEqual(root.get(StockDto_.state), StocksStateEnum.Draft));
+
+// Список акций с определенной даты или по-умолчанию
+if(updateDate != null)
+	restrictions.getExpressions().add(getCriteriaBuilder().or(getCriteriaBuilder().greaterThanOrEqualTo(root.get(StockDto_.updateDatetime), updateDate), getCriteriaBuilder().greaterThanOrEqualTo(root.get(StockDto_.startDate), updateDate)));
+else
+	restrictions
+	    .getExpressions()
+			.add(getCriteriaBuilder().or(getCriteriaBuilder().greaterThan(root.get(StockDto_.startDate), startDate), getCriteriaBuilder().isNull(root.get(StockDto_.finishDate))));
+
+// Дата начала или дата публикации должны наступить (быть менее чем СЕЙЧАС) LEAST(s.StartDate, IFNULL(s.PublishDate,
+				// NOW())) < NOW()
+				restrictions
+					.getExpressions()
+					.add(getCriteriaBuilder()
+						.lessThan(getCriteriaBuilder()
+							.function("LEAST", Date.class, root.get(StockDto_.startDate), getCriteriaBuilder()
+								.function("IFNULL", Date.class, root.get(StockDto_.publishDate), getCriteriaBuilder().currentTimestamp())), getCriteriaBuilder().currentTimestamp()));
+
+if(buyer != null)
+	// Персональные и общие акции
+	restrictions
+		.getExpressions()
+			.add(getCriteriaBuilder().or(getCriteriaBuilder().equal(buyersJoin.get(BuyerDto_.recID), buyer.getRecID()), getCriteriaBuilder()
+			    .and(getCriteriaBuilder().isNull(root.get(StockDto_.auditory)), getCriteriaBuilder().isNull(buyersJoin.get(BuyerDto_.recID)), getCriteriaBuilder().isNull(root.get(StockDto_.byersFilter)))));
+else
+	// Только общие акции
+    restrictions.getExpressions().add(getCriteriaBuilder().and(getCriteriaBuilder().isNull(buyersJoin.get(BuyerDto_.recID)), getCriteriaBuilder()
+		.and(getCriteriaBuilder().isNull(root.get(StockDto_.auditory)), getCriteriaBuilder().isNull(root.get(StockDto_.byersFilter)))));
+
+// Поток кластеризации дисконтных карт
+@Log4j
+public class CardClasteriser extends CustomWorker
+
+
+// 3.2
+// Было
+// Кол-во товаров в чеке
+check.setGoods(purchase.getPositions().getPosition().size());
+
+// Стало
+check.setCheckItems(purchase.getPositions().getPosition().size());
+
+// Было
+// Сохраняем карту
+card = getCardsDataService().update(card);
+
+// Стало
+card = getCardsDataService().save(card);
+
+// Было
+/*
+** Может вернуть null, если ClientType прийдет полностью пустой.
+*/
+BuyerDto initBuyer(ClientType clientType, InternalCardType internalCardType, RetailerDto retailer) throws Exception
+{
+	if(clientType.isNullAllFields())
+	    return null;
+	.. // Много кода
+}
+
+// Стало
+BuyerDto initBuyer(ClientType clientType, InternalCardType internalCardType, RetailerDto retailer) throws Exception
+{
+	if(clientType.isNullAllFields())
+	    throw new BuyerNotFoundException();
+	.. // Много кода
+}
+
+// Было
+// Если пароль не подошел и такой карты у нас нет, то создавать карту не нужно.
+if(buyer == null && card == null)
+	throw new ShopperRestException("Некорректный номер карты или пароль", ShopperHttpResponseCodes.INVALID_CARD_NUMBER_OR_PASSWORD);
+
+// Стало
+if(!isPassValid || card == null)
+	throw new ShopperRestException("Некорректный номер карты или пароль", ShopperHttpResponseCodes.INVALID_CARD_NUMBER_OR_PASSWORD);
+
+// Было
+// Групповой оператор по умолчанию для критерия
+private GroupOperationType mainOperation = GroupOperationType.And;
+
+// Стало
+private GroupOperationType criteriaGroupOperator = GroupOperationType.And;
+
+
+
+
