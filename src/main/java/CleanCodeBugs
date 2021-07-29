@@ -1296,4 +1296,196 @@ private GroupOperationType criteriaGroupOperator = GroupOperationType.And;
 
 
 
+_______________________________________________________________________________________________________________________________________-
+/*
+** Правильные комментарии
+*/
 
+// Было
+/*
+** Признак необходимости обработки бонусных программ
+*/
+private Boolean useBonus;
+
+// Стало. Пункт 2. Представление намерений
+/*
+** Признак необходимости обработки бонусных программ. Если этот параметр = true, то при обработке чека необходимо применять бонусный процессинг
+*/
+private Boolean useBonus;
+
+// Было
+/**
+ * Мапер для чеков формата SetRetail
+**/
+public class SetRetailCheckMapper implements IMapperOut<Purchases>
+
+// Стало. Пункт 2. Представление намерений
+/**
+ * Мапер для чеков формата SetRetail. Класс - обработчик чеков. Здесь выполняется парсинг чека, учитывая различные входные параметры и способы обработки чека
+**/
+public class SetRetailCheckMapper implements IMapperOut<Purchases>
+
+// Было
+// Получаем для пользователя признак прочтения акции
+ListJoin<StockDto, StockBuyerReadDto> readJoin = root.join(StockDto_.buyerRead, JoinType.LEFT);
+readJoin.on(getCriteriaBuilder().equal(readJoin.get(StockBuyerReadDto_.buyer), buyer));
+.. // много кода
+
+// Стало. Пункт 1. Информативные комментарии. Избавились от лишнего комментария
+ListJoin<StockDto, StockBuyerReadDto> stocksReadByBuyer = root.join(StockDto_.buyerRead, JoinType.LEFT);
+stocksReadByBuyer.on(getCriteriaBuilder().equal(stocksReadByBuyer.get(StockBuyerReadDto_.buyer), buyer));
+.. // много кода
+
+// Было
+// TODO
+select.add(root.get(StockDto_.startDate));
+
+// Стало. Пункт 6. Комментарии TODO
+// TODO: По хорошему тут нужно считывать null, но как это сделать по быстрому не нашли
+select.add(root.get(StockDto_.startDate));
+
+
+// Было
+if(updateDate != null)
+    restrictions.getExpressions().add(getCriteriaBuilder().or(getCriteriaBuilder().greaterThanOrEqualTo(root.get(StockDto_.updateDatetime), updateDate), getCriteriaBuilder().greaterThanOrEqualTo(root.get(StockDto_.startDate), updateDate)));
+else
+    restrictions
+		.getExpressions()
+		    .add(getCriteriaBuilder().or(getCriteriaBuilder().greaterThan(root.get(StockDto_.startDate), startDate), getCriteriaBuilder().isNull(root.get(StockDto_.finishDate))));
+
+// Стало. Пункт 1. Информативные комментарии
+// Получаем список акций с определенной даты или по-умолчанию.
+if(updateDate != null)
+    restrictions.getExpressions().add(getCriteriaBuilder().or(getCriteriaBuilder().greaterThanOrEqualTo(root.get(StockDto_.updateDatetime), updateDate), getCriteriaBuilder().greaterThanOrEqualTo(root.get(StockDto_.startDate), updateDate)));
+else
+    restrictions
+		.getExpressions()
+		    .add(getCriteriaBuilder().or(getCriteriaBuilder().greaterThan(root.get(StockDto_.startDate), startDate), getCriteriaBuilder().isNull(root.get(StockDto_.finishDate))));
+
+// Было
+restrictions
+    .getExpressions()
+		.add(getCriteriaBuilder()
+			.lessThan(getCriteriaBuilder()
+				.function("LEAST", Date.class, root.get(StockDto_.startDate), getCriteriaBuilder()
+				    .function("IFNULL", Date.class, root.get(StockDto_.publishDate), getCriteriaBuilder().currentTimestamp())), getCriteriaBuilder().currentTimestamp()));
+
+
+// Стало. Пункт 1. Информативные комментарии.
+// Дата начала или дата публикации должны наступить (быть менее чем СЕЙЧАС) LEAST(s.StartDate, IFNULL(s.PublishDate, NOW())) < NOW()
+restrictions
+    .getExpressions()
+		.add(getCriteriaBuilder()
+			.lessThan(getCriteriaBuilder()
+				.function("LEAST", Date.class, root.get(StockDto_.startDate), getCriteriaBuilder()
+				    .function("IFNULL", Date.class, root.get(StockDto_.publishDate), getCriteriaBuilder().currentTimestamp())), getCriteriaBuilder().currentTimestamp()));
+
+// Было
+// Персональные и общие акции
+restrictions
+	.getExpressions()
+		.add(getCriteriaBuilder().or(getCriteriaBuilder().equal(buyersJoin.get(BuyerDto_.recID), buyer.getRecID()), getCriteriaBuilder()
+			.and(getCriteriaBuilder().isNull(root.get(StockDto_.auditory)), getCriteriaBuilder().isNull(buyersJoin.get(BuyerDto_.recID)), getCriteriaBuilder().isNull(root.get(StockDto_.byersFilter)))));
+
+// Стало. Пункт 5. Усиление
+// Получаем только персональные и общие акции. Получение и персональных и общих акций здесь очень важно, т.к в ленте необходимо показывать список всех акций.
+restrictions
+	.getExpressions()
+		.add(getCriteriaBuilder().or(getCriteriaBuilder().equal(buyersJoin.get(BuyerDto_.recID), buyer.getRecID()), getCriteriaBuilder()
+			.and(getCriteriaBuilder().isNull(root.get(StockDto_.auditory)), getCriteriaBuilder().isNull(buyersJoin.get(BuyerDto_.recID)), getCriteriaBuilder().isNull(root.get(StockDto_.byersFilter)))));
+
+// Было
+// Только общие акции
+restrictions.getExpressions().add(getCriteriaBuilder().and(getCriteriaBuilder().isNull(buyersJoin.get(BuyerDto_.recID)), getCriteriaBuilder()
+    .and(getCriteriaBuilder().isNull(root.get(StockDto_.auditory)), getCriteriaBuilder().isNull(root.get(StockDto_.byersFilter)))));
+
+// Стало. Пункт 5. Усиление
+// Получаем только общие акции. Получение только общих акций здесь очень важно, т.к в разделе "Акции" необходимо показывать только общие акции
+restrictions.getExpressions().add(getCriteriaBuilder().and(getCriteriaBuilder().isNull(buyersJoin.get(BuyerDto_.recID)), getCriteriaBuilder()
+    .and(getCriteriaBuilder().isNull(root.get(StockDto_.auditory)), getCriteriaBuilder().isNull(root.get(StockDto_.byersFilter)))));
+
+// Было
+	Predicate predicate = getEm().getCriteriaBuilder().and(
+					getEm().getCriteriaBuilder().isNotNull(rootBuyers.get(BuyerDto_.verified)),
+					getEm().getCriteriaBuilder().equal(rootBuyers.get(BuyerDto_.retailer), retailer));
+
+// Стало. Пункт 6. Комментарии TODO
+Predicate predicate = getEm().getCriteriaBuilder().and(
+    // TODO: Определять наличие девайса только значению verified не правильно. Правильнее выполнять join с buyers.devices. Будет доработано в версии 1.2.2
+    getEm().getCriteriaBuilder().isNotNull(rootBuyers.get(BuyerDto_.verified)),
+    getEm().getCriteriaBuilder().equal(rootBuyers.get(BuyerDto_.retailer), retailer));
+
+// Было
+public static Date lastSecondOfDay(Date date)
+{
+	if(hasTime(date))
+		return date;
+	Calendar calendar = Calendar.getInstance();
+	calendar.setTime(date == null ? DateUtils.now() : date);
+	calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH));
+	calendar.set(Calendar.MONTH, calendar.get(Calendar.MONTH));
+	calendar.set(Calendar.YEAR, calendar.get(Calendar.YEAR));
+	calendar.set(Calendar.HOUR_OF_DAY, 23);
+	calendar.set(Calendar.MINUTE, 59);
+	calendar.set(Calendar.SECOND, 59);
+	return calendar.getTime();
+}
+
+// Стало. Пункт 1. Информативные комментарии
+	/**
+		 * Получить время окончания дня. 23:59:59
+		 *
+		 * @param date
+		 * @return
+		 */
+public static Date lastSecondOfDay(Date date)
+{
+	if(hasTime(date))
+		return date;
+	Calendar calendar = Calendar.getInstance();
+	calendar.setTime(date == null ? DateUtils.now() : date);
+	calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH));
+	calendar.set(Calendar.MONTH, calendar.get(Calendar.MONTH));
+	calendar.set(Calendar.YEAR, calendar.get(Calendar.YEAR));
+	calendar.set(Calendar.HOUR_OF_DAY, 23);
+	calendar.set(Calendar.MINUTE, 59);
+	calendar.set(Calendar.SECOND, 59);
+	return calendar.getTime();
+}
+
+// Было
+public static boolean hasTime(Date value)
+{
+	if(value == null)
+		return false;
+	Calendar calendar = Calendar.getInstance();
+	calendar.setTime(value);
+	return calendar.get(Calendar.HOUR_OF_DAY) > 0 || calendar.get(Calendar.MINUTE) > 0 || calendar.get(Calendar.SECOND) > 0 || calendar.get(Calendar.MILLISECOND) > 0;
+}
+
+// Стало. Пункт 1. Информативные комментарии
+/**
+ * Проверить задано ли время в указанном значении.
+ *
+ * @param value
+ * @return
+ */
+public static boolean hasTime(Date value)
+{
+	if(value == null)
+		return false;
+	Calendar calendar = Calendar.getInstance();
+	calendar.setTime(value);
+	return calendar.get(Calendar.HOUR_OF_DAY) > 0 || calendar.get(Calendar.MINUTE) > 0 || calendar.get(Calendar.SECOND) > 0 || calendar.get(Calendar.MILLISECOND) > 0;
+}
+
+// Было
+setGoodList(logPrefix, check, retailerAccount.getRetailer(), purchase);
+setPayment(logPrefix, check, purchase.getPaymentList());
+check = DataServiceFactory.intance().getChecksService().update(check);
+
+// Стало. Пункт 6. Комментарии TODO
+setGoodList(logPrefix, check, retailerAccount.getRetailer(), purchase);
+setPayment(logPrefix, check, purchase.getPaymentList());
+// TODO: Нужно решить проблему с транзакциями, которая возникает при сохранении чека и несуществующего товара. Будет доработано в версии 1.1.2
+check = DataServiceFactory.intance().getChecksService().update(check);
