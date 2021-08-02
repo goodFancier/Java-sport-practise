@@ -1489,3 +1489,294 @@ setGoodList(logPrefix, check, retailerAccount.getRetailer(), purchase);
 setPayment(logPrefix, check, purchase.getPaymentList());
 // TODO: Нужно решить проблему с транзакциями, которая возникает при сохранении чека и несуществующего товара. Будет доработано в версии 1.1.2
 check = DataServiceFactory.intance().getChecksService().update(check);
+
+__________________________________________________________________________________________________
+
+/*
+** Плохие комментарии
+*/
+
+// Было
+/**
+ * Получить текущую дату в виде строки в формате simpleDateFormat.
+ *
+ * @return
+ */
+public static String getDate()
+{
+	return DateFormats.instance().getSimpleDateFormat().format(new Date());
+}
+
+// Стало. Пункт 8. Избыточные комментарии. Убрал лишний комментарий, переименовал метод
+public static String getDateInSimpleFormat()
+{
+	return DateFormats.instance().getSimpleDateFormat().format(new Date());
+}
+
+// Было
+/**
+  * Получить дату в виде строки в формате simpleDateFormat.
+  *
+  * @param value
+  * @return
+  */
+public static String getDate(Date value)
+{
+	return value == null? "": DateFormats.instance().getSimpleDateFormat().format(value);
+}
+
+// Стало. Пункт 8. Избыточные комментарии. Убрал лишний комментарий, переименовал метод
+public static String getDateStringInSimpleFormat(Date value)
+{
+	return value == null? "": DateFormats.instance().getSimpleDateFormat().format(value);
+}
+
+// Было
+/**
+  * Добавить месяцы к дате
+  *
+  * @param value
+  * @return
+  */
+public static Date addMonth(Date date, Integer value)
+{
+	GregorianCalendar calen = new GregorianCalendar();
+	calen.setTime(date);
+    calen.add(Calendar.MONTH, value);
+	return calen.getTime();
+}
+
+// Cтало. Пункт 8. Избыточные комментарии. Убрал лишний комментарий, переименовал метод
+public static Date addMonthToDate(Date date, Integer value)
+{
+	GregorianCalendar calen = new GregorianCalendar();
+	calen.setTime(date);
+    calen.add(Calendar.MONTH, value);
+	return calen.getTime();
+}
+
+// Было
+// TODO Переименовать метод
+public Boolean getPersonalForAuditory()
+{
+    return StockPersonalTypeEnum.Auditory.equals(this.stockPersonalType) ||
+		StockPersonalTypeEnum.Criteria.equals(this.stockPersonalType);
+}
+
+// Стало. Пункт 8. Избыточные комментарии. Убрал лишний комментарий, переименовал метод
+public Boolean isStockPersonal()
+{
+    return StockPersonalTypeEnum.Auditory.equals(this.stockPersonalType) ||
+		StockPersonalTypeEnum.Criteria.equals(this.stockPersonalType);
+}
+
+// Было
+// Этот список получается при импорте значений из файла
+List<PlanForecastValueDto> planTempList = getDataService().getAddedValueList().stream().filter(o -> planValue != null && getDataService().isDatesEqualsByTimePeriod(o, planValue) && getDataService().isEqualsSalesPoint(o, planValue) && o.getMetric().equals(planValue.getMetric())).collect(Collectors.toList());
+PlanForecastValueDto planTempValue = !planTempList.isEmpty()? planTempList.get(0): null;
+.. // много кода
+
+// Стало. Пункт 8. Избыточные комментарии. Убрал лишний комментарий, переименовал метод
+List<PlanForecastValueDto> importedPlanList = getDataService().getAddedValueList().stream().filter(o -> planValue != null && getDataService().isDatesEqualsByTimePeriod(o, planValue) && getDataService().isEqualsSalesPoint(o, planValue) && o.getMetric().equals(planValue.getMetric())).collect(Collectors.toList());
+PlanForecastValueDto planTempValue = !planTempList.isEmpty()? planTempList.get(0): null;
+.. // много кода
+
+// Было
+// Добавляем группы магазинов в дерево
+List<ShopsGroupDto> shopGroupList = DataServiceFactory.intance().getShopsGroupDataService().getByRetailer(retailer);
+brandMap = new HashMap<>();
+shopMap = new HashMap<>();
+for(ShopsGroupDto shopGroup : shopGroupList)
+{
+	List<ShopDto> shopList = DataServiceFactory.intance().getShopsService().getByShopGroup(shopGroup.getRecID());
+    shopMap.put(shopGroup.getName(), shopList.stream().map(ShopDto::getName).collect(Collectors.toList()).toArray(new String[shopList.size()]));
+}
+brandMap.put("shopGroups", shopMap);
+.. // много кода
+
+// Стало. Пункт 4. Шум. Комментарий тут не нужен, т.к и так понятно, что происходит в коде
+List<ShopsGroupDto> shopGroupList = DataServiceFactory.intance().getShopsGroupDataService().getByRetailer(retailer);
+brandMap = new HashMap<>();
+shopMap = new HashMap<>();
+for(ShopsGroupDto shopGroup : shopGroupList)
+{
+	List<ShopDto> shopList = DataServiceFactory.intance().getShopsService().getByShopGroup(shopGroup.getRecID());
+    shopMap.put(shopGroup.getName(), shopList.stream().map(ShopDto::getName).collect(Collectors.toList()).toArray(new String[shopList.size()]));
+}
+brandMap.put("shopGroups", shopMap);
+.. // много кода
+
+// Было
+// Если пароль не подошел и такой карты у нас нет, то создавать карту не нужно.
+if(buyer == null && card == null)
+    throw new ShopperRestException("Некорректный номер карты или пароль", ShopperHttpResponseCodes.INVALID_CARD_NUMBER_OR_PASSWORD);
+
+// Стало. Пункт 2. Бормотание. Переписал комментарий
+// Если покупатель и карта не найдены в нашей БД, то считаем, что пользователь ввел некорректный номер карты или пароль
+if(buyer == null && card == null)
+    throw new ShopperRestException("Некорректный номер карты или пароль", ShopperHttpResponseCodes.INVALID_CARD_NUMBER_OR_PASSWORD);
+
+// Было
+// Если ни пароль не подошел и такой карты у нас нет, то создавать карту не нужно.
+if(card.getBuyer() != null && !card.getBuyer().getRecID().equals(buyer.getRecID()) && card.getBuyer().getVerified() != null)
+    throw new ShopperRestException("Указанная карта %s уже зарегестрирована на другого покупателя", ShopperHttpResponseCodes.CARD_ALREADY_BINDING_BUYER);
+
+// Стало. Пункт 2. Бормотание. Переписал комментарий
+// Если у карты нет покупателя или покупатель, привязанные к карте отличается от авторизованного покупателя,
+// и покупателя, привязанного к карте, подтвержден номер телефона, то считаем, что карта уже привязана к другому покупателя
+// и не даем возможности ее использовать
+if(card.getBuyer() != null && !card.getBuyer().getRecID().equals(buyer.getRecID()) && card.getBuyer().getVerified() != null)
+    throw new ShopperRestException("Указанная карта %s уже зарегестрирована на другого покупателя", ShopperHttpResponseCodes.CARD_ALREADY_BINDING_BUYER);
+
+
+// Было
+/**
+	 * Зарегистрировать физическую карту
+	 * @return
+	 * @throws Exception
+	 */
+	@Path("/material")
+	@POST
+	@Authenticated
+	public CardJSON register(
+		@NotNull @QueryParam(BaseRestORMService.RetailerParamName) String retailer,
+		@CheckBuyer @NotNull @QueryParam(BaseRestORMService.BuyerIDParamName) Long buyerID,
+		@NotNull @QueryParam(NumberParamName) String number) throws Exception
+	{
+	.. // много кода
+	}
+
+// Стало. Пункт 8. Избыточные комментарии. Убрал лишний комментарий, переименовал метод
+	@Path("/material")
+	@POST
+	@Authenticated
+	public CardJSON registerMaterialCard(
+		@NotNull @QueryParam(BaseRestORMService.RetailerParamName) String retailer,
+		@CheckBuyer @NotNull @QueryParam(BaseRestORMService.BuyerIDParamName) Long buyerID,
+		@NotNull @QueryParam(NumberParamName) String number) throws Exception
+	{
+	.. // много кода
+	}
+
+// Было
+/**
+ ** Зарегистрировать виртуальную карту
+ */
+	@POST
+	@Path("/virtual")
+	@Authenticated
+	public CardJSON registerVirtual(
+		@NotNull @QueryParam(BaseRestORMService.RetailerParamName) String retailer,
+		@CheckBuyer @NotNull @QueryParam(BaseRestORMService.BuyerIDParamName) Long buyerID) throws Exception
+	{
+	.. // много кода
+	}
+
+// Стало. Пункт 8. Избыточные комментарии. Убрал лишний комментарий, переименовал метод
+    @POST
+	@Path("/virtual")
+	@Authenticated
+	public CardJSON registerVirtualCard(
+		@NotNull @QueryParam(BaseRestORMService.RetailerParamName) String retailer,
+		@CheckBuyer @NotNull @QueryParam(BaseRestORMService.BuyerIDParamName) Long buyerID) throws Exception
+	{
+	.. // много кода
+	}
+
+// Было
+/*
+** Получить чек
+*/
+		@POST
+		@IntergationAuthenticated
+		@Path("/getProcessedCheck")
+		public CheckJSON getProcessedCheck(
+			@NotNull @QueryParam(RetailerParamName) String retailerCode,
+			@CheckRetailerToken @QueryParam(ApiKeyParamName) String apiKey,
+			@NotNull @QueryParam(CardNumberParamName) String cardNumber,
+			CheckJSON check
+		) throws Exception
+		{
+		.. // много кода
+		}
+
+// Стало. Пункт 1. Неочевидные комментарии
+/*
+** Получить чек, после применения к нему скидок + остаток бонусов на счету покупателя, доступных для списания	 *
+*/
+		@POST
+		@IntergationAuthenticated
+		@Path("/getProcessedCheck")
+		public CheckJSON getProcessedCheck(
+			@NotNull @QueryParam(RetailerParamName) String retailerCode,
+			@CheckRetailerToken @QueryParam(ApiKeyParamName) String apiKey,
+			@NotNull @QueryParam(CardNumberParamName) String cardNumber,
+			CheckJSON check
+		) throws Exception
+		{
+        .. // много кода
+        }
+
+// Было
+ /**
+   * Обработать новые акции
+   */
+    private void processNewStock(List<StockDto> newStockList)
+	{
+      .. // много кода
+    }
+
+// Стало. Пункт 8. Избыточные комментарии. Убрал лишний комментарий
+    private void processNewStock(List<StockDto> newStockList)
+	{
+      .. // много кода
+    }
+
+// Было
+ /**
+   * Обработать повторно выгружаемые акции
+   */
+    private void processExportedStock(List<StockDto> exportedStockList)
+    {
+        .. // много кода
+    }
+
+ // Стало. Пункт 8. Избыточные комментарии. Убрал лишний комментарий, переименовал метод
+ private void processAlreadyExportedStock(List<StockDto> exportedStockList)
+ {
+    .. // много кода
+ }
+
+ // Было
+ public List<StockDto> getForBonusCalculation(Date minDate)
+ 		{
+ 				CriteriaQuery<StockDto> query = getCriteriaBuilder().createQuery(StockDto.class);
+ 				Root<StockDto> root = query.from(StockDto.class);
+ 				// StartDate <= now() AND (FinishDate IS NULL OR FinishDate >= '20171201' ) AND (State IN ('Approved', 'Completed'))
+ 				// AND (Bonus IS NOT NULL)
+ 				query
+ 					.where(getCriteriaBuilder().lessThanOrEqualTo(root.get(StockDto_.startDate), getCriteriaBuilder().currentDate()), getCriteriaBuilder()
+ 						.or(getCriteriaBuilder().isNull(root.get(StockDto_.finishDate)), getCriteriaBuilder().greaterThanOrEqualTo(root.get(StockDto_.finishDate), minDate)), root
+ 						.get(StockDto_.state)
+ 						.in(StocksStateEnum.Approved, StocksStateEnum.Completed), getCriteriaBuilder().isNotNull(root.get(StockDto_.bonus)));
+ 				return getEm().createQuery(query).getResultList();
+ 		}
+
+  // Стало. Пункт 12. Закомментированный код. Убрал закомментированный код
+  public List<StockDto> getForBonusCalculation(Date minDate)
+  {
+  		CriteriaQuery<StockDto> query = getCriteriaBuilder().createQuery(StockDto.class);
+        Root<StockDto> root = query.from(StockDto.class);
+        query
+            .where(getCriteriaBuilder().lessThanOrEqualTo(root.get(StockDto_.startDate), getCriteriaBuilder().currentDate()), getCriteriaBuilder()
+          	.or(getCriteriaBuilder().isNull(root.get(StockDto_.finishDate)), getCriteriaBuilder().greaterThanOrEqualTo(root.get(StockDto_.finishDate), minDate)), root
+          	.get(StockDto_.state)
+          	.in(StocksStateEnum.Approved, StocksStateEnum.Completed), getCriteriaBuilder().isNotNull(root.get(StockDto_.bonus)));
+        return getEm().createQuery(query).getResultList();
+  }
+
+  // Было
+  private final Integer checkRowInSupplierAndCardForm = 10; // Счетчик строк
+
+  // Стало. Пункт 8. Избыточные комментарии. Убрал лишний комментарий, переименовал переменную
+  private final Integer rowCounter = 10;
