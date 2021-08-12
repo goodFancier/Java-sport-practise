@@ -1,0 +1,61 @@
+import org.junit.Test;
+
+import java.util.List;
+
+import static org.junit.Assert.*;
+
+public class TreeTests
+{
+		@Test public void testAddChild()
+		{
+				Tree tree = new Tree();
+				Tree.SimpleTreeNode<Integer> parentNode = tree.new SimpleTreeNode<>(5, null);
+				Tree.SimpleTree<Integer> simpleTree = tree.new SimpleTree<>(parentNode);
+				Tree.SimpleTreeNode<Integer> childNode = tree.new SimpleTreeNode<>(10, parentNode);
+				simpleTree.AddChild(parentNode, childNode);
+				assertEquals(parentNode.Children.get(0).NodeValue, childNode.NodeValue);
+		}
+
+		@Test public void testDeleteNode()
+		{
+				Tree tree = new Tree();
+				Tree.SimpleTreeNode<Integer> parentNode = tree.new SimpleTreeNode<>(5, null);
+				Tree.SimpleTree<Integer> simpleTree = tree.new SimpleTree<>(parentNode);
+				Tree.SimpleTreeNode<Integer> childNode1 = tree.new SimpleTreeNode<>(10, parentNode);
+				Tree.SimpleTreeNode<Integer> childNode2 = tree.new SimpleTreeNode<>(20, parentNode);
+				simpleTree.AddChild(parentNode, childNode1);
+				simpleTree.AddChild(parentNode, childNode2);
+				simpleTree.DeleteNode(childNode1);
+				assertTrue(simpleTree.Root.Children.get(0).NodeValue.equals(childNode2.NodeValue) && simpleTree.Root.Children.size() == 1);
+		}
+
+		@Test public void testGetAllNodes()
+		{
+				Tree tree = new Tree();
+				Tree.SimpleTreeNode<Integer> parentNode = tree.new SimpleTreeNode<>(5, null);
+				Tree.SimpleTree<Integer> simpleTree = tree.new SimpleTree<>(parentNode);
+				Tree.SimpleTreeNode<Integer> childNode1 = tree.new SimpleTreeNode<>(10, parentNode);
+				Tree.SimpleTreeNode<Integer> childNode3 = tree.new SimpleTreeNode<>(30, childNode1);
+				Tree.SimpleTreeNode<Integer> childNode9 = tree.new SimpleTreeNode<>(90, childNode3);
+				Tree.SimpleTreeNode<Integer> childNode10 = tree.new SimpleTreeNode<>(100, childNode3);
+				Tree.SimpleTreeNode<Integer> childNode4 = tree.new SimpleTreeNode<>(40, childNode1);
+				Tree.SimpleTreeNode<Integer> childNode5 = tree.new SimpleTreeNode<>(50, childNode1);
+				Tree.SimpleTreeNode<Integer> childNode6 = tree.new SimpleTreeNode<>(60, childNode1);
+				Tree.SimpleTreeNode<Integer> childNode2 = tree.new SimpleTreeNode<>(20, parentNode);
+				Tree.SimpleTreeNode<Integer> childNode7 = tree.new SimpleTreeNode<>(70, childNode2);
+				Tree.SimpleTreeNode<Integer> childNode8 = tree.new SimpleTreeNode<>(80, childNode2);
+				simpleTree.AddChild(parentNode, childNode1);
+				simpleTree.AddChild(childNode1, childNode3);
+				simpleTree.AddChild(childNode3, childNode9);
+				simpleTree.AddChild(childNode3, childNode10);
+				simpleTree.AddChild(childNode1, childNode4);
+				simpleTree.AddChild(childNode1, childNode5);
+				simpleTree.AddChild(childNode1, childNode6);
+				simpleTree.AddChild(parentNode, childNode2);
+				simpleTree.AddChild(childNode2, childNode7);
+				simpleTree.AddChild(childNode2, childNode8);
+				assertEquals(simpleTree.GetAllNodes().size(), 11);
+				assertEquals(simpleTree.GetAllNodes().size(), 11);
+				assertNotEquals(simpleTree.GetAllNodes().size(), 12);
+		}
+}
