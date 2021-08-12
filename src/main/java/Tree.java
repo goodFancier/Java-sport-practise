@@ -1,8 +1,5 @@
 import java.util.*;
-import java.util.stream.Collectors;
 
-public class Tree
-{
 		public class SimpleTreeNode<T>
 		{
 				public T NodeValue; // значение в узле
@@ -61,7 +58,7 @@ public class Tree
 								for(SimpleTreeNode<T> node : headNode.Children)
 								{
 										headNode = node;
-										this.getAllNodesByRecursion(allNodes, headNode);
+										getAllNodesByRecursion(allNodes, headNode);
 								}
 						return allNodes;
 				}
@@ -93,4 +90,4 @@ public class Tree
 						return (int)GetAllNodes().stream().filter(o -> o.Children == null || o.Children.isEmpty()).count();
 				}
 		}
-}
+
