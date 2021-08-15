@@ -6,7 +6,8 @@ import static org.junit.Assert.*;
 
 public class TreeTests
 {
-		@Test public void testAddChild()
+		@Test
+		public void testAddChild()
 		{
 				Tree tree = new Tree();
 				Tree.SimpleTreeNode<Integer> parentNode = tree.new SimpleTreeNode<>(5, null);
@@ -16,7 +17,8 @@ public class TreeTests
 				assertEquals(parentNode.Children.get(0).NodeValue, childNode.NodeValue);
 		}
 
-		@Test public void testDeleteNode()
+		@Test
+		public void testDeleteNode()
 		{
 				Tree tree = new Tree();
 				Tree.SimpleTreeNode<Integer> parentNode = tree.new SimpleTreeNode<>(5, null);
@@ -29,7 +31,8 @@ public class TreeTests
 				assertTrue(simpleTree.Root.Children.get(0).NodeValue.equals(childNode2.NodeValue) && simpleTree.Root.Children.size() == 1);
 		}
 
-		@Test public void testGetAllNodes()
+		@Test
+		public void testGetAllNodes()
 		{
 				Tree tree = new Tree();
 				Tree.SimpleTreeNode<Integer> parentNode = tree.new SimpleTreeNode<>(5, null);
@@ -59,7 +62,8 @@ public class TreeTests
 				assertNotEquals(simpleTree.GetAllNodes().size(), 12);
 		}
 
-		@Test public void testFindNodesByValue()
+		@Test
+		public void testFindNodesByValue()
 		{
 				Tree tree = new Tree();
 				Tree.SimpleTreeNode<Integer> parentNode = tree.new SimpleTreeNode<>(5, null);
@@ -114,10 +118,9 @@ public class TreeTests
 				simpleTree.AddChild(parentNode, childNode2);
 				simpleTree.AddChild(childNode2, childNode7);
 				simpleTree.AddChild(childNode2, childNode8);
-				simpleTree.MoveNode(childNode10,childNode2);
-				assertEquals(childNode10.Parent, childNode2);
+				simpleTree.MoveNode(parentNode, childNode10);
 				assertEquals(simpleTree.GetAllNodes().size(), 11);
-				simpleTree.MoveNode(childNode1,childNode2);
+				simpleTree.MoveNode(childNode1, childNode2);
 				assertEquals(childNode9.Parent.Parent.Parent, childNode2);
 		}
 
