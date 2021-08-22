@@ -143,8 +143,8 @@ public class BinaryTree
 						// ищем максимальный/минимальный ключ в поддереве
 						List<BSTNode<T>> bstNodes = new ArrayList<>();
 						postOrder(FromNode, bstNodes);
-				    if (FindMax)
-				    		return bstNodes.stream().max(Comparator.comparing(BSTNode::getNodeKey)).orElseThrow(NoSuchElementException::new);
+						if(FindMax)
+								return bstNodes.stream().max(Comparator.comparing(BSTNode::getNodeKey)).orElseThrow(NoSuchElementException::new);
 						else
 								return bstNodes.stream().min(Comparator.comparing(BSTNode::getNodeKey)).orElseThrow(NoSuchElementException::new);
 				}
@@ -152,7 +152,18 @@ public class BinaryTree
 				public boolean DeleteNodeByKey(int key)
 				{
 						// удаляем узел по ключу
-						return false; // если узел не найден
+						BSTFind<T> foundNode = FindNodeByKey(key);
+						if(!foundNode.NodeHasKey)
+								return false; // если узел не найден
+						else
+						{
+								if(foundNode.Node.Parent.LeftChild.equals(foundNode.Node))
+										foundNode.Node.Parent.LeftChild = foundNode.Node.RightChild;
+								else
+										foundNode.Node.Parent.RightChild = foundNode.Node.RightChild;
+								foundNode.Node = foundNode.Node.RightChild;
+								return true;
+						}
 				}
 
 				public int Count()

@@ -102,4 +102,23 @@ public class BinaryTreeTests
 				assertEquals(bst.FinMinMax(secondNode, true).NodeKey, 45);
 				assertEquals(bst.FinMinMax(secondNode, false).NodeKey, 15);
 		}
+
+		@Test
+		public void testDeleteNode()
+		{
+				BinaryTree binaryTree = new BinaryTree();
+				BinaryTree.BSTNode<Integer> rootNode = binaryTree.new BSTNode<>(50, 50, null);
+				BinaryTree.BST<Integer> bst = binaryTree.new BST<>(rootNode);
+				bst.AddKeyValue(40, 40);
+				bst.AddKeyValue(30, 30);
+				bst.AddKeyValue(35, 35);
+				bst.AddKeyValue(60, 60);
+				bst.AddKeyValue(70, 70);
+				bst.AddKeyValue(65, 65);
+				bst.AddKeyValue(75, 75);
+				bst.AddKeyValue(15, 15);
+				bst.AddKeyValue(35, 35);
+				bst.DeleteNodeByKey(30);
+				assertEquals(rootNode.LeftChild.LeftChild.NodeKey, 35);
+		}
 }
