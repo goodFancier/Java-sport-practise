@@ -23,6 +23,11 @@ public class BinaryTree
 						LeftChild = null;
 						RightChild = null;
 				}
+
+				public int getNodeKey()
+				{
+						return NodeKey;
+				}
 		}
 
 		// промежуточный результат поиска
@@ -102,6 +107,15 @@ public class BinaryTree
 								return findNodeByRecursion(currentNode, key);
 				}
 
+				public void postOrder(BSTNode<T> node, List<BSTNode<T>> nodeList)
+				{
+						if(node == null)
+								return;
+						postOrder(node.LeftChild, nodeList);
+						postOrder(node.RightChild, nodeList);
+						nodeList.add(node);
+				}
+
 				public boolean AddKeyValue(int key, T val)
 				{
 						// добавляем ключ-значение в дерево
@@ -127,7 +141,12 @@ public class BinaryTree
 				public BSTNode<T> FinMinMax(BSTNode<T> FromNode, boolean FindMax)
 				{
 						// ищем максимальный/минимальный ключ в поддереве
-						return null;
+						List<BSTNode<T>> bstNodes = new ArrayList<>();
+						postOrder(FromNode, bstNodes);
+				    if (FindMax)
+				    		return bstNodes.stream().max(Comparator.comparing(BSTNode::getNodeKey)).orElseThrow(NoSuchElementException::new);
+						else
+								return bstNodes.stream().min(Comparator.comparing(BSTNode::getNodeKey)).orElseThrow(NoSuchElementException::new);
 				}
 
 				public boolean DeleteNodeByKey(int key)
@@ -138,7 +157,10 @@ public class BinaryTree
 
 				public int Count()
 				{
-						return 0; // количество узлов в дереве
+						// количество узлов в дереве
+						List<BinaryTree.BSTNode<T>> bstNodes = new ArrayList<>();
+						postOrder(Root, bstNodes);
+						return bstNodes.size();
 				}
 		}
 }
