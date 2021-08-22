@@ -1,6 +1,8 @@
 import java.io.*;
 import java.util.*;
 
+public class BinaryTree
+{
 		class BSTNode<T>
 		{
 				public int NodeKey; // ключ узла
@@ -53,47 +55,44 @@ import java.util.*;
 				public BSTFind<T> FindNodeByKey(int key)
 				{
 						// ищем в дереве узел и сопутствующую информацию по ключу
-						BSTFind<T> bstFind = new BSTFind<>();
+						BSTFind<T> rootNode = new BSTFind<>();
 						if(Root == null)
 						{
-								bstFind.NodeHasKey = false;
-								bstFind.ToLeft = false;
-								bstFind.Node = null;
+								rootNode.NodeHasKey = false;
+								rootNode.ToLeft = false;
+								rootNode.Node = null;
 						}
 						else
 						{
 								if(Root.NodeKey == key)
 								{
-										bstFind.NodeHasKey = true;
-										bstFind.Node = Root;
-										return bstFind;
+										rootNode.NodeHasKey = true;
+										rootNode.Node = Root;
+										return rootNode;
 								}
-								bstFind.Node = Root;
-								bstFind.ToLeft = key < Root.NodeKey;
-								BSTFind<T> foundNode = findNodeByRecursion(bstFind, key);
-								if(foundNode == null)
-										bstFind.Node = null;
-								else
-										bstFind = findNodeByRecursion(bstFind, key);
+								rootNode.Node = Root;
+								rootNode.ToLeft = key < Root.NodeKey;
+								return findNodeByRecursion(rootNode, key);
 						}
-						return bstFind;
+						return rootNode;
 				}
 
-				private BSTFind<T> findNodeByRecursion(BSTFind<T> node, int key)
+				private BSTFind<T> findNodeByRecursion(BSTFind<T> parentNode, int key)
 				{
 						BSTFind<T> currentNode = new BSTFind<>();
-						if(node.ToLeft)
+						if(parentNode.ToLeft)
 						{
-								if(node.Node.LeftChild == null)
-										return null;
-								currentNode.Node = node.Node.LeftChild;
+								if(parentNode.Node.LeftChild == null)
+										return parentNode;
+								currentNode.Node = parentNode.Node.LeftChild;
 						}
 						else
 						{
-								if(node.Node.RightChild == null)
-										return null;
-								currentNode.Node = node.Node.RightChild;
+								if(parentNode.Node.RightChild == null)
+										return parentNode;
+								currentNode.Node = parentNode.Node.RightChild;
 						}
+						currentNode.ToLeft = key < currentNode.Node.NodeKey;
 						if(currentNode.Node.NodeKey == key)
 						{
 								currentNode.NodeHasKey = true;
@@ -111,7 +110,7 @@ import java.util.*;
 								Root = new BSTNode<>(key, val, null);
 						else
 						{
-								if(node.NodeHasKey)
+								if(node.Node.NodeKey == key)
 										return false; // если ключ уже есть
 								else
 								{
@@ -142,4 +141,5 @@ import java.util.*;
 						return 0; // количество узлов в дереве
 				}
 		}
+}
 
