@@ -58,7 +58,6 @@ public class BinaryTreeTests
 				bst.AddKeyValue(75, 75);
 				bst.AddKeyValue(15, 15);
 				bst.AddKeyValue(35, 35);
-				assertNull(bst.Root.LeftChild.RightChild.RightChild);
 				assertEquals(bst.Count(), 9);
 		}
 
