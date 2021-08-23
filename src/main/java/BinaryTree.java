@@ -1,8 +1,6 @@
 import java.io.*;
 import java.util.*;
 
-public class BinaryTree
-{
 		class BSTNode<T>
 		{
 				public int NodeKey; // ключ узла
@@ -169,10 +167,9 @@ public class BinaryTree
 				public int Count()
 				{
 						// количество узлов в дереве
-						List<BinaryTree.BSTNode<T>> bstNodes = new ArrayList<>();
+						List<BSTNode<T>> bstNodes = new ArrayList<>();
 						postOrder(Root, bstNodes);
 						return bstNodes.size();
 				}
 		}
-}
 
