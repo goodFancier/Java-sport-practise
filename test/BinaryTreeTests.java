@@ -86,7 +86,7 @@ public class BinaryTreeTests
 				BinaryTree.BST<Integer> bst = binaryTree.new BST<>(rootNode);
 				bst.AddKeyValue(40, 40);
 				bst.AddKeyValue(30, 30);
-				bst.AddKeyValue(35, 35);
+				bst.AddKeyValue(48, 48);
 				bst.AddKeyValue(60, 60);
 				bst.AddKeyValue(70, 70);
 				bst.AddKeyValue(65, 65);
@@ -95,7 +95,7 @@ public class BinaryTreeTests
 				bst.AddKeyValue(35, 35);
 				assertEquals(bst.FinMinMax(rootNode, true).NodeKey, 75);
 				assertEquals(bst.FinMinMax(rootNode, false).NodeKey, 15);
-				assertEquals(bst.FinMinMax(secondNode, true).NodeKey, 45);
+				assertEquals(bst.FinMinMax(secondNode, true).NodeKey, 48);
 				assertEquals(bst.FinMinMax(secondNode, false).NodeKey, 15);
 		}
 
