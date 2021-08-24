@@ -108,13 +108,39 @@ public class BinaryTreeTests
 				bst.AddKeyValue(40, 40);
 				bst.AddKeyValue(30, 30);
 				bst.AddKeyValue(35, 35);
-				bst.AddKeyValue(60, 60);
-				bst.AddKeyValue(70, 70);
-				bst.AddKeyValue(65, 65);
-				bst.AddKeyValue(75, 75);
 				bst.AddKeyValue(15, 15);
+				bst.AddKeyValue(60, 60);
+				bst.AddKeyValue(58, 58);
+				bst.AddKeyValue(70, 70);
+				bst.AddKeyValue(62, 62);
+				bst.AddKeyValue(57, 57);
+				bst.AddKeyValue(65, 65);
+				bst.AddKeyValue(68, 68);
+				bst.AddKeyValue(69, 69);
+				bst.AddKeyValue(75, 75);
+				bst.DeleteNodeByKey(50);
+				assertEquals(bst.Count(), 13);
+		}
+
+		@Test
+		public void testDeleteNodeInEmptyTree()
+		{
+				BinaryTree binaryTree = new BinaryTree();
+				BinaryTree.BST<Integer> bst = binaryTree.new BST<>(null);
+				bst.DeleteNodeByKey(50);
+				assertEquals(bst.Count(), 0);
+		}
+
+		@Test
+		public void testDeleteRoot()
+		{
+				BinaryTree binaryTree = new BinaryTree();
+				BinaryTree.BSTNode<Integer> rootNode = binaryTree.new BSTNode<>(50, 50, null);
+				BinaryTree.BST<Integer> bst = binaryTree.new BST<>(rootNode);
+				bst.DeleteNodeByKey(50);
+				bst.AddKeyValue(40, 40);
+				bst.AddKeyValue(30, 30);
 				bst.AddKeyValue(35, 35);
-				bst.DeleteNodeByKey(30);
-				assertEquals(rootNode.LeftChild.LeftChild.NodeKey, 35);
+				assertEquals(bst.Count(), 3);
 		}
 }
