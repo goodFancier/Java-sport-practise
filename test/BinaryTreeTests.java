@@ -128,14 +128,10 @@ public class BinaryTreeTests
 				BinaryTree binaryTree = new BinaryTree();
 				BinaryTree.BSTNode<Integer> rootNode = binaryTree.new BSTNode<>(50, 50, null);
 				BinaryTree.BST<Integer> bst = binaryTree.new BST<>(rootNode);
-				bst.AddKeyValue(45, 45);
-				bst.AddKeyValue(70, 70);
-				bst.AddKeyValue(78, 78);
-				bst.AddKeyValue(75, 75);
-				bst.DeleteNodeByKey(75);
-				assertEquals(bst.Count(), 4);
+				bst.AddKeyValue(55, 55);
+				bst.DeleteNodeByKey(50);
+				assertEquals(bst.Count(), 1);
 		}
-
 
 		@Test
 		public void testDeleteLeftLastNode()
@@ -150,7 +146,6 @@ public class BinaryTreeTests
 				bst.DeleteNodeByKey(30);
 				assertEquals(bst.Count(), 4);
 		}
-
 
 		@Test
 		public void testDeleteNodeInEmptyTree()

@@ -191,6 +191,8 @@ import java.util.*;
 														}
 														else
 																root = null;
+						if(root != null && root.Parent == null)
+								Root = root;
 						return root;
 				}
 
