@@ -118,8 +118,20 @@ public class BinaryTreeTests
 				bst.AddKeyValue(68, 68);
 				bst.AddKeyValue(69, 69);
 				bst.AddKeyValue(75, 75);
-				bst.DeleteNodeByKey(75);
+				bst.DeleteNodeByKey(15);
 				assertEquals(bst.Count(), 13);
+		}
+
+		@Test
+		public void testDeleteLastNode()
+		{
+				BinaryTree binaryTree = new BinaryTree();
+				BinaryTree.BSTNode<Integer> rootNode = binaryTree.new BSTNode<>(50, 50, null);
+				BinaryTree.BST<Integer> bst = binaryTree.new BST<>(rootNode);
+				bst.AddKeyValue(45, 45);
+				bst.AddKeyValue(75, 75);
+				bst.DeleteNodeByKey(75);
+				assertEquals(bst.Count(), 2);
 		}
 
 		@Test

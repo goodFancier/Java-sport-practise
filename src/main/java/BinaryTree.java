@@ -1,6 +1,7 @@
 import java.io.*;
 import java.util.*;
 
+
 		class BSTNode<T>
 		{
 				public int NodeKey; // ключ узла
@@ -172,6 +173,7 @@ import java.util.*;
 										if(root.LeftChild != null && root.RightChild != null)
 										{
 												root.NodeKey = FinMinMax(root.RightChild, false).NodeKey;
+												root.NodeValue = FinMinMax(root.RightChild, false).NodeValue;
 												root.RightChild = DeleteNodeByRecursion(root.RightChild, root.NodeKey);
 										}
 										else
@@ -193,4 +195,3 @@ import java.util.*;
 						return bstNodes.size();
 				}
 		}
-
