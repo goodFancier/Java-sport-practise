@@ -1,6 +1,8 @@
 import java.io.*;
 import java.util.*;
 
+public class BinaryTree
+{
 		class BSTNode<T>
 		{
 				public int NodeKey; // ключ узла
@@ -150,51 +152,39 @@ import java.util.*;
 				public boolean DeleteNodeByKey(int key)
 				{
 						// удаляем узел по ключу
-						BSTFind<T> foundNode = FindNodeByKey(key);
-						if(foundNode.Node == null || !foundNode.NodeHasKey)
-								return false; // если узел не найден
-						if(foundNode.Node.RightChild != null)
+						if(DeleteNodeByRecursion(Root, key) == null)
 						{
-								BSTNode<T> minRightChildNode = FinMinMax(foundNode.Node.RightChild, false);
-								minRightChildNode.Parent.LeftChild = null;
-								minRightChildNode.Parent = foundNode.Node.Parent;
-								if(minRightChildNode.Parent == null)
-								{
-										Root = minRightChildNode;
-										Root.RightChild = foundNode.Node.RightChild;
-										Root.RightChild.Parent = Root;
-										Root.LeftChild = foundNode.Node.LeftChild;
-										Root.LeftChild.Parent = Root;
-								}
-								else
-								{
-										if(foundNode.Node.RightChild.Parent.NodeKey != minRightChildNode.NodeKey)
-										{
-												foundNode.Node.RightChild.Parent = minRightChildNode;
-												minRightChildNode.RightChild = foundNode.Node.RightChild;
-										}
-										foundNode.Node.LeftChild.Parent = minRightChildNode;
-										minRightChildNode.LeftChild = foundNode.Node.LeftChild;
-								}
-								return true;
+								Root = null;
+								return false;
 						}
 						else
-								if(foundNode.Node.LeftChild != null)
-								{
-										if(foundNode.Node.Parent != null)
-												foundNode.Node.LeftChild.Parent = foundNode.Node.Parent;
-										else
-										{
-												Root = foundNode.Node.LeftChild;
-												foundNode.Node.LeftChild.Parent = null;
-										}
-										return true;
-								}
+								return true;
+				}
+
+				public BSTNode<T> DeleteNodeByRecursion(BSTNode<T> root, int key)
+				{
+						if(root == null)
+								return null;
+						if(key < root.getNodeKey())
+								root.LeftChild = DeleteNodeByRecursion(root.LeftChild, key);
+						else
+								if(key > root.getNodeKey())
+										root.RightChild = DeleteNodeByRecursion(root.RightChild, key);
 								else
-								{
-										Root = null;
-										return true;
-								}
+										if(root.LeftChild != null && root.RightChild != null)
+										{
+												root.NodeKey = FinMinMax(root.RightChild, false).NodeKey;
+												root.RightChild = DeleteNodeByRecursion(root.RightChild, root.NodeKey);
+										}
+										else
+												if(root.LeftChild != null)
+														root = root.LeftChild;
+												else
+														if(root.RightChild != null)
+																root = root.RightChild;
+														else
+																root = null;
+						return root;
 				}
 
 				public int Count()
@@ -205,5 +195,5 @@ import java.util.*;
 						return bstNodes.size();
 				}
 		}
-
+}
 

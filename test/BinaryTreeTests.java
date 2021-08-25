@@ -118,7 +118,7 @@ public class BinaryTreeTests
 				bst.AddKeyValue(68, 68);
 				bst.AddKeyValue(69, 69);
 				bst.AddKeyValue(75, 75);
-				bst.DeleteNodeByKey(50);
+				bst.DeleteNodeByKey(75);
 				assertEquals(bst.Count(), 13);
 		}
 
