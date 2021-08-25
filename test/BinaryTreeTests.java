@@ -7,9 +7,9 @@ public class BinaryTreeTests
 		@Test
 		public void testFindElement()
 		{
-				BinaryTree binaryTree = new BinaryTree();
-				BinaryTree.BSTNode<Integer> rootNode = binaryTree.new BSTNode<>(50, 50, null);
-				BinaryTree.BST<Integer> bst = binaryTree.new BST<>(rootNode);
+				BinaryTreePractice binaryTree = new BinaryTreePractice();
+				BinaryTreePractice.BSTNode<Integer> rootNode = binaryTree.new BSTNode<>(50, 50, null);
+				BinaryTreePractice.BST<Integer> bst = binaryTree.new BST<>(rootNode);
 				bst.AddKeyValue(40, 40);
 				bst.AddKeyValue(30, 30);
 				bst.AddKeyValue(35, 35);
@@ -26,26 +26,26 @@ public class BinaryTreeTests
 		@Test
 		public void testFindNodeInEmptyTree()
 		{
-				BinaryTree binaryTree = new BinaryTree();
-				BinaryTree.BST<Integer> bst = binaryTree.new BST<>(null);
+				BinaryTreePractice binaryTree = new BinaryTreePractice();
+				BinaryTreePractice.BST<Integer> bst = binaryTree.new BST<>(null);
 				assertNull(bst.FindNodeByKey(7).Node);
 		}
 
 		@Test
 		public void testFindNodeInOneNodeTree()
 		{
-				BinaryTree binaryTree = new BinaryTree();
-				BinaryTree.BSTNode<Integer> rootNode = binaryTree.new BSTNode<>(50, 50, null);
-				BinaryTree.BST<Integer> bst = binaryTree.new BST<>(rootNode);
+				BinaryTreePractice binaryTree = new BinaryTreePractice();
+				BinaryTreePractice.BSTNode<Integer> rootNode = binaryTree.new BSTNode<>(50, 50, null);
+				BinaryTreePractice.BST<Integer> bst = binaryTree.new BST<>(rootNode);
 				assertEquals(bst.FindNodeByKey(50).Node.NodeKey, 50);
 		}
 
 		@Test
 		public void testAddExistsNodeInTree()
 		{
-				BinaryTree binaryTree = new BinaryTree();
-				BinaryTree.BSTNode<Integer> rootNode = binaryTree.new BSTNode<>(50, 50, null);
-				BinaryTree.BST<Integer> bst = binaryTree.new BST<>(rootNode);
+				BinaryTreePractice binaryTree = new BinaryTreePractice();
+				BinaryTreePractice.BSTNode<Integer> rootNode = binaryTree.new BSTNode<>(50, 50, null);
+				BinaryTreePractice.BST<Integer> bst = binaryTree.new BST<>(rootNode);
 				bst.AddKeyValue(40, 40);
 				bst.AddKeyValue(30, 30);
 				bst.AddKeyValue(35, 35);
@@ -61,9 +61,9 @@ public class BinaryTreeTests
 		@Test
 		public void testCount()
 		{
-				BinaryTree binaryTree = new BinaryTree();
-				BinaryTree.BSTNode<Integer> rootNode = binaryTree.new BSTNode<>(50, 50, null);
-				BinaryTree.BST<Integer> bst = binaryTree.new BST<>(rootNode);
+				BinaryTreePractice binaryTree = new BinaryTreePractice();
+				BinaryTreePractice.BSTNode<Integer> rootNode = binaryTree.new BSTNode<>(50, 50, null);
+				BinaryTreePractice.BST<Integer> bst = binaryTree.new BST<>(rootNode);
 				bst.AddKeyValue(40, 40);
 				bst.AddKeyValue(30, 30);
 				bst.AddKeyValue(35, 35);
@@ -79,11 +79,11 @@ public class BinaryTreeTests
 		@Test
 		public void testFindMinMax()
 		{
-				BinaryTree binaryTree = new BinaryTree();
-				BinaryTree.BSTNode<Integer> rootNode = binaryTree.new BSTNode<>(50, 50, null);
-				BinaryTree.BSTNode<Integer> secondNode = binaryTree.new BSTNode<>(45, 45, rootNode);
+				BinaryTreePractice binaryTree = new BinaryTreePractice();
+				BinaryTreePractice.BSTNode<Integer> rootNode = binaryTree.new BSTNode<>(50, 50, null);
+				BinaryTreePractice.BSTNode<Integer> secondNode = binaryTree.new BSTNode<>(45, 45, rootNode);
 				rootNode.LeftChild = secondNode;
-				BinaryTree.BST<Integer> bst = binaryTree.new BST<>(rootNode);
+				BinaryTreePractice.BST<Integer> bst = binaryTree.new BST<>(rootNode);
 				bst.AddKeyValue(40, 40);
 				bst.AddKeyValue(30, 30);
 				bst.AddKeyValue(48, 48);
@@ -102,9 +102,9 @@ public class BinaryTreeTests
 		@Test
 		public void testDeleteNode()
 		{
-				BinaryTree binaryTree = new BinaryTree();
-				BinaryTree.BSTNode<Integer> rootNode = binaryTree.new BSTNode<>(50, 50, null);
-				BinaryTree.BST<Integer> bst = binaryTree.new BST<>(rootNode);
+				BinaryTreePractice binaryTree = new BinaryTreePractice();
+				BinaryTreePractice.BSTNode<Integer> rootNode = binaryTree.new BSTNode<>(50, 50, null);
+				BinaryTreePractice.BST<Integer> bst = binaryTree.new BST<>(rootNode);
 				bst.AddKeyValue(40, 40);
 				bst.AddKeyValue(30, 30);
 				bst.AddKeyValue(35, 35);
@@ -125,20 +125,26 @@ public class BinaryTreeTests
 		@Test
 		public void testDeleteLastNode()
 		{
-				BinaryTree binaryTree = new BinaryTree();
-				BinaryTree.BSTNode<Integer> rootNode = binaryTree.new BSTNode<>(50, 50, null);
-				BinaryTree.BST<Integer> bst = binaryTree.new BST<>(rootNode);
-				bst.AddKeyValue(55, 55);
-				bst.DeleteNodeByKey(50);
-				assertEquals(bst.Count(), 1);
+				BinaryTreePractice binaryTree = new BinaryTreePractice();
+				BinaryTreePractice.BSTNode<Integer> rootNode = binaryTree.new BSTNode<>(10, 10, null);
+				BinaryTreePractice.BST<Integer> bst = binaryTree.new BST<>(rootNode);
+				bst.AddKeyValue(11, 11);
+				bst.AddKeyValue(12, 12);
+				bst.AddKeyValue(13, 13);
+				bst.AddKeyValue(16, 16);
+				bst.AddKeyValue(20, 20);
+				bst.AddKeyValue(15, 15);
+				bst.DeleteNodeByKey(20);
+				bst.DeleteNodeByKey(16);
+				assertEquals(bst.Count(), 6);
 		}
 
 		@Test
 		public void testDeleteLeftLastNode()
 		{
-				BinaryTree binaryTree = new BinaryTree();
-				BinaryTree.BSTNode<Integer> rootNode = binaryTree.new BSTNode<>(50, 50, null);
-				BinaryTree.BST<Integer> bst = binaryTree.new BST<>(rootNode);
+				BinaryTreePractice binaryTree = new BinaryTreePractice();
+				BinaryTreePractice.BSTNode<Integer> rootNode = binaryTree.new BSTNode<>(50, 50, null);
+				BinaryTreePractice.BST<Integer> bst = binaryTree.new BST<>(rootNode);
 				bst.AddKeyValue(45, 45);
 				bst.AddKeyValue(75, 75);
 				bst.AddKeyValue(30, 30);
@@ -150,8 +156,8 @@ public class BinaryTreeTests
 		@Test
 		public void testDeleteNodeInEmptyTree()
 		{
-				BinaryTree binaryTree = new BinaryTree();
-				BinaryTree.BST<Integer> bst = binaryTree.new BST<>(null);
+				BinaryTreePractice binaryTree = new BinaryTreePractice();
+				BinaryTreePractice.BST<Integer> bst = binaryTree.new BST<>(null);
 				bst.DeleteNodeByKey(50);
 				assertEquals(bst.Count(), 0);
 		}
@@ -159,9 +165,9 @@ public class BinaryTreeTests
 		@Test
 		public void testDeleteRoot()
 		{
-				BinaryTree binaryTree = new BinaryTree();
-				BinaryTree.BSTNode<Integer> rootNode = binaryTree.new BSTNode<>(50, 50, null);
-				BinaryTree.BST<Integer> bst = binaryTree.new BST<>(rootNode);
+				BinaryTreePractice binaryTree = new BinaryTreePractice();
+				BinaryTreePractice.BSTNode<Integer> rootNode = binaryTree.new BSTNode<>(50, 50, null);
+				BinaryTreePractice.BST<Integer> bst = binaryTree.new BST<>(rootNode);
 				bst.DeleteNodeByKey(50);
 				bst.AddKeyValue(40, 40);
 				bst.AddKeyValue(30, 30);
