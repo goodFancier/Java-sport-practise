@@ -171,17 +171,24 @@ import java.util.*;
 								else
 										if(root.LeftChild != null && root.RightChild != null)
 										{
-												root.NodeKey = FinMinMax(root, false).NodeKey;
-												root.NodeValue = FinMinMax(root, false).NodeValue;
-												root.LeftChild = FinMinMax(root, false).LeftChild;
+												root.NodeKey = FinMinMax(root.RightChild, false).NodeKey;
+												root.NodeValue = FinMinMax(root.RightChild, false).NodeValue;
 												root.RightChild = DeleteNodeByRecursion(root.RightChild, root.NodeKey);
 										}
 										else
 												if(root.LeftChild != null)
+												{
+														BSTNode<T> parent = root.Parent;
 														root = root.LeftChild;
+														root.Parent = parent;
+												}
 												else
 														if(root.RightChild != null)
+														{
+																BSTNode<T> parent = root.Parent;
 																root = root.RightChild;
+																root.Parent = parent;
+														}
 														else
 																root = null;
 						return root;
@@ -195,4 +202,3 @@ import java.util.*;
 						return bstNodes.size();
 				}
 		}
-
