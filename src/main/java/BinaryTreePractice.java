@@ -1,5 +1,7 @@
 import java.util.*;
 
+public class BinaryTreePractice
+{
 		class BSTNode<T>
 		{
 				public int NodeKey; // ключ узла
@@ -218,13 +220,9 @@ import java.util.*;
 								else
 										if(root.LeftChild != null && root.RightChild != null)
 										{
-												BSTNode<T> oldRoot = root;
-												root = FinMinMax(root.RightChild, false);
-												oldRoot.Parent.RightChild = root;
-												root.Parent = oldRoot.Parent;
-												root.LeftChild = oldRoot.LeftChild;
-												oldRoot.LeftChild.Parent = root;
-												root.RightChild = DeleteNodeByRecursion(root.RightChild, oldRoot.NodeKey);
+												root.NodeKey = FinMinMax(root.RightChild, false).NodeKey;
+												root.NodeValue = FinMinMax(root.RightChild, false).NodeValue;
+												root.RightChild = DeleteNodeByRecursion(root.RightChild, root.NodeKey);
 										}
 										else
 												if(root.LeftChild != null)
@@ -255,3 +253,4 @@ import java.util.*;
 						return bstNodes.size();
 				}
 		}
+}
