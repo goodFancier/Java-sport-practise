@@ -1,7 +1,5 @@
 import java.util.*;
 
-public class BinaryTreePractice
-{
 		class BSTNode<T>
 		{
 				public int NodeKey; // ключ узла
@@ -253,4 +251,3 @@ public class BinaryTreePractice
 						return bstNodes.size();
 				}
 		}
-}
