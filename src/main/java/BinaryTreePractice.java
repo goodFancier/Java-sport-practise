@@ -1,4 +1,3 @@
-import java.io.*;
 import java.util.*;
 
 		class BSTNode<T>
@@ -80,7 +79,32 @@ import java.util.*;
 						return rootNode;
 				}
 
-				private BSTFind<T> findNodeByRecursion(BSTFind<T> parentNode, int key)
+				public BSTFind<T> FindParentNodeByKey(int key)
+				{
+						// ищем в дереве узел и сопутствующую информацию по ключу
+						BSTFind<T> rootNode = new BSTFind<>();
+						if(Root == null)
+						{
+								rootNode.NodeHasKey = false;
+								rootNode.ToLeft = false;
+								rootNode.Node = null;
+						}
+						else
+						{
+								if(Root.NodeKey == key)
+								{
+										rootNode.NodeHasKey = true;
+										rootNode.Node = Root;
+										return rootNode;
+								}
+								rootNode.Node = Root;
+								rootNode.ToLeft = key < Root.NodeKey;
+								return findParentNodeByRecursion(rootNode, key);
+						}
+						return rootNode;
+				}
+
+				private BSTFind<T> findParentNodeByRecursion(BSTFind<T> parentNode, int key)
 				{
 						BSTFind<T> currentNode = new BSTFind<>();
 						if(parentNode.ToLeft)
@@ -102,7 +126,32 @@ import java.util.*;
 								return currentNode;
 						}
 						else
-								return findNodeByRecursion(currentNode, key);
+								return findParentNodeByRecursion(currentNode, key);
+				}
+
+				private BSTFind<T> findNodeByRecursion(BSTFind<T> parentNode, int key)
+				{
+						BSTFind<T> currentNode = new BSTFind<>();
+						if(parentNode.ToLeft)
+						{
+								if(parentNode.Node.LeftChild == null)
+										return null;
+								currentNode.Node = parentNode.Node.LeftChild;
+						}
+						else
+						{
+								if(parentNode.Node.RightChild == null)
+										return null;
+								currentNode.Node = parentNode.Node.RightChild;
+						}
+						currentNode.ToLeft = key < currentNode.Node.NodeKey;
+						if(currentNode.Node.NodeKey == key)
+						{
+								currentNode.NodeHasKey = true;
+								return currentNode;
+						}
+						else
+								return findParentNodeByRecursion(currentNode, key);
 				}
 
 				public void postOrder(BSTNode<T> node, List<BSTNode<T>> nodeList)
@@ -117,7 +166,7 @@ import java.util.*;
 				public boolean AddKeyValue(int key, T val)
 				{
 						// добавляем ключ-значение в дерево
-						BSTFind<T> node = FindNodeByKey(key);
+						BSTFind<T> node = FindParentNodeByKey(key);
 						if(node.Node == null)
 								Root = new BSTNode<>(key, val, null);
 						else
@@ -150,13 +199,11 @@ import java.util.*;
 				public boolean DeleteNodeByKey(int key)
 				{
 						// удаляем узел по ключу
-						if(DeleteNodeByRecursion(Root, key) == null)
-						{
-								Root = null;
+						if(FindNodeByKey(key) == null)
 								return false;
-						}
-						else
-								return true;
+						if(DeleteNodeByRecursion(Root, key) == null)
+								Root = null;
+						return true;
 				}
 
 				public BSTNode<T> DeleteNodeByRecursion(BSTNode<T> root, int key)
