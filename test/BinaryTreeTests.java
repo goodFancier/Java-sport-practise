@@ -1,5 +1,7 @@
 import org.junit.Test;
 
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 public class BinaryTreeTests
@@ -220,5 +222,57 @@ public class BinaryTreeTests
 				assertTrue(bst.AddKeyValue(40, 40));
 				assertTrue(bst.AddKeyValue(30, 30));
 				assertFalse(bst.AddKeyValue(30, 30));
+		}
+
+		@Test
+		public void testWideAllNodes()
+		{
+				BinaryTreePractice binaryTree = new BinaryTreePractice();
+				BinaryTreePractice.BSTNode<Integer> rootNode = binaryTree.new BSTNode<>(50, 50, null);
+				BinaryTreePractice.BST<Integer> bst = binaryTree.new BST<>(rootNode);
+				bst.AddKeyValue(40, 40);
+				bst.AddKeyValue(30, 30);
+				bst.AddKeyValue(35, 35);
+				bst.AddKeyValue(15, 15);
+				bst.AddKeyValue(60, 60);
+				bst.AddKeyValue(58, 58);
+				bst.AddKeyValue(70, 70);
+				bst.AddKeyValue(62, 62);
+				bst.AddKeyValue(57, 57);
+				bst.AddKeyValue(65, 65);
+				bst.AddKeyValue(68, 68);
+				bst.AddKeyValue(69, 69);
+				bst.AddKeyValue(75, 75);
+				List<BinaryTreePractice.BSTNode<Integer>> nodeList = bst.WideAllNodes();
+				assertEquals(nodeList.get(nodeList.size() - 1).NodeKey, 69);
+				assertEquals(nodeList.get(0).NodeKey, 50);
+				assertEquals(nodeList.size(), 14);
+		}
+
+		@Test
+		public void testDeepAllNodes()
+		{
+				BinaryTreePractice binaryTree = new BinaryTreePractice();
+				BinaryTreePractice.BSTNode<Integer> rootNode = binaryTree.new BSTNode<>(50, 50, null);
+				BinaryTreePractice.BST<Integer> bst = binaryTree.new BST<>(rootNode);
+				bst.AddKeyValue(40, 40);
+				bst.AddKeyValue(30, 30);
+				bst.AddKeyValue(35, 35);
+				bst.AddKeyValue(15, 15);
+				bst.AddKeyValue(60, 60);
+				bst.AddKeyValue(58, 58);
+				bst.AddKeyValue(70, 70);
+				bst.AddKeyValue(62, 62);
+				bst.AddKeyValue(57, 57);
+				bst.AddKeyValue(65, 65);
+				bst.AddKeyValue(68, 68);
+				bst.AddKeyValue(69, 69);
+				bst.AddKeyValue(75, 75);
+				List<BinaryTreePractice.BSTNode<Integer>> nodeList = bst.DeepAllNodes(0);
+				assertEquals(nodeList.size(), 14);
+				List<BinaryTreePractice.BSTNode<Integer>> nodeList1 = bst.DeepAllNodes(1);
+				assertEquals(nodeList1.size(), 14);
+				List<BinaryTreePractice.BSTNode<Integer>> nodeList2 = bst.DeepAllNodes(2);
+				assertEquals(nodeList2.size(), 14);
 		}
 }

@@ -250,4 +250,72 @@ import java.util.*;
 						postOrder(Root, bstNodes);
 						return bstNodes.size();
 				}
+
+				public ArrayList<BSTNode<T>> WideAllNodes()
+				{
+						ArrayList<BSTNode<T>> queue = new ArrayList<>();
+						ArrayList<BSTNode<T>> values = new ArrayList<>();
+						queue.add(Root);
+						while(queue.size() > 0)
+						{
+								BSTNode<T> tempNode = queue.remove(0);
+								values.add(tempNode);
+								if(tempNode.LeftChild != null)
+								{
+										queue.add(tempNode.LeftChild);
+								}
+								if(tempNode.RightChild != null)
+								{
+										queue.add(tempNode.RightChild);
+								}
+						}
+						return values;
+				}
+
+				public ArrayList<BSTNode<T>> DeepAllNodes(Integer order)
+				{
+						ArrayList<BSTNode<T>> nodeList = new ArrayList<>();
+						BSTNode<T> node = Root;
+						if(order == 0)
+						{
+								inOrder(nodeList, Root);
+						}
+						else
+								if(order == 1)
+								{
+										postOrder(nodeList, Root);
+								}
+								else
+								{
+										preOrder(nodeList, Root);
+								}
+						return nodeList;
+				}
+
+				public void inOrder(ArrayList<BSTNode<T>> nodeList, BSTNode<T> node)
+				{
+						if(node == null)
+								return;
+						inOrder(nodeList, node.LeftChild);
+						nodeList.add(node);
+						inOrder(nodeList, node.RightChild);
+				}
+
+				public void postOrder(ArrayList<BSTNode<T>> nodeList, BSTNode<T> node)
+				{
+						if(node == null)
+								return;
+						postOrder(nodeList, node.LeftChild);
+						postOrder(nodeList, node.RightChild);
+						nodeList.add(node);
+				}
+
+				public void preOrder(ArrayList<BSTNode<T>> nodeList, BSTNode<T> node)
+				{
+						if(node == null)
+								return;
+						nodeList.add(node);
+						preOrder(nodeList, node.LeftChild);
+						preOrder(nodeList, node.RightChild);
+				}
 		}
