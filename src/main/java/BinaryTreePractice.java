@@ -283,7 +283,7 @@ import java.util.*;
 						else
 								if(order == 1)
 								{
-										postOrder(nodeList, Root);
+										postOrder(Root, nodeList);
 								}
 								else
 								{
@@ -292,7 +292,7 @@ import java.util.*;
 						return nodeList;
 				}
 
-				public void inOrder(ArrayList<BSTNode<T>> nodeList, BSTNode<T> node)
+				private void inOrder(ArrayList<BSTNode<T>> nodeList, BSTNode<T> node)
 				{
 						if(node == null)
 								return;
@@ -301,16 +301,7 @@ import java.util.*;
 						inOrder(nodeList, node.RightChild);
 				}
 
-				public void postOrder(ArrayList<BSTNode<T>> nodeList, BSTNode<T> node)
-				{
-						if(node == null)
-								return;
-						postOrder(nodeList, node.LeftChild);
-						postOrder(nodeList, node.RightChild);
-						nodeList.add(node);
-				}
-
-				public void preOrder(ArrayList<BSTNode<T>> nodeList, BSTNode<T> node)
+				private void preOrder(ArrayList<BSTNode<T>> nodeList, BSTNode<T> node)
 				{
 						if(node == null)
 								return;
