@@ -1,5 +1,7 @@
 import java.util.*;
 
+public class BinaryTreePractice
+{
 		class BSTNode<T>
 		{
 				public int NodeKey; // ключ узла
@@ -310,3 +312,4 @@ import java.util.*;
 						preOrder(nodeList, node.RightChild);
 				}
 		}
+}
