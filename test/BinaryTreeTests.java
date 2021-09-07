@@ -243,7 +243,7 @@ public class BinaryTreeTests
 				bst.AddKeyValue(68, 68);
 				bst.AddKeyValue(69, 69);
 				bst.AddKeyValue(75, 75);
-				List<BinaryTreePractice.BSTNode<Integer>> nodeList = bst.WideAllNodes();
+				List<BinaryTreePractice.BSTNode> nodeList = bst.WideAllNodes();
 				assertEquals(nodeList.get(nodeList.size() - 1).NodeKey, 69);
 				assertEquals(nodeList.get(0).NodeKey, 50);
 				assertEquals(nodeList.size(), 14);
@@ -268,11 +268,11 @@ public class BinaryTreeTests
 				bst.AddKeyValue(68, 68);
 				bst.AddKeyValue(69, 69);
 				bst.AddKeyValue(75, 75);
-				List<BinaryTreePractice.BSTNode<Integer>> nodeList = bst.DeepAllNodes(0);
+				List<BinaryTreePractice.BSTNode> nodeList = bst.DeepAllNodes(0);
 				assertEquals(nodeList.size(), 14);
-				List<BinaryTreePractice.BSTNode<Integer>> nodeList1 = bst.DeepAllNodes(1);
+				List<BinaryTreePractice.BSTNode> nodeList1 = bst.DeepAllNodes(1);
 				assertEquals(nodeList1.size(), 14);
-				List<BinaryTreePractice.BSTNode<Integer>> nodeList2 = bst.DeepAllNodes(2);
+				List<BinaryTreePractice.BSTNode> nodeList2 = bst.DeepAllNodes(2);
 				assertEquals(nodeList2.size(), 14);
 		}
 }
