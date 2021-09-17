@@ -66,51 +66,12 @@ class aBST
 		public Integer FindKeyIndex(int key)
 		{
 				// ищем в массиве индекс ключа
-				BSTFind<Integer> rootNode = new BSTFind<>();
-				if(Root == null)
+				for(int i = 0; i < Tree.length; i++)
 				{
-						rootNode.NodeHasKey = false;
-						rootNode.ToLeft = false;
-						rootNode.Node = null;
-				}
-				else
-				{
-						if(Root.NodeKey == key)
-						{
-								rootNode.NodeHasKey = true;
-								rootNode.Node = Root;
-								return rootNode.Node.NodeKey;
-						}
-						rootNode.Node = Root;
-						rootNode.ToLeft = key < Root.NodeKey;
-						return findNodeByRecursion(rootNode, key);
+						if(Tree[i] != null && Tree[i].equals(key))
+								return i;
 				}
 				return null; // не найден
-		}
-
-		private Integer findNodeByRecursion(BSTFind<Integer> parentNode, int key)
-		{
-				BSTFind<Integer> currentNode = new BSTFind<>();
-				if(parentNode.ToLeft)
-				{
-						if(parentNode.Node.LeftChild == null)
-								return null;
-						currentNode.Node = parentNode.Node.LeftChild;
-				}
-				else
-				{
-						if(parentNode.Node.RightChild == null)
-								return null;
-						currentNode.Node = parentNode.Node.RightChild;
-				}
-				currentNode.ToLeft = key < currentNode.Node.NodeKey;
-				if(currentNode.Node.NodeKey == key)
-				{
-						currentNode.NodeHasKey = true;
-						return currentNode.Node.NodeKey;
-				}
-				else
-						return findParentNodeByRecursion(currentNode, key).Node.NodeKey;
 		}
 
 		private BSTFind<Integer> findParentNodeByRecursion(BSTFind<Integer> parentNode, int key)
@@ -171,21 +132,18 @@ class aBST
 						Root = new BSTNode<>(key, key, null);
 				else
 				{
-						if(node.Node.NodeKey == key)
-								return key; // если ключ уже есть
-						else
+						if(node.Node.NodeKey != key)
 						{
 								BSTNode<Integer> bstNode = new BSTNode<>(key, key, node.Node);
 								if(node.ToLeft)
 										node.Node.LeftChild = bstNode;
 								else
 										node.Node.RightChild = bstNode;
-								Tree = WideAllNodes().stream().map(BSTNode::getNodeKey).collect(Collectors.toList()).toArray(new Integer[Tree.length]);
-								return bstNode.NodeKey;
 						}
 				}
-				Tree = WideAllNodes().stream().map(BSTNode::getNodeKey).collect(Collectors.toList()).toArray(new Integer[Tree.length]);
-				return -1;
+				for(int i = 0; i < WideAllNodes().size(); i++)
+						Tree[i] = WideAllNodes().get(i) == null? null: WideAllNodes().get(i).getNodeKey();
+				return FindKeyIndex(key);
 				// индекс добавленного/существующего ключа или -1 если не удалось
 		}
 
@@ -198,12 +156,9 @@ class aBST
 				{
 						BSTNode<Integer> tempNode = queue.remove(0);
 						values.add(tempNode);
-						if(tempNode.LeftChild != null)
+						if(tempNode != null && values.size() < Tree.length)
 						{
 								queue.add(tempNode.LeftChild);
-						}
-						if(tempNode.RightChild != null)
-						{
 								queue.add(tempNode.RightChild);
 						}
 				}
