@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.stream.Collectors;
 
 class aBST
 {
@@ -25,7 +26,7 @@ class aBST
 
 		class BSTNode<T>
 		{
-				public int NodeKey; // ключ узла
+				public Integer NodeKey; // ключ узла
 
 				public T NodeValue; // значение в узле
 
@@ -35,7 +36,7 @@ class aBST
 
 				public BSTNode<T> RightChild; // правый потомок
 
-				public BSTNode(int key, T val, BSTNode<T> parent)
+				public BSTNode(Integer key, T val, BSTNode<T> parent)
 				{
 						NodeKey = key;
 						NodeValue = val;
@@ -44,7 +45,7 @@ class aBST
 						RightChild = null;
 				}
 
-				public int getNodeKey()
+				public Integer getNodeKey()
 				{
 						return NodeKey;
 				}
@@ -53,14 +54,13 @@ class aBST
 		public aBST(int depth)
 		{
 				// правильно рассчитайте размер массива для дерева глубины depth:
-				int tree_size = (int)Math.pow(2, depth);
+				int tree_size = 0;
+				for(int i = 0; i <= depth; i++)
+						tree_size += (int)Math.pow(2, i);
 				Tree = new Integer[tree_size];
 				for(int i = 0; i < tree_size; i++)
 						Tree[i] = null;
-				if(Tree[0] != null)
-						Root = new BSTNode<>(Tree[0], Tree[0], null);
-				else
-						Root = null;
+				Root = new BSTNode<>(Tree[0], Tree[0], null);
 		}
 
 		public Integer FindKeyIndex(int key)
@@ -142,7 +142,7 @@ class aBST
 		{
 				// ищем в дереве узел и сопутствующую информацию по ключу
 				BSTFind<Integer> rootNode = new BSTFind<>();
-				if(Root == null)
+				if(Root == null || Root.NodeKey == null)
 				{
 						rootNode.NodeHasKey = false;
 						rootNode.ToLeft = false;
@@ -165,6 +165,7 @@ class aBST
 
 		public int AddKey(int key)
 		{
+				// TODO: добавить заполнение
 				BSTFind<Integer> node = FindParentNodeByKey(key);
 				if(node == null || node.Node == null)
 						Root = new BSTNode<>(key, key, null);
@@ -179,10 +180,33 @@ class aBST
 										node.Node.LeftChild = bstNode;
 								else
 										node.Node.RightChild = bstNode;
+								Tree = WideAllNodes().stream().map(BSTNode::getNodeKey).collect(Collectors.toList()).toArray(new Integer[Tree.length]);
 								return bstNode.NodeKey;
 						}
 				}
+				Tree = WideAllNodes().stream().map(BSTNode::getNodeKey).collect(Collectors.toList()).toArray(new Integer[Tree.length]);
 				return -1;
 				// индекс добавленного/существующего ключа или -1 если не удалось
+		}
+
+		public List<BSTNode<Integer>> WideAllNodes()
+		{
+				ArrayList<BSTNode<Integer>> queue = new ArrayList<>();
+				ArrayList<BSTNode<Integer>> values = new ArrayList<>();
+				queue.add(Root);
+				while(queue.size() > 0)
+				{
+						BSTNode<Integer> tempNode = queue.remove(0);
+						values.add(tempNode);
+						if(tempNode.LeftChild != null)
+						{
+								queue.add(tempNode.LeftChild);
+						}
+						if(tempNode.RightChild != null)
+						{
+								queue.add(tempNode.RightChild);
+						}
+				}
+				return values;
 		}
 }
