@@ -34,10 +34,32 @@ public class ArrayBSTTests
 		}
 
 		@Test
-		public void testFindKeyIndexInElemArray()
+		public void testAdd()
 		{
 				aBST aBST = new aBST(3);
-				aBST.AddKey(10);
-				System.out.println(aBST.FindKeyIndex(40));
+				assertEquals(0, aBST.AddKey(10));
+				assertEquals(1, aBST.AddKey(5));
+				assertEquals(2, aBST.AddKey(15));
+				assertEquals(6, aBST.AddKey(20));
+				assertEquals(0, aBST.AddKey(10));
+				assertEquals(3, aBST.AddKey(-5));
+				aBST.AddKey(25);
+				aBST.AddKey(30);
+				aBST.AddKey(35);
+				aBST.AddKey(40);
+				aBST.AddKey(36);
+				aBST.AddKey(32);
+				aBST.AddKey(28);
+				aBST.AddKey(90);
+				aBST.AddKey(100);
+				aBST.AddKey(1000);
+				aBST.AddKey(20);
+				aBST.AddKey(33);
+				aBST.AddKey(28);
+				aBST.AddKey(16);
+				aBST.AddKey(18);
+				aBST.AddKey(4);
+				aBST.AddKey(2);
+				aBST.AddKey(1);
 		}
 }

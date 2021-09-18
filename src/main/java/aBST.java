@@ -188,27 +188,9 @@ class aBST
 										node.Node.RightChild = bstNode;
 						}
 				}
-				for(int i = 0; i < WideAllNodes().size(); i++)
-						Tree[i] = WideAllNodes().get(i) == null? null: WideAllNodes().get(i).getNodeKey();
-				return FindKeyIndex(key);
+				int foundIndex = FindKeyIndex(key);
+				Tree[foundIndex] = key;
+				return foundIndex;
 				// индекс добавленного/существующего ключа или -1 если не удалось
-		}
-
-		public List<BSTNode<Integer>> WideAllNodes()
-		{
-				ArrayList<BSTNode<Integer>> queue = new ArrayList<>();
-				ArrayList<BSTNode<Integer>> values = new ArrayList<>();
-				queue.add(Root);
-				while(queue.size() > 0)
-				{
-						BSTNode<Integer> tempNode = queue.remove(0);
-						values.add(tempNode);
-						if(tempNode != null && values.size() < Tree.length)
-						{
-								queue.add(tempNode.LeftChild);
-								queue.add(tempNode.RightChild);
-						}
-				}
-				return values;
 		}
 }
