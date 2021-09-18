@@ -23,8 +23,8 @@ public class ArrayBSTTests
 		public void testFindKeyIndex()
 		{
 				aBST aBST = new aBST(3);
-				aBST.AddKey(10);
-				aBST.AddKey(20);
+				assertEquals(aBST.AddKey(10), 0);
+				assertEquals(aBST.AddKey(20), 2);
 				assertEquals(aBST.AddKey(50), 6);
 				assertEquals(aBST.AddKey(60), 14);
 				assertEquals(aBST.AddKey(80), -1);

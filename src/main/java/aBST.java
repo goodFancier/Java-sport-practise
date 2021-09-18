@@ -15,7 +15,6 @@ class aBST
 				Tree = new Integer[tree_size];
 				for(int i = 0; i < tree_size; i++)
 						Tree[i] = null;
-				// Root = new BSTNode<>(Tree[0], Tree[0], null);
 		}
 
 		class BSTFind<T>
@@ -170,7 +169,7 @@ class aBST
 
 		public int AddKey(int key)
 		{
-				if(FindKeyIndex(key) != null && Math.abs(FindKeyIndex(key)) >= Tree.length)
+				if(Root != null && FindKeyIndex(key) == null)
 						return -1;
 				BSTFind<Integer> node = findParentNodeByKey(key);
 				if(node == null || node.Node == null)
@@ -191,8 +190,7 @@ class aBST
 				}
 				for(int i = 0; i < WideAllNodes().size(); i++)
 						Tree[i] = WideAllNodes().get(i) == null? null: WideAllNodes().get(i).getNodeKey();
-				Integer foundIndex = FindKeyIndex(key);
-				return foundIndex == null ? -1 : foundIndex;
+				return FindKeyIndex(key);
 				// индекс добавленного/существующего ключа или -1 если не удалось
 		}
 
