@@ -1,11 +1,22 @@
 import java.util.*;
-import java.util.stream.Collectors;
 
 class aBST
 {
 		public Integer[] Tree; // массив ключей
 
 		BSTNode<Integer> Root;
+
+		public aBST(int depth)
+		{
+				// правильно рассчитайте размер массива для дерева глубины depth:
+				int tree_size = 0;
+				for(int i = 0; i <= depth; i++)
+						tree_size += (int)Math.pow(2, i);
+				Tree = new Integer[tree_size];
+				for(int i = 0; i < tree_size; i++)
+						Tree[i] = null;
+				// Root = new BSTNode<>(Tree[0], Tree[0], null);
+		}
 
 		class BSTFind<T>
 		{
@@ -17,6 +28,8 @@ class aBST
 
 				// true, если родительскому узлу надо добавить новый левым
 				public boolean ToLeft;
+
+				private int index;
 
 				public BSTFind()
 				{
@@ -51,29 +64,6 @@ class aBST
 				}
 		}
 
-		public aBST(int depth)
-		{
-				// правильно рассчитайте размер массива для дерева глубины depth:
-				int tree_size = 0;
-				for(int i = 0; i <= depth; i++)
-						tree_size += (int)Math.pow(2, i);
-				Tree = new Integer[tree_size];
-				for(int i = 0; i < tree_size; i++)
-						Tree[i] = null;
-				Root = new BSTNode<>(Tree[0], Tree[0], null);
-		}
-
-		public Integer FindKeyIndex(int key)
-		{
-				// ищем в массиве индекс ключа
-				for(int i = 0; i < Tree.length; i++)
-				{
-						if(Tree[i] != null && Tree[i].equals(key))
-								return i;
-				}
-				return null; // не найден
-		}
-
 		private BSTFind<Integer> findParentNodeByRecursion(BSTFind<Integer> parentNode, int key)
 		{
 				BSTFind<Integer> currentNode = new BSTFind<>();
@@ -99,7 +89,7 @@ class aBST
 						return findParentNodeByRecursion(currentNode, key);
 		}
 
-		public BSTFind<Integer> FindParentNodeByKey(int key)
+		public BSTFind<Integer> findParentNodeByKey(int key)
 		{
 				// ищем в дереве узел и сопутствующую информацию по ключу
 				BSTFind<Integer> rootNode = new BSTFind<>();
@@ -124,12 +114,70 @@ class aBST
 				return null; // не найден
 		}
 
+		private Integer findIndexByRecursion(BSTFind<Integer> parentNode, int key)
+		{
+				BSTFind<Integer> currentNode = new BSTFind<>();
+				if(parentNode.ToLeft)
+				{
+						if(parentNode.Node.LeftChild == null)
+								return -1 * (2 * parentNode.index + 1);
+						currentNode.Node = parentNode.Node.LeftChild;
+						currentNode.index = 2 * parentNode.index + 1;
+				}
+				else
+				{
+						if(parentNode.Node.RightChild == null)
+								return -1 * (2 * parentNode.index + 2);
+						currentNode.Node = parentNode.Node.RightChild;
+						currentNode.index = 2 * parentNode.index + 2;
+				}
+				currentNode.ToLeft = key < currentNode.Node.NodeKey;
+				if(currentNode.Node.NodeKey == key)
+				{
+						currentNode.NodeHasKey = true;
+						return currentNode.index;
+				}
+				else
+						return findIndexByRecursion(currentNode, key);
+		}
+
+		public Integer FindKeyIndex(int key)
+		{
+				// ищем в массиве индекс ключа
+				BSTFind<Integer> rootNode = new BSTFind<>();
+				if(Root == null)
+				{
+						rootNode.NodeHasKey = false;
+						rootNode.ToLeft = false;
+						rootNode.Node = null;
+						return null; // не найден
+				}
+				else
+				{
+						rootNode.index = 0;
+						if(Root.NodeKey == key)
+						{
+								rootNode.NodeHasKey = true;
+								rootNode.Node = Root;
+								return rootNode.index;
+						}
+						rootNode.Node = Root;
+						rootNode.ToLeft = key < Root.NodeKey;
+						int foundIndex = findIndexByRecursion(rootNode, key);
+						return Math.abs(foundIndex) >= Tree.length? null: foundIndex;
+				}
+		}
+
 		public int AddKey(int key)
 		{
-				// TODO: добавить заполнение
-				BSTFind<Integer> node = FindParentNodeByKey(key);
+				if(FindKeyIndex(key) != null && Math.abs(FindKeyIndex(key)) >= Tree.length)
+						return -1;
+				BSTFind<Integer> node = findParentNodeByKey(key);
 				if(node == null || node.Node == null)
+				{
 						Root = new BSTNode<>(key, key, null);
+						return 0;
+				}
 				else
 				{
 						if(node.Node.NodeKey != key)
@@ -143,7 +191,8 @@ class aBST
 				}
 				for(int i = 0; i < WideAllNodes().size(); i++)
 						Tree[i] = WideAllNodes().get(i) == null? null: WideAllNodes().get(i).getNodeKey();
-				return FindKeyIndex(key);
+				Integer foundIndex = FindKeyIndex(key);
+				return foundIndex == null ? -1 : foundIndex;
 				// индекс добавленного/существующего ключа или -1 если не удалось
 		}
 

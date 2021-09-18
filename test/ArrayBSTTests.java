@@ -25,10 +25,12 @@ public class ArrayBSTTests
 				aBST aBST = new aBST(3);
 				aBST.AddKey(10);
 				aBST.AddKey(20);
-				aBST.AddKey(50);
-				aBST.AddKey(60);
-				aBST.AddKey(80);
-				System.out.println(aBST.FindKeyIndex(100));
+				assertEquals(aBST.AddKey(50), 6);
+				assertEquals(aBST.AddKey(60), 14);
+				assertEquals(aBST.AddKey(80), -1);
+				assertEquals(aBST.AddKey(150), -1);
+				assertNull(aBST.FindKeyIndex(80));
+				assertNull(aBST.FindKeyIndex(100));
 		}
 
 		@Test
