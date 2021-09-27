@@ -1,22 +1,24 @@
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class AlgorithmsDataStructures2
 {
-		public int[] Tree;
-
 		BSTNode<Integer> Root;
+
+		private int index = 0;
 
 		class BSTNode<T>
 		{
-				public Integer NodeKey;
+				public Integer NodeKey; // ключ узла
 
-				public T NodeValue;
+				public T NodeValue; // значение в узле
 
-				public BSTNode<T> Parent;
+				public BSTNode<T> Parent; // родитель или null для корня
 
-				public BSTNode<T> LeftChild;
+				public BSTNode<T> LeftChild; // левый потомок
 
-				public BSTNode<T> RightChild;
+				public BSTNode<T> RightChild; // правый потомок
 
 				public BSTNode(Integer key, T val, BSTNode<T> parent)
 				{
@@ -33,51 +35,37 @@ public class AlgorithmsDataStructures2
 				}
 		}
 
-		private void fillElements(int[] a)
+		private BSTNode<Integer> sortedArrayToBST(int[] arr, int start, int end)
 		{
-				int midValue = a[a.length / 2];
-				BSTNode<Integer> middleNode = new BSTNode<>(midValue, midValue, null);
-				Tree[0] = midValue;
-				int[] leftSubArray = new int[a.length / 2];
-				System.arraycopy(a, 0, leftSubArray, 0, leftSubArray.length);
-				int index = fillLeftSubArray(middleNode, leftSubArray, 1);
-				int[] rightSubArray = new int[a.length / 2];
-				System.arraycopy(a, a.length / 2 + 1, rightSubArray, 0, rightSubArray.length);
-				fillRightSubArray(middleNode, rightSubArray, index);
+				if(start > end)
+				{
+						return null;
+				}
+				int mid = (start + end) / 2;
+				BSTNode<Integer> node = new BSTNode<>(arr[mid], arr[mid], null);
+				node.LeftChild = sortedArrayToBST(arr, start, mid - 1);
+				node.RightChild = sortedArrayToBST(arr, mid + 1, end);
+				return node;
 		}
 
-		private int fillLeftSubArray(BSTNode<Integer> parent, int[] a, int index)
+		private void preOrder(List<Integer> nodeList, BSTNode<Integer> node)
 		{
-				int midValue = a[a.length / 2];
-				BSTNode<Integer> middleNode = new BSTNode<>(midValue, midValue, parent);
-				Tree[index] = midValue;
-				int[] subArray = new int[a.length / 2];
-				if(subArray.length <= 0)
-						return index;
-				System.arraycopy(a, 0, subArray, 0, subArray.length);
-				index++;
-				return fillLeftSubArray(middleNode, subArray, index);
-		}
-
-		private void fillRightSubArray(BSTNode<Integer> parent, int[] a, int index)
-		{
-				int midValue = a[a.length / 2];
-				BSTNode<Integer> middleNode = new BSTNode<>(midValue, midValue, parent);
-				index++;
-				Tree[index] = midValue;
-				int[] subArray = new int[a.length / 2];
-				if(subArray.length <= 0)
+				if(node == null)
 						return;
-				System.arraycopy(a, 0, subArray, 0, subArray.length);
-				fillRightSubArray(middleNode, subArray, index);
+				nodeList.add(node.getNodeKey());
+				preOrder(nodeList, node.LeftChild);
+				preOrder(nodeList, node.RightChild);
 		}
 
 		public static int[] GenerateBBSTArray(int[] a)
 		{
 				Arrays.sort(a);
 				AlgorithmsDataStructures2 algorithmsDataStructures = new AlgorithmsDataStructures2();
-				algorithmsDataStructures.Tree = new int[a.length];
-				algorithmsDataStructures.fillElements(a);
-				return algorithmsDataStructures.Tree;
+				BSTNode<Integer> root = algorithmsDataStructures.sortedArrayToBST(a, 0, a.length - 1);
+				List<Integer> resultList = new ArrayList<>();
+				algorithmsDataStructures.preOrder(resultList, root);
+				for(int i = 0; i < a.length; i++)
+						a[i] = resultList.get(i);
+				return a;
 		}
 }
