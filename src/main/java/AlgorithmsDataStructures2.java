@@ -4,10 +4,6 @@ import java.util.List;
 
 public class AlgorithmsDataStructures2
 {
-		BSTNode<Integer> Root;
-
-		private int index = 0;
-
 		class BSTNode<T>
 		{
 				public Integer NodeKey; // ключ узла
@@ -48,13 +44,25 @@ public class AlgorithmsDataStructures2
 				return node;
 		}
 
-		private void preOrder(List<Integer> nodeList, BSTNode<Integer> node)
+		public List<BSTNode<Integer>> WideAllNodes(BSTNode<Integer> node)
 		{
-				if(node == null)
-						return;
-				nodeList.add(node.getNodeKey());
-				preOrder(nodeList, node.LeftChild);
-				preOrder(nodeList, node.RightChild);
+				ArrayList<BSTNode<Integer>> queue = new ArrayList<>();
+				ArrayList<BSTNode<Integer>> values = new ArrayList<>();
+				queue.add(node);
+				while(queue.size() > 0)
+				{
+						BSTNode<Integer> tempNode = queue.remove(0);
+						values.add(tempNode);
+						if(tempNode.LeftChild != null)
+						{
+								queue.add(tempNode.LeftChild);
+						}
+						if(tempNode.RightChild != null)
+						{
+								queue.add(tempNode.RightChild);
+						}
+				}
+				return values;
 		}
 
 		public static int[] GenerateBBSTArray(int[] a)
@@ -62,10 +70,9 @@ public class AlgorithmsDataStructures2
 				Arrays.sort(a);
 				AlgorithmsDataStructures2 algorithmsDataStructures = new AlgorithmsDataStructures2();
 				BSTNode<Integer> root = algorithmsDataStructures.sortedArrayToBST(a, 0, a.length - 1);
-				List<Integer> resultList = new ArrayList<>();
-				algorithmsDataStructures.preOrder(resultList, root);
+				List<BSTNode<Integer>> resultList = algorithmsDataStructures.WideAllNodes(root);
 				for(int i = 0; i < a.length; i++)
-						a[i] = resultList.get(i);
+						a[i] = resultList.get(i).getNodeKey();
 				return a;
 		}
 }
