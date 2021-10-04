@@ -1,8 +1,6 @@
 import java.util.*;
 
-public class BSTFromArray
-{
-		static class BSTNode
+		class BSTNode
 		{
 				public int NodeKey; // ключ узла
 
@@ -23,7 +21,7 @@ public class BSTFromArray
 				}
 		}
 
-		static class BalancedBST
+		class BalancedBST
 		{
 				public BSTNode Root; // корень дерева
 
@@ -47,27 +45,6 @@ public class BSTFromArray
 						node.LeftChild = sortedArrayToBST(arr, start, mid - 1, node);
 						node.RightChild = sortedArrayToBST(arr, mid + 1, end, node);
 						return node;
-				}
-
-				public List<BSTNode> WideAllNodes(BSTNode node)
-				{
-						ArrayList<BSTNode> queue = new ArrayList<>();
-						ArrayList<BSTNode> values = new ArrayList<>();
-						queue.add(node);
-						while(queue.size() > 0)
-						{
-								BSTNode tempNode = queue.remove(0);
-								values.add(tempNode);
-								if(tempNode.LeftChild != null)
-								{
-										queue.add(tempNode.LeftChild);
-								}
-								if(tempNode.RightChild != null)
-								{
-										queue.add(tempNode.RightChild);
-								}
-						}
-						return values;
 				}
 
 				public void GenerateTree(int[] a)
@@ -95,4 +72,3 @@ public class BSTFromArray
 						return 1 + Math.max(height(node.LeftChild), height(node.RightChild));
 				}
 		}
-}
