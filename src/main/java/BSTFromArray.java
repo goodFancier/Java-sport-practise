@@ -58,7 +58,6 @@ class BalancedBST
 		{
 				// создаём дерево с нуля из неотсортированного массива a
 				Arrays.sort(a);
-				AlgorithmsDataStructures2 algorithmsDataStructures = new AlgorithmsDataStructures2();
 				Root = sortedArrayToBST(a, 0, a.length - 1, null);
 		}
 
