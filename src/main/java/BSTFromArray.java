@@ -72,3 +72,4 @@ class BalancedBST
 				return Math.abs(lh - rh) <= 1 && IsBalanced(root_node.LeftChild) && IsBalanced(root_node.RightChild);
 		}
 }
+
