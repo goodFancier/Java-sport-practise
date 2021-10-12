@@ -22,15 +22,17 @@ class Heap
 						tree_size += (int)Math.pow(2, i);
 				HeapArray = new int[tree_size];
 				HeapArray[0] = a[0];
-				for(int i = 1; i < a.length; i++)
-				{
-						if(a[i] > HeapArray[i - 1])
+				System.arraycopy(a, 1, HeapArray, 1, a.length - 1);
+				for(int j = 0; j < HeapArray.length; j++)
+						for(int i = 0; i < HeapArray.length - 1; i++)
 						{
-								HeapArray = siftHeapToUp(HeapArray, a[i], i);
+								if(HeapArray[i] < HeapArray[i + 1])
+								{
+										int tmp = HeapArray[i];
+										HeapArray[i] = HeapArray[i + 1];
+										HeapArray[i + 1] = tmp;
+								}
 						}
-						else
-								HeapArray[i] = a[i];
-				}
 		}
 
 		private int[] siftHeapToUp(int[] existsHeap, int newElement, int newElementIndex)
@@ -58,9 +60,22 @@ class Heap
 				return Root;
 		}
 
+		private int getEmptyIndex()
+		{
+				for(int i = 0; i < HeapArray.length; i++)
+						if(HeapArray[i] == 0)
+								return i;
+				return -1;
+		}
+
 		public boolean Add(int key)
 		{
 				// добавляем новый элемент key в кучу и перестраиваем её
-				return false; // если куча вся заполнена
+				int emptyIndex = getEmptyIndex();
+				if(emptyIndex == -1)
+						return false; // если куча вся заполнена
+				HeapArray[emptyIndex] = key;
+				siftHeapToUp(HeapArray, key, emptyIndex);
+				return true;
 		}
 }
