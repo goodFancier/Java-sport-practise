@@ -115,5 +115,16 @@ public class HeapTests
 				Heap heap = new Heap();
 				heap.MakeHeap(new int[]{2, 5, 8, 6, 1, 3, 4, 7, 11, 9}, 3);
 				assertEquals(heap.GetMax(), 11);
+				Arrays.stream(heap.HeapArray).forEach(System.out::println);
+		}
+
+		@Test
+		public void testGetMaxThenAdd()
+		{
+				Heap heap = new Heap();
+				heap.MakeHeap(new int[]{2, 5, 8, 6, 1, 3, 4, 7, 11, 9}, 3);
+				assertEquals(11, heap.GetMax());
+				heap.Add(20);
+				Arrays.stream(heap.HeapArray).forEach(System.out::println);
 		}
 }

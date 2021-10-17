@@ -84,6 +84,7 @@ class Heap
 				int Root = HeapArray[0];
 				HeapArray[0] = HeapArray[HeapArray.length - 1];
 				HeapArray[HeapArray.length - 1] = 0;
+				currentSize--;
 				displaceDown();
 				return Root;
 		}
