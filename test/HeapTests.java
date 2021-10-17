@@ -1,3 +1,4 @@
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -11,7 +12,8 @@ public class HeapTests
 		{
 				Heap heap = new Heap();
 				heap.MakeHeap(new int[]{2, 5, 8, 6, 1, 3, 4, 7, 11, 9}, 3);
-				Arrays.stream(heap.HeapArray).forEach(System.out::println);
+				assertEquals(heap.HeapArray[0], 11);
+				assertEquals(heap.getCurrentSize(), 10);
 		}
 
 		@Test
@@ -37,7 +39,7 @@ public class HeapTests
 				heap.Add(16);
 				heap.Add(17);
 				heap.Add(18);
-				Arrays.stream(heap.HeapArray).forEach(System.out::println);
+				Assert.assertEquals(heap.getCurrentSize(), heap.HeapArray.length);
 		}
 
 		@Test
@@ -70,7 +72,6 @@ public class HeapTests
 		public void getMaxInHeap()
 		{
 				Heap heap = new Heap();
-				// heap.MakeHeap(new int[]{2, 5, 8, 6, 1, 3, 4, 7, 11, 9}, 3);
 				heap.MakeHeap(new int[]{11}, 3);
 				heap.Add(9);
 				heap.Add(4);
@@ -82,6 +83,30 @@ public class HeapTests
 				heap.Add(5);
 				heap.Add(6);
 				System.out.println(heap.GetMax());
+		}
+
+		@Test
+		public void testAddZeroElement()
+		{
+				Heap heap = new Heap();
+				heap.MakeHeap(new int[]{}, 1);
+				heap.Add(0);
+				heap.Add(10);
+				heap.Add(5);
+				heap.Add(7);
+				Arrays.stream(heap.HeapArray).forEach(System.out::println);
+		}
+
+		@Test
+		public void testAddMinusElement()
+		{
+				Heap heap = new Heap();
+				heap.MakeHeap(new int[]{}, 1);
+				heap.Add(0);
+				heap.Add(-2);
+				heap.Add(-3);
+				heap.Add(-5);
+				Arrays.stream(heap.HeapArray).forEach(System.out::println);
 		}
 
 		@Test

@@ -13,6 +13,11 @@ class Heap
 
 		private int currentSize;
 
+		public int getCurrentSize()
+		{
+				return currentSize;
+		}
+
 		public void MakeHeap(int[] a, int depth)
 		{
 				// создаём массив кучи HeapArray из заданного
@@ -24,6 +29,7 @@ class Heap
 				for(int i = 0; i <= depth; i++)
 						tree_size += (int)Math.pow(2, i);
 				HeapArray = new int[tree_size];
+				//	nodeList = new Node[tree_size];
 				for(int value : a)
 				{
 						Add(value);
@@ -93,6 +99,8 @@ class Heap
 		public boolean Add(int key)
 		{
 				// добавляем новый элемент key в кучу и перестраиваем её
+				if(key < 0 || currentSize >= HeapArray.length)
+						return false;
 				int emptyIndex = getEmptyIndex();
 				if(emptyIndex == -1)
 						return false; // если куча вся заполнена
