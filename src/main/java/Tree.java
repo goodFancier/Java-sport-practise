@@ -7,6 +7,11 @@ class Tree
 		{
 				public T NodeValue; // значение в узле
 
+				public T getNodeValue()
+				{
+						return NodeValue;
+				}
+
 				public SimpleTreeNode<T> Parent; // родитель или null для корня
 
 				public List<SimpleTreeNode<T>> Children; // список дочерних узлов или null
@@ -110,6 +115,22 @@ class Tree
 				{
 						// количество листьев в дереве
 						return (int)GetAllNodes().stream().filter(o -> o.Children == null || o.Children.isEmpty()).count();
+				}
+
+				public ArrayList<T> EvenTrees()
+				{
+						ArrayList<T> resultList = new ArrayList<>();
+						List<SimpleTreeNode<T>> nodes = GetAllNodes();
+						for(int i = 1; i < nodes.size() - 1; i++)
+						{
+								List<SimpleTreeNode<T>> subTree = getAllNodesByRecursion(new ArrayList<>(), nodes.get(i));
+								if(subTree.size() % 2 == 0)
+								{
+										resultList.add((T)nodes.get(i - 1));
+										resultList.add((T)nodes.get(i));
+								}
+						}
+						return resultList;
 				}
 		}
 }

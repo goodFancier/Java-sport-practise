@@ -181,4 +181,32 @@ public class TreeTests
 				simpleTree.AddChild(childNode2, childNode8);
 				assertEquals(simpleTree.LeafCount(), 7);
 		}
+
+		@Test
+		public void testEvenTree()
+		{
+				Tree tree = new Tree();
+				Tree.SimpleTreeNode<Integer> parentNode = tree.new SimpleTreeNode<>(10, null);
+				Tree.SimpleTree<Integer> simpleTree = tree.new SimpleTree<>(parentNode);
+				Tree.SimpleTreeNode<Integer> childNode2 = tree.new SimpleTreeNode<>(20, parentNode);
+				Tree.SimpleTreeNode<Integer> childNode3 = tree.new SimpleTreeNode<>(30, parentNode);
+				Tree.SimpleTreeNode<Integer> childNode6 = tree.new SimpleTreeNode<>(60, parentNode);
+				Tree.SimpleTreeNode<Integer> childNode5 = tree.new SimpleTreeNode<>(50, childNode2);
+				Tree.SimpleTreeNode<Integer> childNode7 = tree.new SimpleTreeNode<>(70, childNode2);
+				Tree.SimpleTreeNode<Integer> childNode4 = tree.new SimpleTreeNode<>(40, childNode3);
+				Tree.SimpleTreeNode<Integer> childNode8 = tree.new SimpleTreeNode<>(80, childNode6);
+				Tree.SimpleTreeNode<Integer> childNode9 = tree.new SimpleTreeNode<>(90, childNode8);
+				Tree.SimpleTreeNode<Integer> childNode10 = tree.new SimpleTreeNode<>(100, childNode8);
+				simpleTree.AddChild(parentNode, childNode2);
+				simpleTree.AddChild(parentNode, childNode3);
+				simpleTree.AddChild(parentNode, childNode6);
+				simpleTree.AddChild(childNode2, childNode5);
+				simpleTree.AddChild(childNode2, childNode7);
+				simpleTree.AddChild(childNode3, childNode4);
+				simpleTree.AddChild(childNode6, childNode8);
+				simpleTree.AddChild(childNode8, childNode9);
+				simpleTree.AddChild(childNode8, childNode10);
+				List<Integer> resultList = simpleTree.EvenTrees();
+				System.out.println(resultList);
+		}
 }
