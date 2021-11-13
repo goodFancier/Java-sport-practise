@@ -124,7 +124,7 @@ class SimpleTree<T>
 						List<SimpleTreeNode<T>> subTree = getAllNodesByRecursion(new ArrayList<>(), nodes.get(i));
 						if(subTree.size() % 2 == 0)
 						{
-								resultList.add((T)nodes.get(i - 1));
+								resultList.add((T)nodes.get(i).Parent);
 								resultList.add((T)nodes.get(i));
 						}
 				}
