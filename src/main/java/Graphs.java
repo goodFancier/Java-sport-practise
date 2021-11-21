@@ -4,9 +4,12 @@ class Vertex
 {
 		public int Value;
 
+		public boolean Hit;
+
 		public Vertex(int val)
 		{
 				Value = val;
+				Hit = false;
 		}
 }
 
@@ -68,5 +71,30 @@ class SimpleGraph
 		{
 				// удаление ребра между вершинами v1 и v2
 				m_adjacency[v1][v2] = 0;
+		}
+
+		public ArrayList<Vertex> DepthFirstSearch(int VFrom, int VTo)
+		{
+				// Узлы задаются позициями в списке vertex
+				ArrayList<Vertex> vertexList = new ArrayList<>();
+				for(Vertex ver : vertex)
+				{
+						ver.Hit = false;
+				}
+				Vertex vert = new Vertex(VFrom);
+				vert.Hit = true;
+				vertexList.add(vert);
+				for(Vertex ver : vertex)
+						if(IsEdge(vert.Value, ver.Value))
+						{
+								vertexList.add(ver);
+								return vertexList;
+						}
+				Optional<Vertex> optionalVertex = vertexList.stream().filter(o -> o.Hit).findFirst();
+				if(optionalVertex.isPresent())
+						vert = optionalVertex.get();
+				// Возвращается список узлов -- путь из VFrom в VTo.
+				// Список пустой, если пути нету.
+				return new ArrayList<>();
 		}
 }
