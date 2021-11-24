@@ -102,4 +102,25 @@ public class GraphsTests
 				assertEquals(2, simpleGraph.DepthFirstSearch(2, 5).get(0).Value);
 				assertEquals(20, simpleGraph.DepthFirstSearch(2, 5).get(simpleGraph.DepthFirstSearch(2, 5).size() - 1).Value);
 		}
+
+		@Test
+		public void testDifficultWay()
+		{
+				SimpleGraph simpleGraph = new SimpleGraph(6);
+				simpleGraph.AddVertex(0);
+				simpleGraph.AddVertex(1);
+				simpleGraph.AddVertex(2);
+				simpleGraph.AddVertex(3);
+				simpleGraph.AddVertex(4);
+				simpleGraph.AddVertex(5);
+				simpleGraph.AddEdge(0, 1);
+				simpleGraph.AddEdge(1, 3);
+				simpleGraph.AddEdge(1, 5);
+				simpleGraph.AddEdge(5, 4);
+				assertEquals(simpleGraph.DepthFirstSearch(0, 4).size(), 4);
+				assertEquals(simpleGraph.DepthFirstSearch(0, 5).size(), 3);
+				assertEquals(simpleGraph.DepthFirstSearch(1, 4).size(), 3);
+				assertEquals(1, simpleGraph.DepthFirstSearch(1, 5).get(0).Value);
+				assertEquals(5, simpleGraph.DepthFirstSearch(1, 5).get(simpleGraph.DepthFirstSearch(1, 5).size() - 1).Value);
+		}
 }

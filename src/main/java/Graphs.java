@@ -76,8 +76,10 @@ class SimpleGraph
 		private ArrayList<Vertex> findWayRecursion(int from, ArrayList<Vertex> vertexList, int VTo)
 		{
 				vertex[from].Hit = true;
-				vertexList.add(vertex[from]);
+				if(!vertexList.contains(vertex[from]))
+						vertexList.add(vertex[from]);
 				for(int i = 0; i < vertex.length; i++)
+				{
 						if(IsEdge(from, i) && !vertex[i].Hit)
 						{
 								from = i;
@@ -90,6 +92,20 @@ class SimpleGraph
 								else
 										findWayRecursion(from, vertexList, VTo);
 						}
+				}
+				if(vertex[VTo].Value != vertexList.get(vertexList.size() - 1).Value)
+				{
+						vertexList.remove(vertexList.size() - 1);
+						for(int i = 0; i < vertex.length; i++)
+						{
+								if(vertex[i].Value == vertexList.get(vertexList.size() - 1).Value)
+								{
+										from = i;
+										break;
+								}
+						}
+						findWayRecursion(from, vertexList, VTo);
+				}
 				return vertexList;
 		}
 
