@@ -73,28 +73,35 @@ class SimpleGraph
 				m_adjacency[v1][v2] = 0;
 		}
 
+		private ArrayList<Vertex> findWayRecursion(int from, ArrayList<Vertex> vertexList, int VTo)
+		{
+				vertex[from].Hit = true;
+				vertexList.add(vertex[from]);
+				for(int i = 0; i < vertex.length; i++)
+						if(IsEdge(from, i) && !vertex[i].Hit)
+						{
+								from = i;
+								if(VTo == i)
+								{
+										vertexList.add(vertex[i]);
+										vertex[i].Hit = true;
+										return vertexList;
+								}
+								else
+										findWayRecursion(from, vertexList, VTo);
+						}
+				return vertexList;
+		}
+
 		public ArrayList<Vertex> DepthFirstSearch(int VFrom, int VTo)
 		{
 				// Узлы задаются позициями в списке vertex
-				ArrayList<Vertex> vertexList = new ArrayList<>();
 				for(Vertex ver : vertex)
 				{
 						ver.Hit = false;
 				}
-				Vertex vert = new Vertex(VFrom);
-				vert.Hit = true;
-				vertexList.add(vert);
-				for(Vertex ver : vertex)
-						if(IsEdge(vert.Value, ver.Value))
-						{
-								vertexList.add(ver);
-								return vertexList;
-						}
-				Optional<Vertex> optionalVertex = vertexList.stream().filter(o -> o.Hit).findFirst();
-				if(optionalVertex.isPresent())
-						vert = optionalVertex.get();
 				// Возвращается список узлов -- путь из VFrom в VTo.
 				// Список пустой, если пути нету.
-				return new ArrayList<>();
+				return findWayRecursion(VFrom, new ArrayList<>(), VTo);
 		}
 }

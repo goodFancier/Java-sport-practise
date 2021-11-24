@@ -68,4 +68,38 @@ public class GraphsTests
 				assertTrue(simpleGraph.IsEdge(2, 5));
 				assertTrue(simpleGraph.IsEdge(1, 4));
 		}
+
+		@Test
+		public void testFindLinearWayInGraph()
+		{
+				SimpleGraph simpleGraph = new SimpleGraph(6);
+				simpleGraph.AddVertex(10);
+				simpleGraph.AddVertex(7);
+				simpleGraph.AddVertex(2);
+				simpleGraph.AddVertex(4);
+				simpleGraph.AddVertex(9);
+				simpleGraph.AddVertex(20);
+				simpleGraph.AddEdge(2, 3);
+				simpleGraph.AddEdge(3, 4);
+				simpleGraph.AddEdge(4, 5);
+				assertEquals(simpleGraph.DepthFirstSearch(2, 5).size(), 4);
+		}
+
+		@Test
+		public void testFindRevertWayInGraph()
+		{
+				SimpleGraph simpleGraph = new SimpleGraph(6);
+				simpleGraph.AddVertex(10);
+				simpleGraph.AddVertex(7);
+				simpleGraph.AddVertex(2);
+				simpleGraph.AddVertex(4);
+				simpleGraph.AddVertex(9);
+				simpleGraph.AddVertex(20);
+				simpleGraph.AddEdge(2, 3);
+				simpleGraph.AddEdge(3, 1);
+				simpleGraph.AddEdge(1, 5);
+				assertEquals(simpleGraph.DepthFirstSearch(2, 5).size(), 4);
+				assertEquals(2, simpleGraph.DepthFirstSearch(2, 5).get(0).Value);
+				assertEquals(20, simpleGraph.DepthFirstSearch(2, 5).get(simpleGraph.DepthFirstSearch(2, 5).size() - 1).Value);
+		}
 }
