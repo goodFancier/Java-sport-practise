@@ -93,18 +93,25 @@ class SimpleGraph
 										findWayRecursion(from, vertexList, VTo);
 						}
 				}
+				if(vertexList.isEmpty())
+						return vertexList;
 				if(vertex[VTo].Value != vertexList.get(vertexList.size() - 1).Value)
 				{
 						vertexList.remove(vertexList.size() - 1);
-						for(int i = 0; i < vertex.length; i++)
+						if(vertexList.isEmpty())
+								return vertexList;
+						else
 						{
-								if(vertex[i].Value == vertexList.get(vertexList.size() - 1).Value)
+								for(int i = 0; i < vertex.length; i++)
 								{
-										from = i;
-										break;
+										if(vertex[i].Value == vertexList.get(vertexList.size() - 1).Value)
+										{
+												from = i;
+												break;
+										}
 								}
+								findWayRecursion(from, vertexList, VTo);
 						}
-						findWayRecursion(from, vertexList, VTo);
 				}
 				return vertexList;
 		}
