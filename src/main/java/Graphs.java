@@ -78,21 +78,16 @@ class SimpleGraph
 				vertex[from].Hit = true;
 				if(!vertexList.contains(vertex[from]))
 						vertexList.add(vertex[from]);
-				for(int i = 0; i < vertex.length; i++)
+				if(IsEdge(from, VTo))
 				{
-						if(IsEdge(from, i) && !vertex[i].Hit)
-						{
-								from = i;
-								if(VTo == i)
-								{
-										vertexList.add(vertex[i]);
-										vertex[i].Hit = true;
-										return vertexList;
-								}
-								else
-										findWayRecursion(from, vertexList, VTo);
-						}
+						vertexList.add(vertex[VTo]);
+						vertex[VTo].Hit = true;
+						return vertexList;
 				}
+				else
+						for(int i = 0; i < vertex.length; i++)
+								if(IsEdge(from, i) && !vertex[i].Hit)
+										findWayRecursion(i, vertexList, VTo);
 				if(vertexList.isEmpty())
 						return vertexList;
 				if(vertex[VTo].Value != vertexList.get(vertexList.size() - 1).Value)
