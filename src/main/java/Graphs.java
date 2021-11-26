@@ -87,7 +87,7 @@ class SimpleGraph
 				else
 						for(int i = 0; i < vertex.length; i++)
 								if(IsEdge(from, i) && !vertex[i].Hit)
-										findWayRecursion(i, vertexList, VTo);
+										return findWayRecursion(i, vertexList, VTo);
 				if(vertexList.isEmpty())
 						return vertexList;
 				if(vertex[VTo].Value != vertexList.get(vertexList.size() - 1).Value)
