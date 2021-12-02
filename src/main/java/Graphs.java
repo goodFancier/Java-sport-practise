@@ -122,4 +122,16 @@ class SimpleGraph
 				// Список пустой, если пути нету.
 				return findWayRecursion(VFrom, new ArrayList<>(), VTo);
 		}
+
+		public ArrayList<Vertex> BreadthFirstSearch(int VFrom, int VTo)
+		{
+				// Узлы задаются позициями в списке vertex.
+				// Возвращается список узлов -- путь из VFrom в VTo.
+				// Список пустой, если пути нету.
+				for(Vertex ver : vertex)
+				{
+						ver.Hit = false;
+				}
+				return findWayRecursion(VFrom, new ArrayList<>(), VTo);
+		}
 }
