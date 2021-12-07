@@ -111,6 +111,44 @@ class SimpleGraph
 				return vertexList;
 		}
 
+		private ArrayList<Vertex> findWayBreadthFirstRecursion(ArrayList<Vertex> resultList, ArrayList<Vertex> adjustedVertices, int VTo)
+		{
+				for(int j = 0; j < adjustedVertices.size(); j++)
+				{
+						for(int i = 0; i < vertex.length; i++)
+						{
+								if(adjustedVertices.get(j).Value == vertex[i].Value)
+								{
+										if(IsEdge(i, VTo))
+										{
+												resultList.add(vertex[i]);
+												resultList.add(vertex[VTo]);
+												vertex[VTo].Hit = true;
+												return resultList;
+										}
+										else
+										{
+												if(!getAdjustedVertices(i).isEmpty())
+												{
+														resultList.add(vertex[i]);
+														return findWayBreadthFirstRecursion(resultList, getAdjustedVertices(i), VTo);
+												}
+										}
+								}
+						}
+				}
+				return new ArrayList<>();
+		}
+
+		private ArrayList<Vertex> getAdjustedVertices(int vertexIndex)
+		{
+				ArrayList<Vertex> adjustedVertices = new ArrayList<>();
+				for(int i = vertexIndex + 1; i < vertex.length; i++)
+						if(IsEdge(vertexIndex, i))
+								adjustedVertices.add(vertex[i]);
+				return adjustedVertices;
+		}
+
 		public ArrayList<Vertex> DepthFirstSearch(int VFrom, int VTo)
 		{
 				// Узлы задаются позициями в списке vertex
@@ -128,10 +166,24 @@ class SimpleGraph
 				// Узлы задаются позициями в списке vertex.
 				// Возвращается список узлов -- путь из VFrom в VTo.
 				// Список пустой, если пути нету.
+				ArrayList<Vertex> resultList = new ArrayList<>();
+				ArrayList<Vertex> adjustedVertices = new ArrayList<>();
 				for(Vertex ver : vertex)
 				{
 						ver.Hit = false;
 				}
-				return findWayRecursion(VFrom, new ArrayList<>(), VTo);
+				vertex[VFrom].Hit = true;
+				resultList.add(vertex[VFrom]);
+				if(IsEdge(VFrom, VTo))
+				{
+						resultList.add(vertex[VTo]);
+						vertex[VTo].Hit = true;
+						return resultList;
+				}
+				else
+						for(int i = 0; i < vertex.length; i++)
+								if(IsEdge(VFrom, i) && !vertex[i].Hit)
+										adjustedVertices.add(vertex[i]);
+				return findWayBreadthFirstRecursion(resultList, adjustedVertices, VTo);
 		}
 }

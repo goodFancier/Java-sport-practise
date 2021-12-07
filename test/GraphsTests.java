@@ -204,4 +204,44 @@ public class GraphsTests
 				simpleGraph.AddEdge(3, 3);
 				assertEquals(simpleGraph.DepthFirstSearch(0, 4).size(),  3);
 		}
+
+		@Test
+		public void testBreadthFirstShortWay()
+		{
+				SimpleGraph simpleGraph = new SimpleGraph(6);
+				simpleGraph.AddVertex(0);
+				simpleGraph.AddVertex(1);
+				simpleGraph.AddVertex(2);
+				simpleGraph.AddVertex(3);
+				simpleGraph.AddVertex(4);
+				simpleGraph.AddVertex(5);
+				simpleGraph.AddEdge(0, 1);
+				simpleGraph.AddEdge(0, 2);
+				simpleGraph.AddEdge(0, 3);
+				simpleGraph.AddEdge(1, 3);
+				simpleGraph.AddEdge(2, 3);
+				simpleGraph.AddEdge(1, 4);
+				simpleGraph.AddEdge(3, 4);
+				simpleGraph.AddEdge(3, 3);
+				assertEquals(simpleGraph.BreadthFirstSearch(0, 4).size(),  2);
+		}
+
+		@Test
+		public void testBreadthFirstLongWay()
+		{
+				SimpleGraph simpleGraph = new SimpleGraph(6);
+				simpleGraph.AddVertex(0);
+				simpleGraph.AddVertex(1);
+				simpleGraph.AddVertex(2);
+				simpleGraph.AddVertex(3);
+				simpleGraph.AddVertex(4);
+				simpleGraph.AddVertex(5);
+				simpleGraph.AddEdge(0, 1);
+				simpleGraph.AddEdge(0, 2);
+				simpleGraph.AddEdge(2, 3);
+				simpleGraph.AddEdge(3, 4);
+				simpleGraph.AddEdge(3, 3);
+				simpleGraph.AddEdge(2, 5);
+				assertEquals(simpleGraph.BreadthFirstSearch(0, 5).size(),  3);
+		}
 }
