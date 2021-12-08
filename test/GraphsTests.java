@@ -202,7 +202,7 @@ public class GraphsTests
 				simpleGraph.AddEdge(1, 4);
 				simpleGraph.AddEdge(3, 4);
 				simpleGraph.AddEdge(3, 3);
-				assertEquals(simpleGraph.DepthFirstSearch(0, 4).size(),  3);
+				assertEquals(simpleGraph.DepthFirstSearch(0, 4).size(), 3);
 		}
 
 		@Test
@@ -223,11 +223,54 @@ public class GraphsTests
 				simpleGraph.AddEdge(1, 4);
 				simpleGraph.AddEdge(3, 4);
 				simpleGraph.AddEdge(3, 3);
-				assertEquals(simpleGraph.BreadthFirstSearch(0, 4).size(),  2);
+				assertEquals(simpleGraph.BreadthFirstSearch(0, 4).size(), 3);
+		}
+
+		@Test
+		public void test5Vertex()
+		{
+				SimpleGraph simpleGraph = new SimpleGraph(5);
+				simpleGraph.AddVertex(0);
+				simpleGraph.AddVertex(1);
+				simpleGraph.AddVertex(2);
+				simpleGraph.AddVertex(3);
+				simpleGraph.AddVertex(4);
+				simpleGraph.AddEdge(0, 1);
+				simpleGraph.AddEdge(0, 2);
+				simpleGraph.AddEdge(0, 3);
+				simpleGraph.AddEdge(1, 4);
+				simpleGraph.AddEdge(2, 4);
+				simpleGraph.AddEdge(3, 4);
+				assertEquals(simpleGraph.BreadthFirstSearch(0, 4).size(), 3);
 		}
 
 		@Test
 		public void testBreadthFirstLongWay()
+		{
+				SimpleGraph simpleGraph = new SimpleGraph(8);
+				simpleGraph.AddVertex(0);
+				simpleGraph.AddVertex(1);
+				simpleGraph.AddVertex(2);
+				simpleGraph.AddVertex(3);
+				simpleGraph.AddVertex(4);
+				simpleGraph.AddVertex(5);
+				simpleGraph.AddVertex(6);
+				simpleGraph.AddVertex(7);
+				simpleGraph.AddEdge(0, 1);
+				simpleGraph.AddEdge(0, 2);
+				simpleGraph.AddEdge(0, 3);
+				simpleGraph.AddEdge(1, 4);
+				simpleGraph.AddEdge(2, 3);
+				simpleGraph.AddEdge(3, 4);
+				simpleGraph.AddEdge(3, 5);
+				simpleGraph.AddEdge(4, 6);
+				simpleGraph.AddEdge(5, 6);
+				simpleGraph.AddEdge(5, 7);
+				assertEquals(simpleGraph.BreadthFirstSearch(0, 7).size(), 5);
+		}
+
+		@Test
+		public void testSimpleTopWay()
 		{
 				SimpleGraph simpleGraph = new SimpleGraph(6);
 				simpleGraph.AddVertex(0);
@@ -237,11 +280,10 @@ public class GraphsTests
 				simpleGraph.AddVertex(4);
 				simpleGraph.AddVertex(5);
 				simpleGraph.AddEdge(0, 1);
-				simpleGraph.AddEdge(0, 2);
-				simpleGraph.AddEdge(2, 3);
-				simpleGraph.AddEdge(3, 4);
-				simpleGraph.AddEdge(3, 3);
-				simpleGraph.AddEdge(2, 5);
-				assertEquals(simpleGraph.BreadthFirstSearch(0, 5).size(),  3);
+				simpleGraph.AddEdge(1, 2);
+				simpleGraph.AddEdge(2, 4);
+				simpleGraph.AddEdge(4, 3);
+				simpleGraph.AddEdge(3, 5);
+				assertEquals(simpleGraph.BreadthFirstSearch(0, 5).size(), 6);
 		}
 }

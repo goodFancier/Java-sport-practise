@@ -21,6 +21,8 @@ class SimpleGraph
 
 		int max_vertex;
 
+		ArrayList<ArrayList<Vertex>> vertexChains;
+
 		public SimpleGraph(int size)
 		{
 				max_vertex = size;
@@ -111,40 +113,58 @@ class SimpleGraph
 				return vertexList;
 		}
 
-		private ArrayList<Vertex> findWayBreadthFirstRecursion(ArrayList<Vertex> resultList, ArrayList<Vertex> adjustedVertices, int VTo)
+		private void findWayBreadthFirstRecursion(int startPoint, int VFrom, int VTo)
 		{
-				for(int j = 0; j < adjustedVertices.size(); j++)
+				for(Vertex adjustedVertex : getAdjustedVertices(VFrom))
 				{
-						for(int i = 0; i < vertex.length; i++)
+						for(Vertex ver : vertex)
 						{
-								if(adjustedVertices.get(j).Value == vertex[i].Value)
+								ver.Hit = false;
+						}
+						fillChain(VFrom, adjustedVertex, new ArrayList<>(), VTo);
+						ArrayList<Vertex> chain = resultChain;
+						if(!chain.isEmpty())
+						{
+								chain.add(0, vertex[startPoint]);
+								vertexChains.add(chain);
+						}
+				}
+		}
+
+		private ArrayList<Vertex> resultChain = new ArrayList<>();
+
+		private void fillChain(int VFrom, Vertex adjustedVertex, ArrayList<Vertex> chain, int VTo)
+		{
+				chain.add(adjustedVertex);
+				for(int i = 0; i < vertex.length; i++)
+				{
+						if(adjustedVertex.Value == vertex[i].Value && !adjustedVertex.Hit)
+						{
+								adjustedVertex.Hit = true;
+								if(IsEdge(i, VTo))
 								{
-										if(IsEdge(i, VTo))
+										chain.add(vertex[VTo]);
+										vertex[VTo].Hit = true;
+								}
+								else
+								{
+										if(!getAdjustedVertices(i).isEmpty())
 										{
-												resultList.add(vertex[i]);
-												resultList.add(vertex[VTo]);
-												vertex[VTo].Hit = true;
-												return resultList;
-										}
-										else
-										{
-												if(!getAdjustedVertices(i).isEmpty())
-												{
-														resultList.add(vertex[i]);
-														return findWayBreadthFirstRecursion(resultList, getAdjustedVertices(i), VTo);
-												}
+												for(Vertex adjustVertex : getAdjustedVertices(i))
+														fillChain(i, adjustVertex, chain, VTo);
 										}
 								}
 						}
 				}
-				return new ArrayList<>();
+				if(chain.get(chain.size() - 1).Value == vertex[VTo].Value)
+						resultChain = chain;
 		}
 
 		private ArrayList<Vertex> getAdjustedVertices(int vertexIndex)
 		{
 				ArrayList<Vertex> adjustedVertices = new ArrayList<>();
-				for(int i = vertexIndex + 1; i < vertex.length; i++)
-						if(IsEdge(vertexIndex, i))
+				for(int i = 0; i < vertex.length; i++)
+						if(IsEdge(vertexIndex, i) && !vertex[i].Hit)
 								adjustedVertices.add(vertex[i]);
 				return adjustedVertices;
 		}
@@ -166,24 +186,14 @@ class SimpleGraph
 				// Узлы задаются позициями в списке vertex.
 				// Возвращается список узлов -- путь из VFrom в VTo.
 				// Список пустой, если пути нету.
-				ArrayList<Vertex> resultList = new ArrayList<>();
-				ArrayList<Vertex> adjustedVertices = new ArrayList<>();
-				for(Vertex ver : vertex)
-				{
-						ver.Hit = false;
-				}
 				vertex[VFrom].Hit = true;
-				resultList.add(vertex[VFrom]);
 				if(IsEdge(VFrom, VTo))
 				{
-						resultList.add(vertex[VTo]);
 						vertex[VTo].Hit = true;
-						return resultList;
+						return (ArrayList<Vertex>)Collections.singletonList(vertex[VFrom]);
 				}
-				else
-						for(int i = 0; i < vertex.length; i++)
-								if(IsEdge(VFrom, i) && !vertex[i].Hit)
-										adjustedVertices.add(vertex[i]);
-				return findWayBreadthFirstRecursion(resultList, adjustedVertices, VTo);
+				vertexChains = new ArrayList<>();
+				findWayBreadthFirstRecursion(VFrom, VFrom, VTo);
+				return vertexChains.stream().min(Comparator.comparing(ArrayList::size)).orElse(new ArrayList<>());
 		}
 }
