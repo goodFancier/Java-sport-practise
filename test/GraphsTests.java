@@ -1,5 +1,7 @@
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.Assert.*;
 
 public class GraphsTests
@@ -266,7 +268,62 @@ public class GraphsTests
 				simpleGraph.AddEdge(4, 6);
 				simpleGraph.AddEdge(5, 6);
 				simpleGraph.AddEdge(5, 7);
-				assertEquals(simpleGraph.BreadthFirstSearch(0, 7).size(), 5);
+				ArrayList<Vertex> resultList = simpleGraph.BreadthFirstSearch(0, 7);
+				assertEquals(resultList.size(), 4);
+				resultList.forEach(o -> System.out.println(o.Value));
+		}
+
+		@Test
+		public void testBSTLongWay2()
+		{
+				SimpleGraph simpleGraph = new SimpleGraph(8);
+				simpleGraph.AddVertex(0);
+				simpleGraph.AddVertex(1);
+				simpleGraph.AddVertex(2);
+				simpleGraph.AddVertex(3);
+				simpleGraph.AddVertex(4);
+				simpleGraph.AddVertex(5);
+				simpleGraph.AddVertex(6);
+				simpleGraph.AddVertex(7);
+				simpleGraph.AddEdge(0, 1);
+				simpleGraph.AddEdge(0, 2);
+				simpleGraph.AddEdge(1, 4);
+				simpleGraph.AddEdge(2, 3);
+				simpleGraph.AddEdge(3, 4);
+				simpleGraph.AddEdge(3, 5);
+				simpleGraph.AddEdge(4, 6);
+				simpleGraph.AddEdge(5, 6);
+				simpleGraph.AddEdge(5, 7);
+				ArrayList<Vertex> resultList = simpleGraph.BreadthFirstSearch(0, 7);
+				assertEquals(resultList.size(), 5);
+				resultList.forEach(o -> System.out.println(o.Value));
+		}
+
+		@Test
+		public void testBSTLongWay3()
+		{
+				SimpleGraph simpleGraph = new SimpleGraph(9);
+				simpleGraph.AddVertex(0);
+				simpleGraph.AddVertex(1);
+				simpleGraph.AddVertex(2);
+				simpleGraph.AddVertex(3);
+				simpleGraph.AddVertex(4);
+				simpleGraph.AddVertex(5);
+				simpleGraph.AddVertex(6);
+				simpleGraph.AddVertex(7);
+				simpleGraph.AddVertex(8);
+				simpleGraph.AddEdge(0, 1);
+				simpleGraph.AddEdge(0, 2);
+				simpleGraph.AddEdge(1, 4);
+				simpleGraph.AddEdge(3, 4);
+				simpleGraph.AddEdge(3, 5);
+				simpleGraph.AddEdge(3, 7);
+				simpleGraph.AddEdge(4, 6);
+				simpleGraph.AddEdge(5, 6);
+				simpleGraph.AddEdge(7, 8);
+				ArrayList<Vertex> resultList = simpleGraph.BreadthFirstSearch(0, 8);
+				// assertEquals(resultList.size(), 6);
+				resultList.forEach(o -> System.out.println(o.Value));
 		}
 
 		@Test

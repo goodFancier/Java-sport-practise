@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.LinkedList;
 
 class Vertex
 {
@@ -20,8 +21,6 @@ class SimpleGraph
 		int[][] m_adjacency;
 
 		int max_vertex;
-
-		ArrayList<ArrayList<Vertex>> vertexChains;
 
 		public SimpleGraph(int size)
 		{
@@ -113,62 +112,6 @@ class SimpleGraph
 				return vertexList;
 		}
 
-		private void findWayBreadthFirstRecursion(int startPoint, int VFrom, int VTo)
-		{
-				for(Vertex adjustedVertex : getAdjustedVertices(VFrom))
-				{
-						for(Vertex ver : vertex)
-						{
-								ver.Hit = false;
-						}
-						fillChain(VFrom, adjustedVertex, new ArrayList<>(), VTo);
-						ArrayList<Vertex> chain = resultChain;
-						if(!chain.isEmpty())
-						{
-								chain.add(0, vertex[startPoint]);
-								vertexChains.add(chain);
-						}
-				}
-		}
-
-		private ArrayList<Vertex> resultChain = new ArrayList<>();
-
-		private void fillChain(int VFrom, Vertex adjustedVertex, ArrayList<Vertex> chain, int VTo)
-		{
-				chain.add(adjustedVertex);
-				for(int i = 0; i < vertex.length; i++)
-				{
-						if(adjustedVertex.Value == vertex[i].Value && !adjustedVertex.Hit)
-						{
-								adjustedVertex.Hit = true;
-								if(IsEdge(i, VTo))
-								{
-										chain.add(vertex[VTo]);
-										vertex[VTo].Hit = true;
-								}
-								else
-								{
-										if(!getAdjustedVertices(i).isEmpty())
-										{
-												for(Vertex adjustVertex : getAdjustedVertices(i))
-														fillChain(i, adjustVertex, chain, VTo);
-										}
-								}
-						}
-				}
-				if(chain.get(chain.size() - 1).Value == vertex[VTo].Value)
-						resultChain = chain;
-		}
-
-		private ArrayList<Vertex> getAdjustedVertices(int vertexIndex)
-		{
-				ArrayList<Vertex> adjustedVertices = new ArrayList<>();
-				for(int i = 0; i < vertex.length; i++)
-						if(IsEdge(vertexIndex, i) && !vertex[i].Hit)
-								adjustedVertices.add(vertex[i]);
-				return adjustedVertices;
-		}
-
 		public ArrayList<Vertex> DepthFirstSearch(int VFrom, int VTo)
 		{
 				// Узлы задаются позициями в списке vertex
@@ -181,19 +124,90 @@ class SimpleGraph
 				return findWayRecursion(VFrom, new ArrayList<>(), VTo);
 		}
 
+		private ArrayList<Vertex> getAdjustedVertices(int vertexIndex)
+		{
+				ArrayList<Vertex> adjustedVertices = new ArrayList<>();
+				for(int i = 0; i < vertex.length; i++)
+						if((IsEdge(vertexIndex, i) || IsEdge(i, vertexIndex)) && !vertex[i].Hit)
+								adjustedVertices.add(vertex[i]);
+				return adjustedVertices;
+		}
+
 		public ArrayList<Vertex> BreadthFirstSearch(int VFrom, int VTo)
 		{
-				// Узлы задаются позициями в списке vertex.
-				// Возвращается список узлов -- путь из VFrom в VTo.
-				// Список пустой, если пути нету.
+				ArrayList<Vertex> resultList = new ArrayList<>();
+				List<Vertex> queue = new ArrayList<>();
 				vertex[VFrom].Hit = true;
-				if(IsEdge(VFrom, VTo))
+				queue.add(vertex[VFrom]);
+				while(queue.size() != 0)
 				{
-						vertex[VTo].Hit = true;
-						return (ArrayList<Vertex>)Collections.singletonList(vertex[VFrom]);
+						Vertex vert = queue.remove(0);
+						for(int i = 0; i < vertex.length; i++)
+								if(vertex[i].Value == vert.Value)
+								{
+										VFrom = i;
+										if(IsEdge(VFrom, VTo))
+										{
+												resultList.add(vert);
+												resultList.add(vertex[VTo]);
+												return resultList;
+										}
+										break;
+								}
+						List<Vertex> adjustedVertices = getAdjustedVertices(VFrom);
+						if(!adjustedVertices.isEmpty())
+						{
+								resultList.add(vert);
+								for(Vertex adjustedVertix : adjustedVertices)
+								{
+										if(!adjustedVertix.Hit)
+										{
+												adjustedVertix.Hit = true;
+												queue.add(0, adjustedVertix);
+										}
+								}
+						}
+						/*else
+						{
+								int lastNodeIndex = 0;
+								int queueNodeIndex = 0;
+								for(int i = resultList.size() - 1; i >= 0; i--)
+								{
+										for(int j = 0; j < vertex.length; j++)
+												if(vertex[j].Value == resultList.get(i).Value)
+												{
+														lastNodeIndex = j;
+														break;
+												}
+
+								}
+								for(int j = 0; j < vertex.length; j++)
+										if(vertex[j].Value == queue.get(0).Value)
+										{
+												queueNodeIndex = j;
+												break;
+										}
+								while(!IsEdge(lastNodeIndex, queueNodeIndex) && !IsEdge(queueNodeIndex, lastNodeIndex))
+								{
+										resultList.remove(resultList.size() - 1);
+										for(int i = resultList.size() - 1; i >= 0; i--)
+										{
+												for(int j = 0; j < vertex.length; j++)
+														if(vertex[j].Value == resultList.get(i).Value)
+														{
+																lastNodeIndex = j;
+																break;
+														}
+										}
+										for(int j = 0; j < vertex.length; j++)
+												if(vertex[j].Value == queue.get(0).Value)
+												{
+														queueNodeIndex = j;
+														break;
+												}
+								}
+						}*/
 				}
-				vertexChains = new ArrayList<>();
-				findWayBreadthFirstRecursion(VFrom, VFrom, VTo);
-				return vertexChains.stream().min(Comparator.comparing(ArrayList::size)).orElse(new ArrayList<>());
+				return new ArrayList<>();
 		}
 }
