@@ -167,47 +167,13 @@ class SimpleGraph
 										}
 								}
 						}
-						/*else
-						{
-								int lastNodeIndex = 0;
-								int queueNodeIndex = 0;
-								for(int i = resultList.size() - 1; i >= 0; i--)
-								{
-										for(int j = 0; j < vertex.length; j++)
-												if(vertex[j].Value == resultList.get(i).Value)
-												{
-														lastNodeIndex = j;
-														break;
-												}
-
-								}
-								for(int j = 0; j < vertex.length; j++)
-										if(vertex[j].Value == queue.get(0).Value)
-										{
-												queueNodeIndex = j;
-												break;
-										}
-								while(!IsEdge(lastNodeIndex, queueNodeIndex) && !IsEdge(queueNodeIndex, lastNodeIndex))
-								{
-										resultList.remove(resultList.size() - 1);
-										for(int i = resultList.size() - 1; i >= 0; i--)
-										{
-												for(int j = 0; j < vertex.length; j++)
-														if(vertex[j].Value == resultList.get(i).Value)
-														{
-																lastNodeIndex = j;
-																break;
-														}
-										}
-										for(int j = 0; j < vertex.length; j++)
-												if(vertex[j].Value == queue.get(0).Value)
-												{
-														queueNodeIndex = j;
-														break;
-												}
-								}
-						}*/
 				}
 				return new ArrayList<>();
+		}
+
+		public ArrayList<Vertex> WeakVertices()
+		{
+				// возвращает список узлов вне треугольников
+				return BreadthFirstSearch(0, vertex.length - 1);
 		}
 }
