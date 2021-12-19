@@ -1,11 +1,12 @@
 import java.util.*;
-import java.util.LinkedList;
 
 class Vertex
 {
 		public int Value;
 
 		public boolean Hit;
+
+		public boolean isInTriangle;
 
 		public Vertex(int val)
 		{
@@ -133,6 +134,19 @@ class SimpleGraph
 				return adjustedVertices;
 		}
 
+		private void initTriangleVertices(int vertexIndex)
+		{
+				for(int i = 0; i < vertex.length; i++)
+						if((IsEdge(vertexIndex, i) || IsEdge(i, vertexIndex)))
+								for(int j = 0; j < vertex.length; j++)
+										if((IsEdge(vertexIndex, j) || IsEdge(j, vertexIndex)) && (IsEdge(i, j) || IsEdge(j, i)))
+										{
+												vertex[vertexIndex].isInTriangle = true;
+												vertex[i].isInTriangle = true;
+												vertex[j].isInTriangle = true;
+										}
+		}
+
 		public ArrayList<Vertex> BreadthFirstSearch(int VFrom, int VTo)
 		{
 				ArrayList<Vertex> resultList = new ArrayList<>();
@@ -174,6 +188,34 @@ class SimpleGraph
 		public ArrayList<Vertex> WeakVertices()
 		{
 				// возвращает список узлов вне треугольников
-				return BreadthFirstSearch(0, vertex.length - 1);
+				int VFrom = 0;
+				ArrayList<Vertex> resultList = new ArrayList<>();
+				List<Vertex> queue = new ArrayList<>();
+				vertex[VFrom].Hit = true;
+				queue.add(vertex[0]);
+				while(queue.size() != 0)
+				{
+						Vertex vert = queue.remove(0);
+						for(int i = 0; i < vertex.length; i++)
+								if(vertex[i].Value == vert.Value)
+										VFrom = i;
+						initTriangleVertices(VFrom);
+						List<Vertex> adjustedVertices = getAdjustedVertices(VFrom);
+						if(!adjustedVertices.isEmpty())
+						{
+								for(Vertex adjustedVertix : adjustedVertices)
+								{
+										if(!adjustedVertix.Hit)
+										{
+												adjustedVertix.Hit = true;
+												queue.add(0, adjustedVertix);
+										}
+								}
+						}
+				}
+				for(Vertex v : vertex)
+						if(!v.isInTriangle)
+								resultList.add(v);
+				return resultList;
 		}
 }
