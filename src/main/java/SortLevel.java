@@ -4,11 +4,11 @@ public class SortLevel
 {
 		public static void SelectionSortStep(int array[], int i)
 		{
-				if (i >= array.length - 1 || i < 0)
+				if(i >= array.length - 1 || i < 0)
 						return;
 				int min = array[i];
 				int resultIndex = i;
-				if (i < array.length - 1)
+				if(i < array.length - 1)
 				{
 						for(int j = i + 1; j < array.length; j++)
 						{
@@ -38,14 +38,15 @@ public class SortLevel
 
 		public static Boolean BubbleSortStep(int array[])
 		{
+				boolean resultOfSort = true;
 				for(int i = 0; i < array.length - 1; i++)
 						if(array[i] > array[i + 1])
 						{
 								int c = array[i];
 								array[i] = array[i + 1];
 								array[i + 1] = c;
-								return false;
+								resultOfSort = false;
 						}
-				return true;
+				return resultOfSort;
 		}
 }
