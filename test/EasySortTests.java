@@ -18,7 +18,7 @@ public class EasySortTests
 		@Test
 		public void testBubbleSortStep()
 		{
-				int[] array = new int[]{9, 7, 2};
+				int[] array = new int[]{4, 3, 1, 2};
 				SortLevel.BubbleSortStep(array);
 				Arrays.stream(array).forEach(System.out::println);
 		}

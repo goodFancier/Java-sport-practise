@@ -38,12 +38,12 @@ public class SortLevel
 
 		public static Boolean BubbleSortStep(int array[])
 		{
-				for(int i = 1; i < array.length - 1; i++)
-						if(array[i] < array[i - 1])
+				for(int i = 0; i < array.length - 1; i++)
+						if(array[i] > array[i + 1])
 						{
 								int c = array[i];
-								array[i] = array[i - 1];
-								array[i - 1] = c;
+								array[i] = array[i + 1];
+								array[i + 1] = c;
 								return false;
 						}
 				return true;
