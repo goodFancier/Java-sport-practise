@@ -22,4 +22,12 @@ public class EasySortTests
 				SortLevel.BubbleSortStep(array);
 				Arrays.stream(array).forEach(System.out::println);
 		}
+
+		@Test
+		public void testInsertionSortStep()
+		{
+				int[] array = new int[]{4, 3, 1, 2};
+				SortLevel.InsertionSortStep(array, 2, 1);
+				Arrays.stream(array).forEach(System.out::println);
+		}
 }
