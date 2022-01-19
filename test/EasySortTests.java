@@ -26,8 +26,12 @@ public class EasySortTests
 		@Test
 		public void testInsertionSortStep()
 		{
-				int[] array = new int[]{4, 3, 1, 2};
-				SortLevel.InsertionSortStep(array, 2, 1);
+				int[] array = new int[]{7,6,5,4,3,2,1};
+				SortLevel.InsertionSortStep(array,3,0);
+				Arrays.stream(array).forEach(System.out::println);
+				System.out.println();
+				array = new int[]{10, 40, 30, 25};
+				SortLevel.InsertionSortStep(array,2,1);
 				Arrays.stream(array).forEach(System.out::println);
 		}
 }

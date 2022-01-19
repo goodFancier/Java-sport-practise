@@ -52,12 +52,24 @@ public class SortLevel
 
 		public static void InsertionSortStep(int[] array, int step, int i)
 		{
-				if(i < array.length && i + step < array.length && step >= 1 && i >= 0)
-						if(array[i] > array[i + step])
+				int startIndex = i;
+				while(i < array.length && step >= 1 && i >= 0)
+				{
+						if(i + step < array.length)
 						{
-								int c = array[i];
-								array[i] = array[i + step];
-								array[i + step] = c;
+								if(array[i] > array[i + step])
+								{
+										int c = array[i];
+										array[i] = array[i + step];
+										array[i + step] = c;
+								}
+								if(i - step >= 0 && array[i] < array[i - step])
+								{
+										i = startIndex;
+										continue;
+								}
 						}
+						i += step;
+				}
 		}
 }
