@@ -1,5 +1,7 @@
 package leetcode;
 
+import java.util.Arrays;
+
 public class MyLinkedList
 {
 		protected class Node
@@ -14,6 +16,21 @@ public class MyLinkedList
 				{
 						this.value = value;
 				}
+
+				public int getValue()
+				{
+						return value;
+				}
+
+				public Node getPrev()
+				{
+						return prev;
+				}
+
+				public Node getNext()
+				{
+						return next;
+				}
 		}
 
 		Node head;
@@ -24,7 +41,7 @@ public class MyLinkedList
 
 		public MyLinkedList()
 		{
-				linkedList = new Node[1000];
+				linkedList = new Node[10];
 		}
 
 		public int get(int index)
@@ -36,37 +53,71 @@ public class MyLinkedList
 
 		public void addAtHead(int val)
 		{
-				Node node = new Node(val);
-				node.next = head;
-				head.prev = node;
+				addAtIndex(0, val);
 		}
 
 		public void addAtTail(int val)
 		{
-				Node node = new Node(val);
-				node.prev = tail;
-				tail.next = node;
+				addAtIndex(linkedList.length - 1, val);
 		}
 
 		public void addAtIndex(int index, int val)
 		{
-				Node newNode = new Node(val);
-				linkedList[index].prev = newNode;
-				newNode.next = linkedList[index];
-				rebuildIndexes();
+				Node node = new Node(val);
+				if(head == null)
+				{
+						head = node;
+						tail = node;
+						linkedList[0] = node;
+				}
+				else
+						if(index == 0)
+						{
+								Node oldHead = head;
+								oldHead.prev = node;
+								node.next = oldHead;
+								head = node;
+								if(linkedList[linkedList.length - 1] != null)
+										linkedList = Arrays.copyOf(linkedList, linkedList.length + 1);
+								if(linkedList.length - 1 >= 0)
+										System.arraycopy(linkedList, 0, linkedList, 1, linkedList.length - 1);
+								linkedList[0] = node;
+						}
+						else
+								if(index == linkedList.length)
+								{
+										node.prev = linkedList[linkedList.length - 1];
+										linkedList = Arrays.copyOf(linkedList, linkedList.length + 1);
+										node.prev.next = node;
+										linkedList[linkedList.length - 1] = node;
+										tail = node;
+								}
+								else
+								{
+										if(index < linkedList.length)
+										{
+												if(linkedList[linkedList.length - 1] != null)
+														linkedList = Arrays.copyOf(linkedList, linkedList.length + 1);
+												if(linkedList[index] != null)
+												{
+														System.arraycopy(linkedList, index + 1 - 1, linkedList, index + 1, linkedList.length - index + 1);
+														node.next = linkedList[index + 1];
+														linkedList[index] = node;
+														if(tail.next == null || tail == linkedList[index])
+																tail = linkedList[index];
+														linkedList[index + 1].prev = linkedList[index];
+												}
+												else
+												{
+														linkedList[index] = node;
+														if(tail.next == null || tail == linkedList[index])
+																tail = linkedList[index];
+												}
+										}
+								}
 		}
 
 		public void deleteAtIndex(int index)
 		{
-				
-		}
-
-		public void rebuildIndexes()
-		{
-				linkedList[0] = head;
-				for (int i = 1; i < linkedList.length; i++)
-				{
-						linkedList[i] = linkedList[i - 1].next;
-				}
 		}
 }
