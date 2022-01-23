@@ -14,7 +14,7 @@ public class LinkedListTests
 		{
 				MyLinkedList linkedList = new MyLinkedList();
 				linkedList.addAtHead(10);
-				assertEquals(linkedList.linkedList.length, 10);
+				assertEquals(linkedList.linkedList.size(), 10);
 				assertEquals(linkedList.head.getValue(), 10);
 		}
 
@@ -31,7 +31,7 @@ public class LinkedListTests
 				assertEquals(linkedList.tail.getValue(), 10);
 				/*assertEquals(linkedList.tail.getPrev(), linkedList.head);
 				assertEquals(linkedList.head.getNext(), linkedList.tail);*/
-				Arrays.stream(linkedList.linkedList).filter(Objects::nonNull).map(MyLinkedList.Node::getValue).forEach(System.out::println);
+				linkedList.linkedList.stream().filter(Objects::nonNull).map(MyLinkedList.Node::getValue).forEach(System.out::println);
 		}
 
 		@Test
@@ -43,6 +43,6 @@ public class LinkedListTests
 				linkedList.addAtHead(30);
 				linkedList.addAtHead(40);
 				linkedList.addAtIndex(6, 60);
-				Arrays.stream(linkedList.linkedList).filter(Objects::nonNull).map(MyLinkedList.Node::getValue).forEach(System.out::println);
+				linkedList.linkedList.stream().filter(Objects::nonNull).map(MyLinkedList.Node::getValue).forEach(System.out::println);
 		}
 }

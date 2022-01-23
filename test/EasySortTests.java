@@ -34,4 +34,11 @@ public class EasySortTests
 				SortLevel.InsertionSortStep(array,2,1);
 				Arrays.stream(array).forEach(System.out::println);
 		}
+
+
+		@Test
+		public void testKnuthSequence()
+		{
+				SortLevel.KnuthSequence(5).forEach(System.out::println);
+		}
 }
