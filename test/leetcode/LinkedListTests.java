@@ -43,6 +43,7 @@ public class LinkedListTests
 				linkedList.addAtHead(30);
 				linkedList.addAtHead(40);
 				linkedList.addAtIndex(6, 60);
+				linkedList.addAtIndex(4, 45);
 				linkedList.linkedList.stream().filter(Objects::nonNull).map(MyLinkedList.Node::getValue).forEach(System.out::println);
 		}
 }

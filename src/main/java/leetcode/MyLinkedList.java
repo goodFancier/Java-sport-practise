@@ -98,5 +98,6 @@ public class MyLinkedList
 
 		public void deleteAtIndex(int index)
 		{
+				linkedList.remove(index);
 		}
 }
