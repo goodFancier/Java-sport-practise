@@ -76,11 +76,12 @@ public class SortLevel
 		public static ArrayList<Integer> KnuthSequence(int array_size)
 		{
 				ArrayList<Integer> stepList = new ArrayList<>();
+				stepList.add(1);
 				int step = 1;
-				while (step < array_size)
+				while (3 * step + 1 < array_size)
 				{
-						stepList.add(0, step);
 						step = 3 * step + 1;
+						stepList.add(0, step);
 				}
 				return stepList;
 		}

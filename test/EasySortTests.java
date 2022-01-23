@@ -39,6 +39,6 @@ public class EasySortTests
 		@Test
 		public void testKnuthSequence()
 		{
-				SortLevel.KnuthSequence(5).forEach(System.out::println);
+				SortLevel.KnuthSequence(13).forEach(System.out::println);
 		}
 }
