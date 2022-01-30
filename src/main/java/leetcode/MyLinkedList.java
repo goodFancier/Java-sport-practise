@@ -54,16 +54,31 @@ public class MyLinkedList
 
 		public void addAtHead(int val)
 		{
-				addAtIndex(0, val);
+				Node node = new Node(val);
+				if(linkedList.isEmpty())
+						linkedList.add(node);
+				else
+						addAtIndex(0, val);
+				if(head != null)
+						head.prev = node;
+				head = node;
 		}
 
 		public void addAtTail(int val)
 		{
-				addAtIndex(linkedList.size() - 1, val);
+				Node node = new Node(val);
+				if (head == null)
+						head = node;
+				linkedList.add(node);
+				if(tail != null)
+						tail.next = node;
+				tail = node;
 		}
 
 		public void addAtIndex(int index, int val)
 		{
+				if (index > linkedList.size())
+						return;
 				Node node = new Node(val);
 				if(head == null)
 				{
@@ -90,13 +105,14 @@ public class MyLinkedList
 								{
 										if(index < linkedList.size())
 										{
-												linkedList.add(index - 1, node);
+												linkedList.add(index, node);
 										}
 								}
 		}
 
 		public void deleteAtIndex(int index)
 		{
-				linkedList.remove(index);
+				if(linkedList.size() > index)
+						linkedList.remove(index);
 		}
 }

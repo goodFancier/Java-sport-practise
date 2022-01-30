@@ -78,11 +78,57 @@ public class SortLevel
 				ArrayList<Integer> stepList = new ArrayList<>();
 				stepList.add(1);
 				int step = 1;
-				while (3 * step + 1 < array_size)
+				while(3 * step + 1 < array_size)
 				{
 						step = 3 * step + 1;
 						stepList.add(0, step);
 				}
 				return stepList;
+		}
+
+		public int ArrayChunk(int[] M)
+		{
+				int supportElement = M[M.length / 2];
+				int supportIdx = M.length / 2;
+				int i1 = M[0];
+				int i2 = M[M.length - 1];
+				return chunkArrayRecursion(M, i1, i2, supportElement, supportIdx);
+		}
+
+		private int chunkArrayRecursion(int[] M, int i1, int i2, int supportElement, int supportIdx)
+		{
+				while(M[i1] < supportElement)
+						i1++;
+				while(M[i2] > supportElement)
+						i2--;
+				if(i1 == i2 - 1 && M[i1] > M[i2])
+				{
+						int c = M[i1];
+						M[i1] = M[i2];
+						M[i2] = c;
+						return ArrayChunk(M);
+				}
+				else
+						if(i1 == i2 || (i1 == i2 - 1 && M[i1] < M[i2]))
+								return supportIdx;
+						else
+						{
+								if(i1 == supportIdx)
+								{
+										int c = supportElement;
+										supportElement = M[i1];
+										M[i1] = c;
+								}
+								if(i2 == supportIdx)
+								{
+										int c = supportElement;
+										supportElement = M[i2];
+										M[i2] = c;
+								}
+								int c = M[i1];
+								M[i1] = M[i2];
+								M[i2] = c;
+								return chunkArrayRecursion(M, i1, i2, supportElement, supportIdx);
+						}
 		}
 }
