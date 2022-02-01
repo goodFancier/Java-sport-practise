@@ -46,4 +46,10 @@ public class EasySortTests
 		{
 				System.out.println(SortLevel.ArrayChunk(new int[]{7, 5, 6, 4, 3, 1, 2}));
 		}
+
+		@Test
+		public void testChunkArray1()
+		{
+				System.out.println(SortLevel.ArrayChunk(new int[]{1, 3, 4, 6, 5, 2, 8}));
+		}
 }

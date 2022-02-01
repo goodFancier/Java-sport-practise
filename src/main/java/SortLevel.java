@@ -113,21 +113,23 @@ public class SortLevel
 								return supportIdx;
 						else
 						{
-								if(i1 == supportIdx)
-								{
-										int c = supportElement;
-										supportElement = M[i1];
-										M[i1] = c;
-								}
-								if(i2 == supportIdx)
-								{
-										int c = supportElement;
-										supportElement = M[i2];
-										M[i2] = c;
-								}
 								int c = M[i1];
 								M[i1] = M[i2];
 								M[i2] = c;
+								if(M[i1] == supportElement)
+								{
+										int k = supportElement;
+										supportElement = M[i1];
+										supportIdx = i1;
+										M[i1] = k;
+								}
+								if(M[i2] == supportElement)
+								{
+										int k = supportElement;
+										supportElement = M[i2];
+										supportIdx = i2;
+										M[i2] = k;
+								}
 								return chunkArrayRecursion(M, i1, i2, supportElement, supportIdx);
 						}
 		}
