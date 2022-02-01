@@ -86,7 +86,7 @@ public class SortLevel
 				return stepList;
 		}
 
-		int ArrayChunk(int[] M)
+		public static int ArrayChunk(int[] M)
 		{
 				int supportElement = M[M.length / 2];
 				int supportIdx = M.length / 2;
@@ -95,7 +95,7 @@ public class SortLevel
 				return chunkArrayRecursion(M, i1, i2, supportElement, supportIdx);
 		}
 
-		private int chunkArrayRecursion(int[] M, int i1, int i2, int supportElement, int supportIdx)
+		private static int chunkArrayRecursion(int[] M, int i1, int i2, int supportElement, int supportIdx)
 		{
 				while(M[i1] < supportElement)
 						i1++;
