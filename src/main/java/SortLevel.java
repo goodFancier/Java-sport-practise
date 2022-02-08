@@ -86,51 +86,33 @@ public class SortLevel
 				return stepList;
 		}
 
-		public static int ArrayChunk(int[] M)
+		public static int ArrayChunk(int[] M, int left, int right)
 		{
-				int supportElement = M[M.length / 2];
-				int supportIdx = M.length / 2;
-				int i1 = 0;
-				int i2 = M.length - 1;
-				return chunkArrayRecursion(M, i1, i2, supportElement, supportIdx);
+				int pivot = M[right];
+				int i = (left - 1);
+				for(int j = left; j < right; j++)
+				{
+						if(M[j] <= pivot)
+						{
+								i++;
+								int swapTemp = M[i];
+								M[i] = M[j];
+								M[j] = swapTemp;
+						}
+				}
+				int swapTemp = M[i + 1];
+				M[i + 1] = M[right];
+				M[right] = swapTemp;
+				return i + 1;
 		}
 
-		private static int chunkArrayRecursion(int[] M, int i1, int i2, int supportElement, int supportIdx)
+		public void QuickSort(int[] array, int left, int right)
 		{
-				while(M[i1] < supportElement)
-						i1++;
-				while(M[i2] > supportElement)
-						i2--;
-				if(i1 == i2 - 1 && M[i1] > M[i2])
+				if(left < right && left <= array.length - 1 && right <= array.length - 1)
 				{
-						int c = M[i1];
-						M[i1] = M[i2];
-						M[i2] = c;
-						return ArrayChunk(M);
+						int N = ArrayChunk(array, left, right); // опорный элемент
+						QuickSort(array, left, N - 1);
+						QuickSort(array, N + 1, right);
 				}
-				else
-						if(i1 == i2 || (i1 == i2 - 1 && M[i1] < M[i2]))
-								return supportIdx;
-						else
-						{
-								int c = M[i1];
-								M[i1] = M[i2];
-								M[i2] = c;
-								if(M[i1] == supportElement)
-								{
-										int k = supportElement;
-										supportElement = M[i1];
-										supportIdx = i1;
-										M[i1] = k;
-								}
-								if(M[i2] == supportElement)
-								{
-										int k = supportElement;
-										supportElement = M[i2];
-										supportIdx = i2;
-										M[i2] = k;
-								}
-								return chunkArrayRecursion(M, i1, i2, supportElement, supportIdx);
-						}
 		}
 }

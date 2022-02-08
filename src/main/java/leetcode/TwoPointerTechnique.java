@@ -1,19 +1,20 @@
 package leetcode;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-public class MyLinkedList
+public class TwoPointerTechnique
 {
-		protected class Node
+		protected class ListNode
 		{
-				private Node prev;
+				private ListNode next;
 
-				private Node next;
+				private ListNode tail;
+
+				private ListNode head;
 
 				private int value;
 
-				public Node(int value)
+				public ListNode(int value)
 				{
 						this.value = value;
 				}
@@ -23,29 +24,24 @@ public class MyLinkedList
 						return value;
 				}
 
-				public Node getPrev()
-				{
-						return prev;
-				}
-
-				public Node getNext()
+				public ListNode getNext()
 				{
 						return next;
 				}
 
-				public void setNext(Node next)
+				public void setNext(ListNode next)
 				{
 						this.next = next;
 				}
 		}
 
-		Node head;
+		ListNode head;
 
-		Node tail;
+		ListNode tail;
 
-		List<Node> linkedList;
+		List<ListNode> linkedList;
 
-		public MyLinkedList()
+		public TwoPointerTechnique()
 		{
 				linkedList = new ArrayList<>();
 		}
@@ -59,20 +55,24 @@ public class MyLinkedList
 
 		public void addAtHead(int val)
 		{
-				Node node = new Node(val);
+				TwoPointerTechnique.ListNode node = new TwoPointerTechnique.ListNode(val);
 				if(linkedList.isEmpty())
+				{
 						linkedList.add(node);
+						tail = node;
+				}
 				else
+				{
+						node.next = head;
 						addAtIndex(0, val);
-				if(head != null)
-						head.prev = node;
+				}
 				head = node;
 		}
 
 		public void addAtTail(int val)
 		{
-				Node node = new Node(val);
-				if (head == null)
+				TwoPointerTechnique.ListNode node = new TwoPointerTechnique.ListNode(val);
+				if(head == null)
 						head = node;
 				linkedList.add(node);
 				if(tail != null)
@@ -82,9 +82,9 @@ public class MyLinkedList
 
 		public void addAtIndex(int index, int val)
 		{
-				if (index > linkedList.size())
+				if(index > linkedList.size())
 						return;
-				Node node = new Node(val);
+				TwoPointerTechnique.ListNode node = new TwoPointerTechnique.ListNode(val);
 				if(head == null)
 				{
 						head = node;
@@ -94,9 +94,7 @@ public class MyLinkedList
 				else
 						if(index == 0)
 						{
-								Node oldHead = head;
-								oldHead.prev = node;
-								node.next = oldHead;
+								node.next = head;
 								head = node;
 								linkedList.add(0, node);
 						}
@@ -119,5 +117,23 @@ public class MyLinkedList
 		{
 				if(linkedList.size() > index)
 						linkedList.remove(index);
+		}
+
+		public boolean hasCycle(ListNode head)
+		{
+				if (head == null)
+						return false;
+				Set<ListNode> nodeSet = new HashSet<>();
+				nodeSet.add(head);
+				ListNode currentNode = head.next;
+				while(currentNode != null)
+				{
+						if(nodeSet.contains(currentNode))
+								return true;
+						else
+								nodeSet.add(currentNode);
+						currentNode = currentNode.next;
+				}
+				return false;
 		}
 }

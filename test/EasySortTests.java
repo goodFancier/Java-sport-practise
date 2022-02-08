@@ -1,9 +1,6 @@
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-
-import static org.junit.Assert.*;
 
 public class EasySortTests
 {
@@ -41,15 +38,26 @@ public class EasySortTests
 				SortLevel.KnuthSequence(13).forEach(System.out::println);
 		}
 
-		@Test
+	/*	@Test
 		public void testChunkArray()
 		{
-				System.out.println(SortLevel.ArrayChunk(new int[]{7, 5, 6, 4, 3, 1, 2}));
-		}
+				int[] array = new int[]{7, 5, 6, 4, 3, 1, 2};
+				System.out.println(SortLevel.ArrayChunk(array));
+				System.out.println();
+				Arrays.stream(array).forEach(System.out::println);
+		}*/
 
-		@Test
+		/*@Test
 		public void testChunkArray1()
 		{
 				System.out.println(SortLevel.ArrayChunk(new int[]{1, 3, 4, 6, 5, 2, 8}));
+		}
+*/
+		@Test
+		public void quickSortTest()
+		{
+				int[] array = new int[]{1, 9, 4, 6, 5, 2, 8};
+				new SortLevel().QuickSort(array, 0, 6);
+				Arrays.stream(array).forEach(System.out::println);
 		}
 }
