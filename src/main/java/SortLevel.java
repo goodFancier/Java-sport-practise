@@ -86,7 +86,7 @@ public class SortLevel
 				return stepList;
 		}
 
-		public static int ArrayChunk(int[] M, int left, int right)
+		public int ArrayChunk(int[] M, int left, int right)
 		{
 				int pivot = M[right];
 				int i = (left - 1);
@@ -106,7 +106,7 @@ public class SortLevel
 				return i + 1;
 		}
 
-		public void QuickSort(int[] array, int left, int right)
+		void QuickSort( int[] array, int left, int right )
 		{
 				if(left < right && left <= array.length - 1 && right <= array.length - 1)
 				{
