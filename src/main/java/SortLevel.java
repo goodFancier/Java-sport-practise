@@ -2,7 +2,7 @@ import java.util.*;
 
 public class SortLevel
 {
-		public static void SelectionSortStep(int array[], int i)
+		public void SelectionSortStep(int array[], int i)
 		{
 				if(i >= array.length - 1 || i < 0)
 						return;
@@ -36,7 +36,7 @@ public class SortLevel
 				}
 		}
 
-		public static Boolean BubbleSortStep(int array[])
+		public Boolean BubbleSortStep(int array[])
 		{
 				boolean resultOfSort = true;
 				for(int i = 0; i < array.length - 1; i++)
@@ -50,7 +50,7 @@ public class SortLevel
 				return resultOfSort;
 		}
 
-		public static void InsertionSortStep(int[] array, int step, int i)
+		public void InsertionSortStep(int[] array, int step, int i)
 		{
 				int startIndex = i;
 				while(i < array.length && step >= 1 && i >= 0)
@@ -73,7 +73,7 @@ public class SortLevel
 				}
 		}
 
-		public static ArrayList<Integer> KnuthSequence(int array_size)
+		public ArrayList<Integer> KnuthSequence(int array_size)
 		{
 				ArrayList<Integer> stepList = new ArrayList<>();
 				stepList.add(1);
@@ -86,7 +86,7 @@ public class SortLevel
 				return stepList;
 		}
 
-		public static int ArrayChunk(int[] M)
+		public int ArrayChunk(int[] M)
 		{
 				int supportElement = M[M.length / 2];
 				int supportIdx = M.length / 2;
@@ -95,7 +95,7 @@ public class SortLevel
 				return chunkArrayRecursion(M, i1, i2, supportElement, supportIdx);
 		}
 
-		private static int chunkArrayRecursion(int[] M, int i1, int i2, int supportElement, int supportIdx)
+		private int chunkArrayRecursion(int[] M, int i1, int i2, int supportElement, int supportIdx)
 		{
 				while(M[i1] < supportElement)
 						i1++;
@@ -134,29 +134,9 @@ public class SortLevel
 						}
 		}
 
-		/*public int ArrayChunk(int[] M, int left, int right)
-		{
-				int pivot = M[right];
-				int i = (left - 1);
-				for(int j = left; j < right; j++)
-				{
-						if(M[j] <= pivot)
-						{
-								i++;
-								int swapTemp = M[i];
-								M[i] = M[j];
-								M[j] = swapTemp;
-						}
-				}
-				int swapTemp = M[i + 1];
-				M[i + 1] = M[right];
-				M[right] = swapTemp;
-				return i + 1;
-		}*/
+		private Integer N;
 
-		Integer N;
-
-		void QuickSort(int[] array, int left, int right)
+		public void QuickSort(int[] array, int left, int right)
 		{
 				if(left < right && left <= array.length - 1 && right <= array.length - 1)
 				{
