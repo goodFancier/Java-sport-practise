@@ -86,7 +86,55 @@ public class SortLevel
 				return stepList;
 		}
 
-		public int ArrayChunk(int[] M, int left, int right)
+		public static int ArrayChunk(int[] M)
+		{
+				int supportElement = M[M.length / 2];
+				int supportIdx = M.length / 2;
+				int i1 = 0;
+				int i2 = M.length - 1;
+				return chunkArrayRecursion(M, i1, i2, supportElement, supportIdx);
+		}
+
+		private static int chunkArrayRecursion(int[] M, int i1, int i2, int supportElement, int supportIdx)
+		{
+				while(M[i1] < supportElement)
+						i1++;
+				while(i2 > 0 && M[i2] > supportElement)
+						i2--;
+				if(i1 == i2 - 1 && M[i1] > M[i2])
+				{
+						int c = M[i1];
+						M[i1] = M[i2];
+						M[i2] = c;
+						return ArrayChunk(M);
+				}
+				else
+						if(i1 == i2 || (i1 == i2 - 1 && M[i1] < M[i2]))
+								return supportIdx;
+						else
+						{
+								int c = M[i1];
+								M[i1] = M[i2];
+								M[i2] = c;
+								if(M[i1] == supportElement)
+								{
+										int k = supportElement;
+										supportElement = M[i1];
+										supportIdx = i1;
+										M[i1] = k;
+								}
+								if(M[i2] == supportElement)
+								{
+										int k = supportElement;
+										supportElement = M[i2];
+										supportIdx = i2;
+										M[i2] = k;
+								}
+								return chunkArrayRecursion(M, i1, i2, supportElement, supportIdx);
+						}
+		}
+
+		/*public int ArrayChunk(int[] M, int left, int right)
 		{
 				int pivot = M[right];
 				int i = (left - 1);
@@ -104,14 +152,26 @@ public class SortLevel
 				M[i + 1] = M[right];
 				M[right] = swapTemp;
 				return i + 1;
-		}
+		}*/
 
-		void QuickSort( int[] array, int left, int right )
+		Integer N;
+
+		void QuickSort(int[] array, int left, int right)
 		{
 				if(left < right && left <= array.length - 1 && right <= array.length - 1)
 				{
-						int N = ArrayChunk(array, left, right); // опорный элемент
+						List<Integer> sortedList = new ArrayList<>(0);
+						for(int i = left; i <= right; i++)
+								sortedList.add(array[i]);
+						array = sortedList.stream().mapToInt(i -> i).toArray();
+						left = 0;
+						right = array.length - 1;
+						// индекс опорного элемента
+						if(N == null || N >= array.length)
+								N = array.length / 2;
+						N = chunkArrayRecursion(array, left, right, array[N], N);
 						QuickSort(array, left, N - 1);
+						N = array.length / 2;
 						QuickSort(array, N + 1, right);
 				}
 		}
