@@ -42,7 +42,7 @@ public class EasySortTests
 		public void testChunkArray()
 		{
 				int[] array = new int[]{7, 5, 6, 4, 3, 1, 2};
-				System.out.println(SortLevel.ArrayChunk(array));
+				System.out.println(SortLevel.ArrayChunk(array, 0, 6));
 				System.out.println();
 				Arrays.stream(array).forEach(System.out::println);
 		}
@@ -51,7 +51,7 @@ public class EasySortTests
 		public void testChunkArray1()
 		{
 				int[] array = new int[]{1, 3, 4, 6, 5, 2, 8};
-				System.out.println(SortLevel.ArrayChunk(array));
+				System.out.println(SortLevel.ArrayChunk(array, 0, 6));
 				Arrays.stream(array).forEach(System.out::println);
 		}
 
@@ -59,7 +59,7 @@ public class EasySortTests
 		public void quickSortTest()
 		{
 				int[] array = new int[]{1, 9, 4, 6, 5, 2, 8};
-				new SortLevel().QuickSort(array, 0, 6);
-				// Arrays.stream(array).forEach(System.out::println);
+				SortLevel.QuickSort(array, 0, 6);
+				Arrays.stream(array).forEach(System.out::println);
 		}
 }

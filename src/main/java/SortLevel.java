@@ -2,7 +2,7 @@ import java.util.*;
 
 public class SortLevel
 {
-		public void SelectionSortStep(int array[], int i)
+		public static void SelectionSortStep(int array[], int i)
 		{
 				if(i >= array.length - 1 || i < 0)
 						return;
@@ -36,7 +36,7 @@ public class SortLevel
 				}
 		}
 
-		public Boolean BubbleSortStep(int array[])
+		public static Boolean BubbleSortStep(int array[])
 		{
 				boolean resultOfSort = true;
 				for(int i = 0; i < array.length - 1; i++)
@@ -50,7 +50,7 @@ public class SortLevel
 				return resultOfSort;
 		}
 
-		public void InsertionSortStep(int[] array, int step, int i)
+		public static void InsertionSortStep(int[] array, int step, int i)
 		{
 				int startIndex = i;
 				while(i < array.length && step >= 1 && i >= 0)
@@ -73,7 +73,7 @@ public class SortLevel
 				}
 		}
 
-		public ArrayList<Integer> KnuthSequence(int array_size)
+		public static ArrayList<Integer> KnuthSequence(int array_size)
 		{
 				ArrayList<Integer> stepList = new ArrayList<>();
 				stepList.add(1);
@@ -86,72 +86,32 @@ public class SortLevel
 				return stepList;
 		}
 
-		public int ArrayChunk(int[] M)
+		public static int ArrayChunk(int[] M, int left, int right)
 		{
-				int supportElement = M[M.length / 2];
-				int supportIdx = M.length / 2;
-				int i1 = 0;
-				int i2 = M.length - 1;
-				return chunkArrayRecursion(M, i1, i2, supportElement, supportIdx);
-		}
-
-		private int chunkArrayRecursion(int[] M, int i1, int i2, int supportElement, int supportIdx)
-		{
-				while(M[i1] < supportElement)
-						i1++;
-				while(i2 > 0 && M[i2] > supportElement)
-						i2--;
-				if(i1 == i2 - 1 && M[i1] > M[i2])
+				int pivot = M[right];
+				int i = (left - 1);
+				for(int j = left; j < right; j++)
 				{
-						int c = M[i1];
-						M[i1] = M[i2];
-						M[i2] = c;
-						return ArrayChunk(M);
-				}
-				else
-						if(i1 == i2 || (i1 == i2 - 1 && M[i1] < M[i2]))
-								return supportIdx;
-						else
+						if(M[j] <= pivot)
 						{
-								int c = M[i1];
-								M[i1] = M[i2];
-								M[i2] = c;
-								if(M[i1] == supportElement)
-								{
-										int k = supportElement;
-										supportElement = M[i1];
-										supportIdx = i1;
-										M[i1] = k;
-								}
-								if(M[i2] == supportElement)
-								{
-										int k = supportElement;
-										supportElement = M[i2];
-										supportIdx = i2;
-										M[i2] = k;
-								}
-								return chunkArrayRecursion(M, i1, i2, supportElement, supportIdx);
+								i++;
+								int swapTemp = M[i];
+								M[i] = M[j];
+								M[j] = swapTemp;
 						}
+				}
+				int swapTemp = M[i + 1];
+				M[i + 1] = M[right];
+				M[right] = swapTemp;
+				return i + 1;
 		}
 
-		private Integer N;
-
-		public void QuickSort(int[] array, int left, int right)
+		public static void QuickSort(int[] array, int left, int right)
 		{
 				if(left < right && left <= array.length - 1 && right <= array.length - 1)
 				{
-						List<Integer> sortedList = new ArrayList<>(0);
-						for(int i = left; i <= right; i++)
-								sortedList.add(array[i]);
-						array = sortedList.stream().mapToInt(i -> i).toArray();
-						left = 0;
-						right = array.length - 1;
-						// индекс опорного элемента
-						if(N == null || N >= array.length)
-								N = array.length / 2;
-						N = chunkArrayRecursion(array, left, right, array[N], N);
+						int N = ArrayChunk(array, left, right); // опорный элемент
 						QuickSort(array, left, N - 1);
-						N = array.length / 2;
 						QuickSort(array, N + 1, right);
 				}
 		}
