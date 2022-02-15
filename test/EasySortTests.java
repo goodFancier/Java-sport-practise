@@ -62,4 +62,12 @@ public class EasySortTests
 				SortLevel.QuickSort(array, 0, 6);
 				Arrays.stream(array).forEach(System.out::println);
 		}
+
+		@Test
+		public void testQuickSortTailOptimization()
+		{
+				int[] array = new int[]{1, 9, 4, 6, 5, 2, 8};
+				SortLevel.QuickSortTailOptimization(array, 0, 6);
+				Arrays.stream(array).forEach(System.out::println);
+		}
 }

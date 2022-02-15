@@ -136,4 +136,21 @@ public class TwoPointerTechnique
 				}
 				return false;
 		}
+
+		public ListNode detectCycle(ListNode head) {
+				if (head == null)
+						return null;
+				Set<ListNode> nodeSet = new HashSet<>();
+				nodeSet.add(head);
+				ListNode currentNode = head.next;
+				while(currentNode != null)
+				{
+						if(nodeSet.contains(currentNode))
+								return currentNode;
+						else
+								nodeSet.add(currentNode);
+						currentNode = currentNode.next;
+				}
+				return null;
+		}
 }
