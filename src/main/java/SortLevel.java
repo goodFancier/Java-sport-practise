@@ -118,11 +118,34 @@ public class SortLevel
 
 		public static void QuickSortTailOptimization(int[] array, int left, int right)
 		{
-				while (left < right)
+				while(left < right)
 				{
 						int N = ArrayChunk(array, left, right); // опорный элемент
 						QuickSortTailOptimization(array, left, N - 1);
 						left = N + 1;
 				}
+		}
+
+		public static ArrayList<Integer> KthOrderStatisticsStep(int[] Array, int L, int R, int k)
+		{
+				ArrayList<Integer> resultList = new ArrayList<>();
+				int N = (R + L) / 2;
+				if(N == k)
+				{
+						resultList.add(L);
+						resultList.add(R);
+						return resultList;
+				}
+				else
+						if(N < k)
+						{
+								L = N + 1;
+								return KthOrderStatisticsStep(Array, L, R, k);
+						}
+						else
+						{
+								R = N - 1;
+								return KthOrderStatisticsStep(Array, L, R, k);
+						}
 		}
 }

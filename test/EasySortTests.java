@@ -70,4 +70,11 @@ public class EasySortTests
 				SortLevel.QuickSortTailOptimization(array, 0, 6);
 				Arrays.stream(array).forEach(System.out::println);
 		}
+
+		@Test
+		public void testKthOrderStatisticsStep()
+		{
+				int[] array = new int[]{3,5,2,4,1};
+				SortLevel.KthOrderStatisticsStep(array, 0, 6, 4).forEach(System.out::println);
+		}
 }
