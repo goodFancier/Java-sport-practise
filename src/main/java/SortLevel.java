@@ -129,7 +129,7 @@ public class SortLevel
 		public static ArrayList<Integer> KthOrderStatisticsStep(int[] Array, int L, int R, int k)
 		{
 				ArrayList<Integer> resultList = new ArrayList<>();
-				int N = (R + L) / 2;
+				int N = ArrayChunk(Array, L, R); // опорный элемент
 				if(N == k)
 				{
 						resultList.add(L);

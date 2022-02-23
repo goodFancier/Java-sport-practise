@@ -75,6 +75,6 @@ public class EasySortTests
 		public void testKthOrderStatisticsStep()
 		{
 				int[] array = new int[]{3,5,2,4,1};
-				SortLevel.KthOrderStatisticsStep(array, 0, 6, 4).forEach(System.out::println);
+				SortLevel.KthOrderStatisticsStep(array, 0, 4, 2).forEach(System.out::println);
 		}
 }
