@@ -126,10 +126,29 @@ public class SortLevel
 				}
 		}
 
+		public static int ArrayChunkOrderStatistic(int[] M, int left, int right, int pivot)
+		{
+				int i = (left - 1);
+				for(int j = left; j < right; j++)
+				{
+						if(M[j] <= pivot)
+						{
+								i++;
+								int swapTemp = M[i];
+								M[i] = M[j];
+								M[j] = swapTemp;
+						}
+				}
+				int swapTemp = M[i + 1];
+				M[i + 1] = M[right];
+				M[right] = swapTemp;
+				return i + 1;
+		}
+
 		public static ArrayList<Integer> KthOrderStatisticsStep(int[] Array, int L, int R, int k)
 		{
 				ArrayList<Integer> resultList = new ArrayList<>();
-				int N = ArrayChunk(Array, L, R); // опорный элемент
+				int N = ArrayChunkOrderStatistic(Array, L, R, (R+L)/2); // индекс опорного элемента
 				if(N == k)
 				{
 						resultList.add(L);
