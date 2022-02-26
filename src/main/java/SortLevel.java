@@ -157,7 +157,7 @@ public class SortLevel
 				ArrayList<Integer> resultList = new ArrayList<>();
 				int N = ArrayChunkOrderStatistic(Array, L, R, (R+L)/2); // индекс опорного элемента
 				if(N == k)
-				{f
+				{
 						resultList.add(L);
 						resultList.add(R);
 						return resultList;
