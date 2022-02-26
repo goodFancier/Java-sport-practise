@@ -1,6 +1,10 @@
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class EasySortTests
 {
@@ -74,7 +78,21 @@ public class EasySortTests
 		@Test
 		public void testKthOrderStatisticsStep()
 		{
-				int[] array = new int[]{3,5,2,4,1};
-				SortLevel.KthOrderStatisticsStep(array, 0, 4, 1).forEach(System.out::println);
+				int[] array = new int[]{13, 15, 0, 14, 1};
+				SortLevel.KthOrderStatisticsStep(array, 0, 4, 4).forEach(System.out::println);
+		}
+
+		@Test
+		public void testKthOrderStat()
+		{
+				int[] array = new int[]{13, 15, 0, 14, 1};
+				ArrayList<Integer> defList = new ArrayList<>();
+				defList.add(0);
+				defList.add(1);
+				defList.add(13);
+				defList.add(14);
+				defList.add(15);
+				ArrayList<Integer> resultList = SortLevel.KthOrderStatisticsStep(array, 0, 4, 1);
+				assertEquals(defList.get(resultList.get(resultList.size() - 1)), Integer.valueOf(13));
 		}
 }
